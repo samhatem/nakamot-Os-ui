@@ -15,6 +15,8 @@ yarn
 
 cd ..
 
+cp .env.example .env
+
 yarn start
 ```
 
