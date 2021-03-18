@@ -5,7 +5,6 @@ import { ethers } from 'ethers'
 import { TOKEN_SYMBOLS, TOKEN_ADDRESSES, ERROR_CODES } from '../../utils'
 import {
   useTokenContract,
-  useExchangeContract,
   useAddressBalance,
   useAddressAllowance,
   useExchangeReserves,
@@ -151,11 +150,6 @@ export default function Main({ stats, status }) {
 
   // selected token
   const [selectedTokenSymbol, setSelectedTokenSymbol] = useState(TOKEN_SYMBOLS.ETH)
-
-  // get exchange contracts
-  const exchangeContractSOCKS = useExchangeContract(TOKEN_ADDRESSES.SOCKS)
-  const exchangeContractSelectedToken = useExchangeContract(TOKEN_ADDRESSES[selectedTokenSymbol])
-  const exchangeContractDAI = useExchangeContract(TOKEN_ADDRESSES.DAI)
 
   // get token contracts
   const tokenContractSOCKS = useTokenContract(TOKEN_ADDRESSES.SOCKS)

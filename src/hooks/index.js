@@ -4,8 +4,6 @@ import { useWeb3Context } from 'web3-react'
 import {
   isAddress,
   getTokenContract,
-  getExchangeContract,
-  getTokenExchangeAddressFromFactory,
   getEtherBalance,
   getTokenBalance,
   getTokenAllowance,
@@ -39,34 +37,6 @@ export function useTokenContract(tokenAddress, withSignerIfPossible = true) {
       return null
     }
   }, [account, library, tokenAddress, withSignerIfPossible])
-}
-
-export function useExchangeContract(tokenAddress, withSignerIfPossible = true) {
-  const { library, account } = useWeb3Context()
-
-  const [exchangeAddress, setExchangeAddress] = useState()
-  useEffect(() => {
-    if (isAddress(tokenAddress)) {
-      let stale = false
-      getTokenExchangeAddressFromFactory(tokenAddress, library).then(exchangeAddress => {
-        if (!stale) {
-          setExchangeAddress(exchangeAddress)
-        }
-      })
-      return () => {
-        stale = true
-        setExchangeAddress()
-      }
-    }
-  }, [library, tokenAddress])
-
-  return useMemo(() => {
-    try {
-      return getExchangeContract(exchangeAddress, library, withSignerIfPossible ? account : undefined)
-    } catch {
-      return null
-    }
-  }, [exchangeAddress, library, withSignerIfPossible, account])
 }
 
 export function useAddressBalance(address, tokenAddress) {
@@ -138,15 +108,6 @@ export function useTotalSupply(contract) {
   useBlockEffect(updateTotalSupply)
 
   return totalSupply && Math.round(Number(utils.formatEther(totalSupply)))
-}
-
-export function useExchangeReserves(tokenAddress) {
-  const exchangeContract = useExchangeContract(tokenAddress)
-
-  const reserveETH = useAddressBalance(exchangeContract && exchangeContract.address, TOKEN_ADDRESSES.ETH)
-  const reserveToken = useAddressBalance(exchangeContract && exchangeContract.address, tokenAddress)
-
-  return { reserveETH, reserveToken }
 }
 
 export function useAddressAllowance(address, tokenAddress, spenderAddress) {

@@ -1,27 +1,23 @@
 import { ethers } from 'ethers'
+import { ChainId, Token, Pair } from '@uniswap/sdk'
 
 import ERC20_ABI from './erc20.json'
-import EXCHANGE_ABI from './exchange.json'
 import FACTORY_ABI from './factory.json'
 
 import UncheckedJsonRpcSigner from './signer'
 
-const FACTORY_ADDRESS = '0xc0a47dFe034B400B47bDaD5FecDa2621de6c4d95'
+const ROUTER_ADDRESS = '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'
+
+const FACTORY_ADDRESS = '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f'
 
 export const TOKEN_ADDRESSES = {
   ETH: 'ETH',
-  SOCKS: '0x23B608675a2B2fB1890d3ABBd85c5775c51691d5',
-  ANT: '0x960b236A07cf122663c4303350609A66A7B288C0',
-  BAT: '0x0D8775F648430679A709E98d2b0Cb6250d2887EF',
+  BKFT: '0x19c40ac926DE7276fa69b85dfa35771CA2144bEa',
   DAI: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
-  KNC: '0xdd974D5C2e2928deA5F71b9825b8b646686BD200',
-  MKR: '0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2',
-  RDN: '0x255Aa6DF07540Cb5d3d297f0D0D4D84cb52bc8e6',
-  REP: '0x1985365e9f78359a9B6AD760e32412f4a445E862',
-  SNT: '0x744d70FDBE2Ba4CF95131626614a1763DF805B9E',
-  SPANK: '0x42d6622deCe394b54999Fbd73D108123806f6a18',
-  TUSD: '0x8dd5fbCe2F6a956C3022bA3663759011Dd51e73E',
-  ZRX: '0xE41d2489571d322189246DaFA5ebDe1F4699F498'
+  USDC: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+  USDT: '0xdac17f958d2ee523a2206206994597c13d831ec7',
+  UNI: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
+  WBTC: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
 }
 
 export const TOKEN_SYMBOLS = Object.keys(TOKEN_ADDRESSES).reduce((o, k) => {
@@ -70,14 +66,6 @@ export function getContract(address, ABI, library, account) {
 
 export function getTokenContract(tokenAddress, library, account) {
   return getContract(tokenAddress, ERC20_ABI, library, account)
-}
-
-export function getExchangeContract(exchangeAddress, library, account) {
-  return getContract(exchangeAddress, EXCHANGE_ABI, library, account)
-}
-
-export async function getTokenExchangeAddressFromFactory(tokenAddress, library, account) {
-  return getContract(FACTORY_ADDRESS, FACTORY_ABI, library, account).getExchange(tokenAddress)
 }
 
 // get the ether balance of an address
