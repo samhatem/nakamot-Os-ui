@@ -33,7 +33,7 @@ const Shim = styled.div`
   height: 1rem;
 `
 
-export default function RedeemButton({ balanceSOCKS }) {
+export default function RedeemButton({ balanceBKFT }) {
   const [, setState] = useAppContext()
   const { account } = useWeb3Context()
 
@@ -44,7 +44,7 @@ export default function RedeemButton({ balanceSOCKS }) {
   return (
     <BuyButtonFrame>
       <ButtonFrame
-        disabled={balanceSOCKS > 0 ? false : true}
+        disabled={balanceBKFT > 0 ? false : true}
         text={'Sell'}
         type={'secondary'}
         onClick={() => {
@@ -55,8 +55,8 @@ export default function RedeemButton({ balanceSOCKS }) {
       <ButtonFrame
         disabled={
           account === null ||
-          !balanceSOCKS ||
-          balanceSOCKS.lt(ethers.utils.bigNumberify(10).pow(ethers.utils.bigNumberify(18)))
+          !balanceBKFT ||
+          balanceBKFT.lt(ethers.utils.bigNumberify(10).pow(ethers.utils.bigNumberify(18)))
         }
         text={'Redeem'}
         type={'secondary'}

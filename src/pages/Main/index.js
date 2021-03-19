@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect, useMemo } from 'react'
 import { useWeb3Context } from 'web3-react'
 import { ethers } from 'ethers'
 
@@ -9,14 +9,16 @@ import {
   useAddressAllowance,
   useExchangeReserves,
   useExchangeAllowance,
-  useTotalSupply
+  useTotalSupply,
+  useRouterContract
 } from '../../hooks'
 import Body from '../Body'
 import Stats from '../Stats'
 import Status from '../Status'
+import { getExchangeAddress } from "../../utils"
 
 // denominated in bips
-const GAS_MARGIN = ethers.utils.bigNumberify(1000)
+const GAS_MARGIN = ethers.BigNumber.from(1000)
 
 export function calculateGasMargin(value, margin) {
   const offset = value.mul(margin).div(ethers.utils.bigNumberify(10000))
@@ -27,7 +29,7 @@ export function calculateGasMargin(value, margin) {
 const DEADLINE_FROM_NOW = 60 * 15
 
 // denominated in bips
-const ALLOWED_SLIPPAGE = ethers.utils.bigNumberify(200)
+const ALLOWED_SLIPPAGE = ethers.BigNumber.from(200)
 
 function calculateSlippageBounds(value) {
   const offset = value.mul(ALLOWED_SLIPPAGE).div(ethers.utils.bigNumberify(10000))
@@ -82,14 +84,14 @@ function calculateAmount(
   inputTokenSymbol,
   outputTokenSymbol,
   SOCKSAmount,
-  reserveSOCKSETH,
-  reserveSOCKSToken,
+  reserveBKFTWETH,
+  reserveBKFTToken,
   reserveSelectedTokenETH,
   reserveSelectedTokenToken
 ) {
   // eth to token - buy
   if (inputTokenSymbol === TOKEN_SYMBOLS.ETH && outputTokenSymbol === TOKEN_SYMBOLS.SOCKS) {
-    const amount = calculateEtherTokenInputFromOutput(SOCKSAmount, reserveSOCKSETH, reserveSOCKSToken)
+    const amount = calculateEtherTokenInputFromOutput(SOCKSAmount, reserveBKFTWETH, reserveBKFTToken)
     if (amount.lte(ethers.constants.Zero) || amount.gte(ethers.constants.MaxUint256)) {
       throw Error()
     }
@@ -98,7 +100,7 @@ function calculateAmount(
 
   // token to eth - sell
   if (inputTokenSymbol === TOKEN_SYMBOLS.SOCKS && outputTokenSymbol === TOKEN_SYMBOLS.ETH) {
-    const amount = calculateEtherTokenOutputFromInput(SOCKSAmount, reserveSOCKSToken, reserveSOCKSETH)
+    const amount = calculateEtherTokenOutputFromInput(SOCKSAmount, reserveBKFTToken, reserveBKFTWETH)
     if (amount.lte(ethers.constants.Zero) || amount.gte(ethers.constants.MaxUint256)) {
       throw Error()
     }
@@ -111,7 +113,7 @@ function calculateAmount(
 
   if (buyingSOCKS) {
     // eth needed to buy x socks
-    const intermediateValue = calculateEtherTokenInputFromOutput(SOCKSAmount, reserveSOCKSETH, reserveSOCKSToken)
+    const intermediateValue = calculateEtherTokenInputFromOutput(SOCKSAmount, reserveBKFTWETH, reserveBKFTToken)
     // calculateEtherTokenOutputFromInput
     if (intermediateValue.lte(ethers.constants.Zero) || intermediateValue.gte(ethers.constants.MaxUint256)) {
       throw Error()
@@ -128,7 +130,7 @@ function calculateAmount(
     return amount
   } else {
     // eth gained from selling x socks
-    const intermediateValue = calculateEtherTokenOutputFromInput(SOCKSAmount, reserveSOCKSToken, reserveSOCKSETH)
+    const intermediateValue = calculateEtherTokenOutputFromInput(SOCKSAmount, reserveBKFTToken, reserveBKFTWETH)
     if (intermediateValue.lte(ethers.constants.Zero) || intermediateValue.gte(ethers.constants.MaxUint256)) {
       throw Error()
     }
@@ -148,53 +150,60 @@ function calculateAmount(
 export default function Main({ stats, status }) {
   const { library, account } = useWeb3Context()
 
-  // selected token
   const [selectedTokenSymbol, setSelectedTokenSymbol] = useState(TOKEN_SYMBOLS.ETH)
-
-  // get token contracts
-  const tokenContractSOCKS = useTokenContract(TOKEN_ADDRESSES.SOCKS)
   const tokenContractSelectedToken = useTokenContract(TOKEN_ADDRESSES[selectedTokenSymbol])
-
-  // get balances
-  const balanceETH = useAddressBalance(account, TOKEN_ADDRESSES.ETH)
-  const balanceSOCKS = useAddressBalance(account, TOKEN_ADDRESSES.SOCKS)
-  const balanceSelectedToken = useAddressBalance(account, TOKEN_ADDRESSES[selectedTokenSymbol])
-
-  // totalsupply
-  const totalSupply = useTotalSupply(tokenContractSOCKS)
-
-  // get allowances
-  const allowanceSOCKS = useAddressAllowance(
-    account,
-    TOKEN_ADDRESSES.SOCKS,
-    exchangeContractSOCKS && exchangeContractSOCKS.address
-  )
-  const allowanceSelectedToken = useExchangeAllowance(account, TOKEN_ADDRESSES[selectedTokenSymbol])
-
-  // get reserves
-  const reserveSOCKSETH = useAddressBalance(exchangeContractSOCKS && exchangeContractSOCKS.address, TOKEN_ADDRESSES.ETH)
-  const reserveSOCKSToken = useAddressBalance(
-    exchangeContractSOCKS && exchangeContractSOCKS.address,
-    TOKEN_ADDRESSES.SOCKS
-  )
+  const allowanceSelectedToken = useExchangeAllowance(account, TOKEN_ADDRESSES.BKFT, TOKEN_ADDRESSES[selectedTokenSymbol])
   const { reserveETH: reserveSelectedTokenETH, reserveToken: reserveSelectedTokenToken } = useExchangeReserves(
+    TOKEN_ADDRESSES.BKFT,
     TOKEN_ADDRESSES[selectedTokenSymbol]
   )
 
-  const reserveDAIETH = useAddressBalance(exchangeContractDAI && exchangeContractDAI.address, TOKEN_ADDRESSES.ETH)
-  const reserveDAIToken = useAddressBalance(exchangeContractDAI && exchangeContractDAI.address, TOKEN_ADDRESSES.DAI)
-
-  const [USDExchangeRateETH, setUSDExchangeRateETH] = useState()
   const [USDExchangeRateSelectedToken, setUSDExchangeRateSelectedToken] = useState()
 
+  // get token contracts
+  const tokenContractBKFT = useTokenContract(TOKEN_ADDRESSES.BKFT)
+
+  // get router contract
+  const router = useRouterContract();
+
+  // get balances
+  const balanceETH = useAddressBalance(account, TOKEN_ADDRESSES.ETH)
+  const balanceBKFT = useAddressBalance(account, TOKEN_ADDRESSES.BKFT)
+  const balanceSelectedToken = useAddressBalance(account, TOKEN_ADDRESSES[selectedTokenSymbol])
+
+  const bkftWethExchangeAddress = useMemo(() => getExchangeAddress(TOKEN_ADDRESSES.WETH, TOKEN_ADDRESSES.BKFT), [])
+  const daiWethExchangeAddress = useMemo(() => getExchangeAddress(TOKEN_ADDRESSES.WETH, TOKEN_ADDRESSES.DAI), [])
+
+  // totalsupply
+  const totalSupply = useTotalSupply(tokenContractBKFT)
+
+  // get allowances
+  const allowanceBKFT = useAddressAllowance(
+    account,
+    TOKEN_ADDRESSES.SOCKS,
+    bkftWethExchangeAddress
+  )
+
+  // get reserves
+  const reserveBKFTWETH = useAddressBalance(bkftWethExchangeAddress, TOKEN_ADDRESSES.WETH)
+  const reserveBKFTToken = useAddressBalance(
+    bkftWethExchangeAddress,
+    TOKEN_ADDRESSES.BKFT
+  )
+
+  const reserveDAIETH = useAddressBalance(daiWethExchangeAddress, TOKEN_ADDRESSES.WETH)
+  const reserveDAIToken = useAddressBalance(daiWethExchangeAddress, TOKEN_ADDRESSES.DAI)
+
+  const [USDExchangeRateETH, setUSDExchangeRateETH] = useState()
+
   const ready = !!(
-    (account === null || allowanceSOCKS) &&
+    (account === null || allowanceBKFT) &&
     (selectedTokenSymbol === 'ETH' || account === null || allowanceSelectedToken) &&
     (account === null || balanceETH) &&
-    (account === null || balanceSOCKS) &&
+    (account === null || balanceBKFT) &&
     (account === null || balanceSelectedToken) &&
-    reserveSOCKSETH &&
-    reserveSOCKSToken &&
+    reserveBKFTWETH &&
+    reserveBKFTToken &&
     (selectedTokenSymbol === 'ETH' || reserveSelectedTokenETH) &&
     (selectedTokenSymbol === 'ETH' || reserveSelectedTokenToken) &&
     selectedTokenSymbol &&
@@ -237,7 +246,7 @@ export default function Main({ stats, status }) {
   const [dollarPrice, setDollarPrice] = useState()
   useEffect(() => {
     try {
-      const SOCKSExchangeRateETH = getExchangeRate(reserveSOCKSToken, reserveSOCKSETH)
+      const SOCKSExchangeRateETH = getExchangeRate(reserveBKFTToken, reserveBKFTWETH)
       setDollarPrice(
         SOCKSExchangeRateETH.mul(USDExchangeRateETH).div(
           ethers.utils.bigNumberify(10).pow(ethers.utils.bigNumberify(18))
@@ -246,11 +255,11 @@ export default function Main({ stats, status }) {
     } catch {
       setDollarPrice()
     }
-  }, [USDExchangeRateETH, reserveSOCKSETH, reserveSOCKSToken])
+  }, [USDExchangeRateETH, reserveBKFTToken, reserveBKFTWETH])
 
   async function unlock(buyingSOCKS = true) {
-    const contract = buyingSOCKS ? tokenContractSelectedToken : tokenContractSOCKS
-    const spenderAddress = buyingSOCKS ? exchangeContractSelectedToken.address : exchangeContractSOCKS.address
+    const contract = buyingSOCKS ? tokenContractSelectedToken : tokenContractBKFT
+    const spenderAddress = bkftWethExchangeAddress // buyingSOCKS ? exchangeContractSelectedToken.address : exchangeContractSOCKS.address
 
     const estimatedGasLimit = await contract.estimate.approve(spenderAddress, ethers.constants.MaxUint256)
     const estimatedGasPrice = await library
@@ -281,8 +290,8 @@ export default function Main({ stats, status }) {
           selectedTokenSymbol,
           TOKEN_SYMBOLS.SOCKS,
           parsedValue,
-          reserveSOCKSETH,
-          reserveSOCKSToken,
+          reserveBKFTWETH,
+          reserveBKFTToken,
           reserveSelectedTokenETH,
           reserveSelectedTokenToken
         )
@@ -332,16 +341,7 @@ export default function Main({ stats, status }) {
         error: errorAccumulator
       }
     },
-    [
-      allowanceSelectedToken,
-      balanceETH,
-      balanceSelectedToken,
-      reserveSOCKSETH,
-      reserveSOCKSToken,
-      reserveSelectedTokenETH,
-      reserveSelectedTokenToken,
-      selectedTokenSymbol
-    ]
+    [allowanceSelectedToken, balanceETH, balanceSelectedToken, reserveBKFTToken, reserveBKFTWETH, reserveSelectedTokenETH, reserveSelectedTokenToken, selectedTokenSymbol]
   )
 
   async function buy(maximumInputValue, outputValue) {
@@ -352,15 +352,27 @@ export default function Main({ stats, status }) {
       .then(gasPrice => gasPrice.mul(ethers.utils.bigNumberify(150)).div(ethers.utils.bigNumberify(100)))
 
     if (selectedTokenSymbol === TOKEN_SYMBOLS.ETH) {
-      const estimatedGasLimit = await exchangeContractSOCKS.estimate.ethToTokenSwapOutput(outputValue, deadline, {
-        value: maximumInputValue
-      })
-      return exchangeContractSOCKS.ethToTokenSwapOutput(outputValue, deadline, {
-        value: maximumInputValue,
-        gasLimit: calculateGasMargin(estimatedGasLimit, GAS_MARGIN),
-        gasPrice: estimatedGasPrice
-      })
+      const estimatedGasLimit = await router.estimate.swapETHForExactTokens(
+          outputValue,
+          [TOKEN_ADDRESSES.WETH, TOKEN_ADDRESSES.BKFT],
+          account,
+          deadline,
+          { value: maximumInputValue }
+      )
+      return router.swapETHForExactTokens(
+          outputValue,
+          [TOKEN_ADDRESSES.WETH, TOKEN_ADDRESSES.BKFT],
+          account,
+          deadline,
+          {
+              value: maximumInputValue,
+              gasLimit: calculateGasMargin(estimatedGasLimit, GAS_MARGIN),
+              gasPrice: estimatedGasPrice
+          }
+      )
     } else {
+      throw new Error('No Support for swapping with tokens other than ETH')
+      /*
       const estimatedGasLimit = await exchangeContractSelectedToken.estimate.tokenToTokenSwapOutput(
         outputValue,
         maximumInputValue,
@@ -379,6 +391,7 @@ export default function Main({ stats, status }) {
           gasPrice: estimatedGasPrice
         }
       )
+      */
     }
   }
 
@@ -401,8 +414,8 @@ export default function Main({ stats, status }) {
           TOKEN_SYMBOLS.SOCKS,
           selectedTokenSymbol,
           parsedValue,
-          reserveSOCKSETH,
-          reserveSOCKSToken,
+          reserveBKFTWETH,
+          reserveBKFTToken,
           reserveSelectedTokenETH,
           reserveSelectedTokenToken
         )
@@ -426,7 +439,7 @@ export default function Main({ stats, status }) {
       }
 
       // validate minimum socks balance
-      if (balanceSOCKS.lt(parsedValue)) {
+      if (balanceBKFT.lt(parsedValue)) {
         const error = Error()
         error.code = ERROR_CODES.INSUFFICIENT_SELECTED_TOKEN_BALANCE
         if (!errorAccumulator) {
@@ -435,7 +448,7 @@ export default function Main({ stats, status }) {
       }
 
       // validate allowance
-      if (allowanceSOCKS.lt(parsedValue)) {
+      if (allowanceBKFT.lt(parsedValue)) {
         const error = Error()
         error.code = ERROR_CODES.INSUFFICIENT_ALLOWANCE
         if (!errorAccumulator) {
@@ -450,16 +463,7 @@ export default function Main({ stats, status }) {
         error: errorAccumulator
       }
     },
-    [
-      allowanceSOCKS,
-      balanceETH,
-      balanceSOCKS,
-      reserveSOCKSETH,
-      reserveSOCKSToken,
-      reserveSelectedTokenETH,
-      reserveSelectedTokenToken,
-      selectedTokenSymbol
-    ]
+    [balanceETH, balanceBKFT, allowanceBKFT, selectedTokenSymbol, reserveBKFTWETH, reserveBKFTToken, reserveSelectedTokenETH, reserveSelectedTokenToken]
   )
 
   async function sell(inputValue, minimumOutputValue) {
@@ -470,16 +474,27 @@ export default function Main({ stats, status }) {
       .then(gasPrice => gasPrice.mul(ethers.utils.bigNumberify(150)).div(ethers.utils.bigNumberify(100)))
 
     if (selectedTokenSymbol === TOKEN_SYMBOLS.ETH) {
-      const estimatedGasLimit = await exchangeContractSOCKS.estimate.tokenToEthSwapInput(
+      const estimatedGasLimit = await router.estimate.swapExactTokensForETH(
         inputValue,
         minimumOutputValue,
+        [TOKEN_ADDRESSES.BKFT, TOKEN_ADDRESSES.WETH],
+        account,
         deadline
       )
-      return exchangeContractSOCKS.tokenToEthSwapInput(inputValue, minimumOutputValue, deadline, {
-        gasLimit: calculateGasMargin(estimatedGasLimit, GAS_MARGIN),
-        gasPrice: estimatedGasPrice
-      })
+      return router.swapExactTokensForETH(
+          inputValue,
+          minimumOutputValue,
+          [TOKEN_ADDRESSES.BKFT, TOKEN_ADDRESSES.WETH],
+          account,
+          deadline,
+          {
+              gasLimit: calculateGasMargin(estimatedGasLimit, GAS_MARGIN),
+              gasPrice: estimatedGasPrice
+          }
+      )
     } else {
+      throw new Error("Swaps for tokens other than ETH not yet supported")
+      /*
       const estimatedGasLimit = await exchangeContractSOCKS.estimate.tokenToTokenSwapInput(
         inputValue,
         minimumOutputValue,
@@ -498,6 +513,7 @@ export default function Main({ stats, status }) {
           gasPrice: estimatedGasPrice
         }
       )
+      */
     }
   }
 
@@ -508,18 +524,18 @@ export default function Main({ stats, status }) {
       .getGasPrice()
       .then(gasPrice => gasPrice.mul(ethers.utils.bigNumberify(150)).div(ethers.utils.bigNumberify(100)))
 
-    const estimatedGasLimit = await tokenContractSOCKS.estimate.burn(parsedAmount)
+    const estimatedGasLimit = await tokenContractBKFT.estimate.burn(parsedAmount)
 
-    return tokenContractSOCKS.burn(parsedAmount, {
+    return tokenContractBKFT.burn(parsedAmount, {
       gasLimit: calculateGasMargin(estimatedGasLimit, GAS_MARGIN),
       gasPrice: estimatedGasPrice
     })
   }
 
   return stats ? (
-    <Stats reserveSOCKSToken={reserveSOCKSToken} totalSupply={totalSupply} ready={ready} balanceSOCKS={balanceSOCKS} />
+    <Stats reserveBKFTToken={reserveBKFTToken} totalSupply={totalSupply} ready={ready} balanceBKFT={balanceBKFT} />
   ) : status ? (
-    <Status totalSupply={totalSupply} ready={ready} balanceSOCKS={balanceSOCKS} />
+    <Status totalSupply={totalSupply} ready={ready} balanceBKFT={balanceBKFT} />
   ) : (
     <Body
       selectedTokenSymbol={selectedTokenSymbol}
@@ -533,8 +549,8 @@ export default function Main({ stats, status }) {
       burn={burn}
       dollarize={dollarize}
       dollarPrice={dollarPrice}
-      balanceSOCKS={balanceSOCKS}
-      reserveSOCKSToken={reserveSOCKSToken}
+      balanceBKFT={balanceBKFT}
+      reserveBKFTToken={reserveBKFTToken}
       totalSupply={totalSupply}
     />
   )

@@ -69,7 +69,7 @@ export default function Checkout({
   validateSell,
   sell,
   burn,
-  balanceSOCKS,
+  balanceBKFT,
   dollarPrice,
   reserveSOCKSToken,
   dollarize,
@@ -170,7 +170,7 @@ export default function Checkout({
           <Redeem
             ready={ready}
             burn={burn}
-            balanceSOCKS={balanceSOCKS}
+            balanceBKFT={balanceBKFT}
             dollarize={dollarize}
             setCurrentTransaction={setCurrentTransaction}
             setShowConnect={setShowConnect}

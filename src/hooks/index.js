@@ -7,6 +7,8 @@ import {
   getEtherBalance,
   getTokenBalance,
   getTokenAllowance,
+  getExchangeAddress,
+  getRouterContract,
   TOKEN_ADDRESSES
 } from '../utils'
 import { utils } from 'ethers'
@@ -37,6 +39,32 @@ export function useTokenContract(tokenAddress, withSignerIfPossible = true) {
       return null
     }
   }, [account, library, tokenAddress, withSignerIfPossible])
+}
+
+/*
+export function useExchangeContract(tokenAddress0, tokenAddress1, withSignerIfPossible = true) {
+    const { library, account } = useWeb3Context()
+
+    return useMemo(() => {
+        try {
+            return get
+        }
+    })
+}
+*/
+
+export function useExchangeReserves(tokenAddress0, tokenAddress1) {
+  const exchangeContract = useMemo(() => {
+      const address0 = tokenAddress0 === TOKEN_ADDRESSES.ETH ? TOKEN_ADDRESSES.WETH : tokenAddress0
+      const address1 = tokenAddress1 === TOKEN_ADDRESSES.ETH ? TOKEN_ADDRESSES.WETH : tokenAddress1
+
+      return getExchangeAddress(address0, address1)
+  }, [tokenAddress0, tokenAddress1]);
+
+  const reserve0 = useAddressBalance(exchangeContract, tokenAddress0)
+  const reserve1 = useAddressBalance(exchangeContract, tokenAddress1)
+
+  return { reserve0, reserve1 }
 }
 
 export function useAddressBalance(address, tokenAddress) {
@@ -147,8 +175,23 @@ export function useAddressAllowance(address, tokenAddress, spenderAddress) {
   return allowance
 }
 
-export function useExchangeAllowance(address, tokenAddress) {
-  const exchangeContract = useExchangeContract(tokenAddress)
+// tokenAddress0 is the address we're checking
+export function useExchangeAllowance(address, tokenAddress0, tokenAddress1) {
+  const exchangeContract = useMemo(
+      () => {
+          const address0 = tokenAddress0 === TOKEN_ADDRESSES.ETH ? TOKEN_ADDRESSES.WETH : tokenAddress0
+          const address1 = tokenAddress1 === TOKEN_ADDRESSES.ETH ? TOKEN_ADDRESSES.WETH : tokenAddress1
 
-  return useAddressAllowance(address, tokenAddress, exchangeContract && exchangeContract.address)
+          return getExchangeAddress(address0, address1)
+      },
+      [tokenAddress0, tokenAddress1]
+  );
+
+  return useAddressAllowance(address, tokenAddress0, exchangeContract)
+}
+
+export function useRouterContract() {
+    const { library, account } = useWeb3Context()
+
+    return useMemo(() => getRouterContract(library, account), [library, account])
 }

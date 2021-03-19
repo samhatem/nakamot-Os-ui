@@ -1,45 +1,12 @@
 import { ethers } from 'ethers'
-import { ChainId, Token, Pair } from '@uniswap/sdk'
+import { Token, Pair } from '@uniswap/sdk'
+import UncheckedJsonRpcSigner from './signer'
+import { CHAIN_ID, ROUTER_ADDRESS } from "./constants"
 
 import ERC20_ABI from './erc20.json'
-import FACTORY_ABI from './factory.json'
+import ROUTER_ABI from './router.json'
 
-import UncheckedJsonRpcSigner from './signer'
-
-const ROUTER_ADDRESS = '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'
-
-const FACTORY_ADDRESS = '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f'
-
-export const TOKEN_ADDRESSES = {
-  ETH: 'ETH',
-  BKFT: '0x19c40ac926DE7276fa69b85dfa35771CA2144bEa',
-  DAI: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
-  USDC: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
-  USDT: '0xdac17f958d2ee523a2206206994597c13d831ec7',
-  UNI: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
-  WBTC: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
-}
-
-export const TOKEN_SYMBOLS = Object.keys(TOKEN_ADDRESSES).reduce((o, k) => {
-  o[k] = k
-  return o
-}, {})
-
-export const ERROR_CODES = [
-  'INVALID_AMOUNT',
-  'INVALID_TRADE',
-  'INSUFFICIENT_ETH_GAS',
-  'INSUFFICIENT_SELECTED_TOKEN_BALANCE',
-  'INSUFFICIENT_ALLOWANCE'
-].reduce((o, k, i) => {
-  o[k] = i
-  return o
-}, {})
-
-export const TRADE_TYPES = ['BUY', 'SELL', 'UNLOCK', 'REDEEM'].reduce((o, k, i) => {
-  o[k] = i
-  return o
-}, {})
+export * from "./constants";
 
 export function isAddress(value) {
   try {
@@ -64,6 +31,10 @@ export function getContract(address, ABI, library, account) {
   return new ethers.Contract(address, ABI, getProviderOrSigner(library, account))
 }
 
+export function getRouterContract(library, account) {
+  return getContract(ROUTER_ADDRESS, ROUTER_ABI, library, account)
+}
+
 export function getTokenContract(tokenAddress, library, account) {
   return getContract(tokenAddress, ERC20_ABI, library, account)
 }
@@ -75,6 +46,13 @@ export async function getEtherBalance(address, library) {
   }
 
   return library.getBalance(address)
+}
+
+export function getExchangeAddress(tokenAddress0, tokenAddress1) {
+    const token0 = new Token(CHAIN_ID, tokenAddress0, 18, "TOKEN0", "TKN0")
+    const token1 = new Token(CHAIN_ID, tokenAddress1, 18, "TOKEN1", "TKN1")
+
+    return Pair.getAddress(token0, token1);
 }
 
 // get the token balance of an address

@@ -52,7 +52,7 @@ export function Controls({ closeCheckout, theme, type }) {
 
 export default function Redeem({
   burn,
-  balanceSOCKS,
+  balanceBKFT,
   balance,
   ready,
   unlock,
@@ -112,12 +112,12 @@ export default function Redeem({
             <ImgStyle src={test} alt="Logo" hasPickedAmount={hasPickedAmount} />
             <InfoFrame pending={pending}>
               <Owned>
-                <SockCount>You own {balanceSOCKS && `${amountFormatter(balanceSOCKS, 18, 0)}`}</SockCount>
+                <SockCount>You own {balanceBKFT && `${amountFormatter(balanceBKFT, 18, 0)}`}</SockCount>
                 <p>Redeem SOCKS</p>
               </Owned>
               <IncrementToken
-                initialValue={Number(amountFormatter(balanceSOCKS, 18, 0))}
-                max={Number(amountFormatter(balanceSOCKS, 18, 0))}
+                initialValue={Number(amountFormatter(balanceBKFT, 18, 0))}
+                max={Number(amountFormatter(balanceBKFT, 18, 0))}
               />
             </InfoFrame>
           </TopFrame>

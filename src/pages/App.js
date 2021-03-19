@@ -7,7 +7,7 @@ import GlobalStyle, { ThemeProvider } from '../theme'
 import Web3ReactManager from '../components/Web3ReactManager'
 import AppProvider from '../context'
 import Main from './Main'
-import { PROVIDER_URL, SUPPORTED_NETWORKS, SUPPORTED_NETWORK_URLS } from "../utils/network"
+import { PROVIDER_URL, SUPPORTED_NETWORKS, SUPPORTED_NETWORK_URLS } from "../utils"
 
 const { NetworkOnlyConnector, InjectedConnector, WalletConnectConnector } = Connectors
 const Network = new NetworkOnlyConnector({
