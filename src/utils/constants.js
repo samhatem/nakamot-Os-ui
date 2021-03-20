@@ -1,6 +1,6 @@
 import { ChainId } from '@uniswap/sdk'
 
-const isProd = process.env.NETWORK = "mainnet";
+const isProd = process.env.NETWORK === "mainnet";
 
 export const PROVIDER_URL = isProd
     ? process.env.REACT_APP_MAINNET_PROVIDER_URL
@@ -53,3 +53,5 @@ export const TRADE_TYPES = ['BUY', 'SELL', 'UNLOCK', 'REDEEM'].reduce((o, k, i) 
   o[k] = i
   return o
 }, {})
+
+export const INITIAL_SUPPLY = 2100;

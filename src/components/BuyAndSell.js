@@ -83,7 +83,7 @@ export default function BuyAndSell({
   //       ? '0x888503cb966a67192afb74c740abaec0b7e8bda370bc8f853fb040eab247c63f'
   //       : '0x8cd2cc7ebb7d47dd0230bd505fa4b3375faabb1c9f92137f725b85e4de3f61df',
   //     TRADE_TYPES.SELL,
-  //     ethers.utils.bigNumberify('1000000000000000000')
+  //     ethers.BigNumber.from('1000000000000000000')
   //   )
   // }
 

@@ -13,6 +13,7 @@ const { NetworkOnlyConnector, InjectedConnector, WalletConnectConnector } = Conn
 const Network = new NetworkOnlyConnector({
   providerURL: PROVIDER_URL
 })
+
 const Injected = new InjectedConnector({ supportedNetworks: SUPPORTED_NETWORKS })
 const WalletConnect = new WalletConnectConnector({
   api: WalletConnectApi,

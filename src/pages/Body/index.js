@@ -8,7 +8,7 @@ import Card from '../../components/Card'
 import BuyButtons from '../../components/Buttons'
 import RedeemButton from '../../components/RedeemButton'
 import Checkout from '../../components/Checkout'
-import { amountFormatter } from '../../utils'
+import { amountFormatter, INITIAL_SUPPLY } from '../../utils'
 
 export function Header({ totalSupply, ready, balanceBKFT, setShowConnect }) {
   const { account, setConnector } = useWeb3Context()
@@ -36,14 +36,14 @@ export function Header({ totalSupply, ready, balanceBKFT, setShowConnect }) {
               <span role="img" aria-label="fire">
                 🔥
               </span>{' '}
-              {500 - totalSupply} <HideMobile>redeemed</HideMobile>
+              {INITIAL_SUPPLY - totalSupply} <HideMobile>redeemed</HideMobile>
             </Burned>
           </Link>
         )}
         <Account onClick={() => handleAccount()} balanceBKFT={balanceBKFT}>
           {account ? (
             balanceBKFT > 0 ? (
-              <SockCount>{balanceBKFT && `${amountFormatter(balanceBKFT, 18, 0)}`} SOCKS</SockCount>
+              <SockCount>{balanceBKFT && `${amountFormatter(balanceBKFT, 18, 0)}`} BKFT</SockCount>
             ) : (
               <SockCount>{account.slice(0, 6)}...</SockCount>
             )

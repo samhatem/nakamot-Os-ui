@@ -56,7 +56,7 @@ export default function RedeemButton({ balanceBKFT }) {
         disabled={
           account === null ||
           !balanceBKFT ||
-          balanceBKFT.lt(ethers.utils.bigNumberify(10).pow(ethers.utils.bigNumberify(18)))
+          balanceBKFT.lt(ethers.BigNumber.from(10).pow(ethers.BigNumber.from(18)))
         }
         text={'Redeem'}
         type={'secondary'}
