@@ -261,7 +261,7 @@ export default function Main({ stats, status }) {
     const contract = buyingSOCKS ? tokenContractSelectedToken : tokenContractBKFT
     const spenderAddress = bkftWethExchangeAddress // buyingSOCKS ? exchangeContractSelectedToken.address : exchangeContractSOCKS.address
 
-    const estimatedGasLimit = await contract.estimate.approve(spenderAddress, ethers.constants.MaxUint256)
+    const estimatedGasLimit = await contract.estimateGas.approve(spenderAddress, ethers.constants.MaxUint256)
     const estimatedGasPrice = await library
       .getGasPrice()
       .then(gasPrice => gasPrice.mul(ethers.BigNumber.from(150)).div(ethers.BigNumber.from(100)))
@@ -352,7 +352,7 @@ export default function Main({ stats, status }) {
       .then(gasPrice => gasPrice.mul(ethers.BigNumber.from(150)).div(ethers.BigNumber.from(100)))
 
     if (selectedTokenSymbol === TOKEN_SYMBOLS.ETH) {
-      const estimatedGasLimit = await router.estimate.swapETHForExactTokens(
+      const estimatedGasLimit = await router.estimateGas.swapETHForExactTokens(
           outputValue,
           [TOKEN_ADDRESSES.WETH, TOKEN_ADDRESSES.BKFT],
           account,
@@ -373,7 +373,7 @@ export default function Main({ stats, status }) {
     } else {
       throw new Error('No Support for swapping with tokens other than ETH')
       /*
-      const estimatedGasLimit = await exchangeContractSelectedToken.estimate.tokenToTokenSwapOutput(
+      const estimatedGasLimit = await exchangeContractSelectedToken.estimateGas.tokenToTokenSwapOutput(
         outputValue,
         maximumInputValue,
         ethers.constants.MaxUint256,
@@ -474,7 +474,7 @@ export default function Main({ stats, status }) {
       .then(gasPrice => gasPrice.mul(ethers.BigNumber.from(150)).div(ethers.BigNumber.from(100)))
 
     if (selectedTokenSymbol === TOKEN_SYMBOLS.ETH) {
-      const estimatedGasLimit = await router.estimate.swapExactTokensForETH(
+      const estimatedGasLimit = await router.estimateGas.swapExactTokensForETH(
         inputValue,
         minimumOutputValue,
         [TOKEN_ADDRESSES.BKFT, TOKEN_ADDRESSES.WETH],
@@ -495,7 +495,7 @@ export default function Main({ stats, status }) {
     } else {
       throw new Error("Swaps for tokens other than ETH not yet supported")
       /*
-      const estimatedGasLimit = await exchangeContractSOCKS.estimate.tokenToTokenSwapInput(
+      const estimatedGasLimit = await exchangeContractSOCKS.estimateGas.tokenToTokenSwapInput(
         inputValue,
         minimumOutputValue,
         ethers.constants.One,
@@ -524,7 +524,7 @@ export default function Main({ stats, status }) {
       .getGasPrice()
       .then(gasPrice => gasPrice.mul(ethers.BigNumber.from(150)).div(ethers.BigNumber.from(100)))
 
-    const estimatedGasLimit = await tokenContractBKFT.estimate.burn(parsedAmount)
+    const estimatedGasLimit = await tokenContractBKFT.estimateGas.burn(parsedAmount)
 
     return tokenContractBKFT.burn(parsedAmount, {
       gasLimit: calculateGasMargin(estimatedGasLimit, GAS_MARGIN),
