@@ -172,7 +172,7 @@ export default function Main({ stats, status }) {
   const balanceSelectedToken = useAddressBalance(account, TOKEN_ADDRESSES[selectedTokenSymbol])
 
   const bkftWethExchangeAddress = useMemo(() => getExchangeAddress(TOKEN_ADDRESSES.WETH, TOKEN_ADDRESSES.BKFT), [])
-  const daiWethExchangeAddress = useMemo(() => getExchangeAddress(TOKEN_ADDRESSES.WETH, TOKEN_ADDRESSES.DAI), [])
+  const usdcWethExchangeAddress = useMemo(() => getExchangeAddress(TOKEN_ADDRESSES.WETH, TOKEN_ADDRESSES.USDC), [])
 
   // totalsupply
   const totalSupply = useTotalSupply(tokenContractBKFT)
@@ -180,7 +180,7 @@ export default function Main({ stats, status }) {
   // get allowances
   const allowanceBKFT = useAddressAllowance(
     account,
-    TOKEN_ADDRESSES.SOCKS,
+    TOKEN_ADDRESSES.BKFT,
     bkftWethExchangeAddress
   )
 
@@ -191,8 +191,8 @@ export default function Main({ stats, status }) {
     TOKEN_ADDRESSES.BKFT
   )
 
-  const reserveDAIETH = useAddressBalance(daiWethExchangeAddress, TOKEN_ADDRESSES.WETH)
-  const reserveDAIToken = useAddressBalance(daiWethExchangeAddress, TOKEN_ADDRESSES.DAI)
+  const reserveUSDCETH = useAddressBalance(usdcWethExchangeAddress, TOKEN_ADDRESSES.WETH)
+  const reserveUSDCToken = useAddressBalance(usdcWethExchangeAddress, TOKEN_ADDRESSES.USDC)
 
   const [USDExchangeRateETH, setUSDExchangeRateETH] = useState()
 
@@ -212,15 +212,15 @@ export default function Main({ stats, status }) {
 
   useEffect(() => {
     try {
-      const exchangeRateDAI = getExchangeRate(reserveDAIETH, reserveDAIToken)
+      const exchangeRateUSDC = getExchangeRate(reserveUSDCETH, reserveUSDCToken)
 
       if (selectedTokenSymbol === TOKEN_SYMBOLS.ETH) {
-        setUSDExchangeRateETH(exchangeRateDAI)
+        setUSDExchangeRateETH(exchangeRateUSDC)
       } else {
         const exchangeRateSelectedToken = getExchangeRate(reserveSelectedTokenETH, reserveSelectedTokenToken)
-        if (exchangeRateDAI && exchangeRateSelectedToken) {
+        if (exchangeRateUSDC && exchangeRateSelectedToken) {
           setUSDExchangeRateSelectedToken(
-            exchangeRateDAI
+            exchangeRateUSDC
               .mul(ethers.BigNumber.from(10).pow(ethers.BigNumber.from(18)))
               .div(exchangeRateSelectedToken)
           )
@@ -230,7 +230,7 @@ export default function Main({ stats, status }) {
       setUSDExchangeRateETH()
       setUSDExchangeRateSelectedToken()
     }
-  }, [reserveDAIETH, reserveDAIToken, reserveSelectedTokenETH, reserveSelectedTokenToken, selectedTokenSymbol])
+  }, [reserveUSDCETH, reserveUSDCToken, reserveSelectedTokenETH, reserveSelectedTokenToken, selectedTokenSymbol])
 
   function _dollarize(amount, exchangeRate) {
     return amount.mul(exchangeRate).div(ethers.BigNumber.from(10).pow(ethers.BigNumber.from(18)))
