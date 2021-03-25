@@ -164,25 +164,22 @@ export default function RedeemForm({ setHasConfirmedAddress, setUserAddress, num
         autoComplete="off"
         type="text"
       />
-      <Compressed>
-        <input
-          type="text"
-          value={formState[line1]}
-          onChange={handleChange}
-          name={line1}
-          placeholder={nameMap[line1]}
-          autoComplete="off"
-        />
-
-        <input
-          type="text"
-          name={line2}
-          value={formState[line2]}
-          onChange={handleChange}
-          placeholder={nameMap[line2]}
-          autoComplete="off"
-        />
-      </Compressed>
+      <input
+        type="text"
+        value={formState[line1]}
+        onChange={handleChange}
+        name={line1}
+        placeholder={nameMap[line1]}
+        autoComplete="off"
+      />
+      <input
+        type="text"
+        name={line2}
+        value={formState[line2]}
+        onChange={handleChange}
+        placeholder={nameMap[line2]}
+        autoComplete="off"
+      />
       <input
         required
         type="text"
