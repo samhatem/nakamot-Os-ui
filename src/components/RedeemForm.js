@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import { useWeb3Context } from 'web3-react'
 import ReCAPTCHA from 'react-google-recaptcha'
-
-import Suggest from './Suggest'
 
 // we need to capture the full address into netlify...
 // https://www.netlify.com/blog/2017/07/20/how-to-integrate-netlifys-form-handling-in-a-react-app/
@@ -61,6 +59,7 @@ const defaultState = {
 }
 
 // mapping from field to google maps return value
+/*
 const addressMapping = [
   { [line1]: 'street_address' },
   { [city]: 'sublocality' },
@@ -68,15 +67,15 @@ const addressMapping = [
   { [zip]: 'postal_code' },
   { [country]: 'country' }
 ]
+*/
 
 const recaptchaEnabled = false
 
 export default function RedeemForm({ setHasConfirmedAddress, setUserAddress, numberBurned: actualNumberBurned }) {
   const { library, account } = useWeb3Context()
   const [recaptcha, setRecaptcha] = useState()
-  const [autoAddress, setAutoAddress] = useState([])
-  const [inputY, setInputY] = useState(0)
-  const suggestEl = useRef()
+  // const [autoAddress, setAutoAddress] = useState([])
+  // const [inputY, setInputY] = useState(0)
 
   const [formState, setFormState] = useState(defaultState)
 
@@ -85,6 +84,7 @@ export default function RedeemForm({ setHasConfirmedAddress, setUserAddress, num
     setFormState(state => ({ ...state, [name]: value }))
   }
 
+  /*
   function updateAutoFields(address) {
     let constructedStreetAddress = ''
     function getTypes(addressItem, addressVal, item) {
@@ -135,6 +135,7 @@ export default function RedeemForm({ setHasConfirmedAddress, setUserAddress, num
       setInputY(suggestEl.current.getBoundingClientRect().bottom)
     }
   }, [suggestEl])
+  */
 
   const canSign =
     formState[name] &&
@@ -152,28 +153,24 @@ export default function RedeemForm({ setHasConfirmedAddress, setUserAddress, num
   }
 
   return (
-    <FormFrame autocomplete="off">
-      <input hidden type="text" name="beep-boop" value={formState[bot]} onChange={handleChange} />
+    <FormFrame autoComplete="off">
+      <input hidden autoComplete="false" type="text" name="beep-boop" value={formState[bot]} onChange={handleChange} />
       <input
         required
-        type="text"
         name={name}
         value={formState[name]}
         onChange={handleChange}
         placeholder={nameMap[name]}
-        autoComplete="name"
+        autoComplete="off"
+        type="text"
       />
       <Compressed>
-        <Suggest
-          required
-          myRef={suggestEl}
-          inputY={inputY}
-          setAutoAddress={setAutoAddress}
+        <input
           type="text"
-          name={line1}
           value={formState[line1]}
           onChange={handleChange}
-          placeholder={nameMap[line1]}
+          name={line1}
+          placeholder={nameMap[line2]}
           autoComplete="off"
         />
 

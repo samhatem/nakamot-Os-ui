@@ -31,6 +31,7 @@ export default function LocationSearchInput({ myRef, inputY, value, setAutoAddre
             required
             ref={myRef}
             autoComplete="off"
+            type="text"
             {...getInputProps({
               placeholder: 'Street Address',
               className: 'location-search-input'
@@ -50,6 +51,7 @@ export default function LocationSearchInput({ myRef, inputY, value, setAutoAddre
                     className,
                     style
                   })}
+                  key={suggestion.description}
                 >
                   <span>{suggestion.description}</span>
                 </div>

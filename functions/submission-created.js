@@ -65,6 +65,8 @@ export async function handler(event) {
     console.log('Unauthorized!', `${m1}\n\n${m2}\n${m3}`, signature, address)
   }
 
+  console.log("Got a valid submission leggo")
+
   try {
     await client.query(
       q.Create(q.Collection('addresses'), {

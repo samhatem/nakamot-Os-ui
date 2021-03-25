@@ -177,8 +177,7 @@ export default function Redeem({
             <InfoFrame hasPickedAmount={hasPickedAmount}>
               <ImgStyle src={test} alt="Logo" hasPickedAmount={hasPickedAmount} />
               <Owned>
-                <p style={{ fontSize: '18px' }}>{state.count} Unisocks</p>
-                <p style={{ fontSize: '14px', fontWeight: '500' }}>One size fits most</p>
+                <p style={{ fontSize: '18px' }}>{state.count} Nakamot'Os</p>
                 <p
                   style={{
                     fontSize: '12px',
