@@ -170,7 +170,7 @@ export default function RedeemForm({ setHasConfirmedAddress, setUserAddress, num
           value={formState[line1]}
           onChange={handleChange}
           name={line1}
-          placeholder={nameMap[line2]}
+          placeholder={nameMap[line1]}
           autoComplete="off"
         />
 
