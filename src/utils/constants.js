@@ -16,11 +16,15 @@ export const SUPPORTED_NETWORK_URLS = isProd
 
 export const CHAIN_ID = isProd ? ChainId.MAINNET : ChainId.GOERLI
 
+export const TOKEN_SYMBOL = 'BKFT'
+
 export const ROUTER_ADDRESS = '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'
 
 export const FACTORY_ADDRESS = '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f'
 
-const BKFT_ADDRESS = isProd ? 'bad address' : '0x19c40ac926DE7276fa69b85dfa35771CA2144bEa'
+export const NFT_ADDRESS = isProd ? 'bad address' : '0xE586475eaF2576E24d0C9E3Fb753d1C218d9a72C'
+
+export const BKFT_ADDRESS = isProd ? 'bad address' : '0xaCdBabd2C3e1Af6AC29afA604D04c10E90416cEC'
 
 const WETH_ADDRESS = isProd ? '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' : '0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6'
 

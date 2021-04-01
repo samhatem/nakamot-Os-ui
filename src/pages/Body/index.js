@@ -19,8 +19,6 @@ export function Header({ totalSupply, ready, balanceBKFT, setShowConnect, claima
     })
   }
 
-  console.log({ claimableNFTs })
-
   return (
     <HeaderFrame balanceBKFT={balanceBKFT}>
       <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
@@ -32,9 +30,9 @@ export function Header({ totalSupply, ready, balanceBKFT, setShowConnect, claima
         </Unicorn>
       </Link>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
-        {claimableNFTs > 0 && (
+        {claimableNFTs && claimableNFTs > 0 && (
           <Claims>
-            {amountFormatter(claimableNFTs, 18, 0)} Claimable NFTs
+            {claimableNFTs} Claimable NFTs
           </Claims>
         )}
         {totalSupply && (
