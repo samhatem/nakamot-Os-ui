@@ -97,7 +97,6 @@ const Content = styled.div`
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
-  border-radius: 8px;
   margin-bottom: 2rem;
 `
 

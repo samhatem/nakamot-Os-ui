@@ -2,26 +2,26 @@ import React from 'react'
 import styled, { createGlobalStyle, ThemeProvider as StyledComponentsThemeProvider, keyframes } from 'styled-components'
 
 export default createGlobalStyle`
-  @import url('https://rsms.me/inter/inter.css');
-  
+  @import url('https://fonts.googleapis.com/css2?family=Domine:wght@400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Tomorrow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600&display=swap');
+
   body {
     padding: 0;
     margin: 0;
     font-family: sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-family: Inter, sans-serif;
+    font-family: Tomorrow, sans-serif;
     /* background-color: #F1F2F6; */
   }
 `
 
 const theme = {
-  uniswapPink: '#FE6DDE',
-  primary: '#2B2B2B',
+  primary: '#FE8700',
   secondary: '#F1F2F6',
   text: '#000',
   textDisabled: '#737373',
-  orange: '#CF2C0A',
+  orange: '#FE8700',
   green: '#66BB66',
   grey: '#F1F2F6',
   blue: '#2F80ED',

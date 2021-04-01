@@ -23,10 +23,10 @@ export function Header({ totalSupply, ready, balanceBKFT, setShowConnect }) {
     <HeaderFrame balanceBKFT={balanceBKFT}>
       <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
         <Unicorn>
-          <span role="img" aria-label="unicorn">
-            🦄
+          <span role="img" aria-label="crown">
+            👑
           </span>{' '}
-          Unisocks
+          Nakamot'Os
         </Unicorn>
       </Link>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -34,9 +34,9 @@ export function Header({ totalSupply, ready, balanceBKFT, setShowConnect }) {
           <Link to="/stats" style={{ textDecoration: 'none' }}>
             <Burned>
               <span role="img" aria-label="fire">
-                🔥
+                🚀
               </span>{' '}
-              {INITIAL_SUPPLY - totalSupply} <HideMobile>redeemed</HideMobile>
+              {INITIAL_SUPPLY - totalSupply} <HideMobile>Redeemed</HideMobile>
             </Burned>
           </Link>
         )}
@@ -72,9 +72,8 @@ const HeaderFrame = styled.div`
 `
 
 const Account = styled.div`
-  background-color: ${props => (props.balanceBKFT ? '#f1f2f6' : props.theme.blue)};
+  background-color: ${props => (props.balanceBKFT ? '#f1f2f6' : props.theme.orange)};
   padding: 0.75rem;
-  border-radius: 6px;
   cursor: ${props => (props.balanceBKFT ? 'auto' : 'pointer')};
 
   transform: scale(1);
@@ -88,10 +87,9 @@ const Account = styled.div`
 
 const Burned = styled.div`
   background-color: none;
-  border: 1px solid red;
+  border: 1px solid ${props => props.theme.black};;
   margin-right: 1rem;
   padding: 0.75rem;
-  border-radius: 6px;
   cursor: pointer;
   transform: scale(1);
   transition: transform 0.3s ease;
@@ -103,7 +101,7 @@ const Burned = styled.div`
 
   font-weight: 500;
   font-size: 14px;
-  color: red;
+  color: ${props => props.theme.black};
 `
 
 const HideMobile = styled.span`
@@ -123,8 +121,6 @@ const SockCount = styled.p`
 const Status = styled.div`
   display: ${props => (props.balanceBKFT ? 'initial' : 'none')};
   width: 12px;
-  height: 12px;
-  border-radius: 100%;
   margin-left: 12px;
   margin-top: 2px;
   float: right;
@@ -264,14 +260,12 @@ const Info = styled.div`
   font-size: 14px;
   padding: 20px;
   padding-top: 32px;
-  border-radius: 0 0 8px 8px;
-  /* border-radius: 8px; */
   margin-bottom: 12px;
   margin-top: -12px;
   /* margin-top: 16px; */
   background-color: ${props => '#f1f2f6'};
   a {
-    color: ${props => props.theme.uniswapPink};
+    color: ${props => props.theme.orange};
     text-decoration: none;
     /* padding-top: 8px; */
     /* font-size: 14px; */
@@ -283,13 +277,13 @@ const Info = styled.div`
 `
 
 const OrderStatusLink = styled.p`
-  color: ${props => props.theme.uniswapPink};
+  color: ${props => props.theme.orange};
   text-align: center;
   font-size: 0.6rem;
 `
 
 const Unicorn = styled.p`
-  color: ${props => props.theme.uniswapPink};
+  color: ${props => props.theme.black};
   font-weight: 600;
   margin: auto 0px;
   font-size: 16px;

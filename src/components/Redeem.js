@@ -36,7 +36,7 @@ export function Controls({ closeCheckout, theme, type }) {
     <FrameControls>
       <Unicorn theme={theme}>
         <span role="img" aria-label="unicorn">
-          🦄
+          👑
         </span>{' '}
         Pay{' '}
         <span style={{ color: '#737373' }}>
@@ -304,7 +304,6 @@ const TopFrame = styled.div`
   background: #000000;
   background: linear-gradient(162.92deg, #2b2b2b 12.36%, #000000 94.75%);
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
-  border-radius: 8px;
   color: white;
   display: flex;
   flex-direction: column;
@@ -361,8 +360,6 @@ const InfoFrame = styled.div`
   /* margin-bottom: 8px; */
   /* margin-right: ${props => (props.hasPickedAmount ? '8px' : '0px')}; */
 
-  border-radius: 6px;
-
   /* background-color: ${props => (props.hasPickedAmount ? '#000' : 'none')}; */
   border: ${props => (props.hasPickedAmount ? '1px solid #3d3d3d' : 'none')};
 `
@@ -380,8 +377,7 @@ const Bonus = styled.div`
   font-weight: 500;
   font-size: 12px;
   padding: 4px;
-  background-color: ${props => props.theme.uniswapPink};
-  border-radius: 4px;
+  background-color: ${props => props.theme.orange};
   position: absolute;
   top: 200px;
   left: 32px;
@@ -398,7 +394,7 @@ const SockCount = styled.span`
   font-size: 14px;
   width: 100%;
   margin-bottom: 0.5rem;
-  color: ${props => props.theme.uniswapPink};
+  color: ${props => props.theme.orange};
   cursor: pointer;
 
   :hover {
@@ -416,7 +412,7 @@ const Back = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* color: ${props => props.theme.uniswapPink}; */
+  /* color: ${props => props.theme.orange}; */
   text-align: center;
   span {
     cursor: pointer;
@@ -448,7 +444,7 @@ const RedeemFrame = styled(RedeemForm)`
 
 const EtherscanLink = styled.a`
   text-decoration: none;
-  color: ${props => props.theme.uniswapPink};
+  color: ${props => props.theme.orange};
   font-style: normal;
   font-weight: 400;
   font-size: 12px;

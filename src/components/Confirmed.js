@@ -139,7 +139,6 @@ const TopFrame = styled.div`
   background: #000000;
   background: linear-gradient(162.92deg, #2b2b2b 12.36%, #000000 94.75%);
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
-  border-radius: 8px;
   color: white;
   display: flex;
   flex-direction: column;
@@ -186,7 +185,6 @@ const InfoFrame = styled.div`
   /* padding: 1rem 0 1rem 0; */
   margin-top: 12px;
   margin-bottom: 8px;
-  border-radius: 6px;
   /* background-color: ${props => (props.hasPickedAmount ? '#000' : 'none')}; */
   /* border: ${props => (props.hasPickedAmount ? '1px solid #3d3d3d' : 'none')}; */
 `
@@ -217,7 +215,7 @@ const CheckoutPrompt = styled.p`
 `
 const EtherscanLink = styled.a`
   text-decoration: none;
-  color: ${props => props.theme.uniswapPink};
+  color: ${props => props.theme.orange};
   font-style: normal;
   font-weight: 400;
   font-size: 12px;

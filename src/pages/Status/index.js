@@ -11,7 +11,6 @@ const OrderDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-radius: 2rem;
   border: 1px solid black;
   margin-bottom: 1rem;
 `

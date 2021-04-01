@@ -79,7 +79,6 @@ const SelectForm = styled.div`
   z-index: 10;
   margin-top: 38px;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
-  border-radius: 8px;
   background-color: #f1f2f6;
   color: #000;
 

@@ -208,7 +208,6 @@ const CheckoutFrame = styled.div`
   margin-top: 20px;
   height: 524px;
   height: fit-content;
-  border-radius: 8px 8px 0px 0px;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -224,7 +223,6 @@ const CheckoutFrame = styled.div`
     max-width: 375px;
     left: 0;
     right: 0;
-    border-radius: 8px 8px;
     visibility: ${props => !props.isVisible && 'hidden'};
 
     bottom: ${props => (props.isVisible ? '20%' : '-100%')};

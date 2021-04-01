@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import Tilt from 'react-tilt'
 
-import { amountFormatter } from '../utils'
+import { amountFormatter, TOKEN_SYMBOL } from '../utils'
 
 import Gallery from './Gallery'
 
@@ -15,7 +15,7 @@ export default function Card({ totalSupply, dollarPrice, reserveSOCKSToken }) {
     >
       <CardWrapper>
         <Title>Unisocks Edition 0</Title>
-        <SubTitle>$SOCKS</SubTitle>
+        <SubTitle>${TOKEN_SYMBOL}</SubTitle>
         <Gallery />
         <MarketData>
           <span>
@@ -40,10 +40,8 @@ export default function Card({ totalSupply, dollarPrice, reserveSOCKSToken }) {
 
 const CardWrapper = styled.div`
   /* max-width: 300px; */
-  background: #000000;
-  background: linear-gradient(162.92deg, #2b2b2b 12.36%, #000000 94.75%);
+  background: #fff;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
-  border-radius: 8px;
   color: white;
   display: flex;
   flex-direction: column;
@@ -62,6 +60,7 @@ const Title = styled.p`
   line-height: 126.7%;
   width: 100%;
   margin: 0;
+  color: #000;
 `
 
 const SubTitle = styled.p`
@@ -113,7 +112,6 @@ const InfoButton = styled.span`
   color: white;
   text-decoration: none;
   text-align: center;
-  border-radius: 50%;
   margin-left: 8px;
   float: right;
   background-color: #5ca2ff;

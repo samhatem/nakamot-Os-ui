@@ -8,7 +8,6 @@ import arrow from './Gallery/arrow.svg'
 const SelectMenu = styled.select`
   display: block;
   font-size: 16px;
-  border-radius: 24px;
   margin: 1rem;
   font-family: sans-serif;
   font-weight: 700;
@@ -31,7 +30,6 @@ const SelectMenu = styled.select`
 const SelectItem = styled.option`
   border: none;
   width: 100%;
-  border-radius: 24px;
   background-color: ${props => props.theme.grey};
   padding: 0px 0.5rem 0px 0.5rem;
 `

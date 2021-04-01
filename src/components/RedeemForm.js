@@ -301,7 +301,6 @@ const FormFrame = styled.form`
     font-size: 16px;
     width: 100%;
     box-sizing: border-box;
-    border-radius: 4px;
   }
   input:required {
     box-shadow: inset 0 0 0 1px rgba(254, 109, 222, 0.5);
@@ -321,7 +320,6 @@ const Compressed = styled.span`
 const ButtonFrame = styled.button`
   padding: 0;
   text-align: center;
-  border-radius: 8px;
   box-sizing: border-box;
   height: 48px;
   width: 100%;

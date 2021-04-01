@@ -290,7 +290,6 @@ const TopFrame = styled.div`
   background: #000000;
   background: linear-gradient(162.92deg, #2b2b2b 12.36%, #000000 94.75%);
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
-  border-radius: 8px;
   color: white;
   display: flex;
   flex-direction: column;
@@ -368,7 +367,7 @@ const ButtonFrame = styled(Button)`
 
 const EtherscanLink = styled.a`
   text-decoration: none;
-  color: ${props => props.theme.uniswapPink};
+  color: ${props => props.theme.orange};
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
