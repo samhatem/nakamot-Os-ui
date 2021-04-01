@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useAppContext } from '../../context'
 import { Header } from '../Body'
-import { amountFormatter, TOKEN_SYMBOL } from '../../utils'
+import { amountFormatter, TOKEN_SYMBOL, INITIAL_SUPPLY } from '../../utils'
 
 export default function Body({ totalSupply, reserveBKFTToken, ready, balanceBKFT }) {
   const [state] = useAppContext()
@@ -19,7 +19,7 @@ export default function Body({ totalSupply, reserveBKFTToken, ready, balanceBKFT
             </span>
             Initial {TOKEN_SYMBOL}
           </p>
-          <p>2100</p>
+          <p>{INITIAL_SUPPLY}</p>
         </Description>
         <Description>
           <p>
@@ -28,7 +28,7 @@ export default function Body({ totalSupply, reserveBKFTToken, ready, balanceBKFT
             </span>
             Redeemed {TOKEN_SYMBOL}
           </p>
-          <p>{500 - totalSupply}</p>
+          <p>{INITIAL_SUPPLY - totalSupply}</p>
         </Description>
         <Description>
           <p>

@@ -16,6 +16,8 @@ export const SUPPORTED_NETWORK_URLS = isProd
 
 export const CHAIN_ID = isProd ? ChainId.MAINNET : ChainId.GOERLI
 
+export const INITIAL_SUPPLY = 2100
+
 export const TOKEN_SYMBOL = 'BKFT'
 
 export const ROUTER_ADDRESS = '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'
@@ -61,5 +63,3 @@ export const TRADE_TYPES = ['BUY', 'SELL', 'UNLOCK', 'REDEEM'].reduce((o, k, i) 
   o[k] = i
   return o
 }, {})
-
-export const INITIAL_SUPPLY = 2100;
