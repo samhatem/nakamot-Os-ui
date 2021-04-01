@@ -196,7 +196,7 @@ export default function Body({
       <Content>
         <Card totalSupply={totalSupply} dollarPrice={dollarPrice} reserveBKFTToken={reserveBKFTToken} />{' '}
         <Info>
-          <div style={{ marginBottom: '4px' }}>Buy and sell real socks with digital currency.</div>
+          <div style={{ marginBottom: '4px' }}>Buy and sell real cereal with digital currency.</div>
           <div style={{ marginBottom: '4px' }}>
             Delivered on demand.{' '}
             <a

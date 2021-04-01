@@ -142,7 +142,7 @@ export default function Redeem({
             <InfoFrame hasPickedAmount={hasPickedAmount}>
               <ImgStyle src={test} alt="Logo" hasPickedAmount={hasPickedAmount} />
               <Owned>
-                <p>{state.count} Unisocks</p>
+                <p>{state.count} Boxes</p>
                 <p style={{ fontSize: '20px', fontWeight: '400', color: '#AEAEAE' }}>One size fits most</p>
                 <p style={{ fontSize: '14px', fontWeight: '500', marginTop: '16px', color: '#AEAEAE' }}>Edition 0</p>
               </Owned>
@@ -195,7 +195,7 @@ export default function Redeem({
               <ImgStyle src={nfc} alt="Logo" hasPickedAmount={hasPickedAmount} />
               <Bonus>Bonus</Bonus>
               <Owned>
-                <p style={{ fontSize: '18px' }}>{state.count} Unisocks NFT</p>
+                <p style={{ fontSize: '18px' }}>{state.count} Nakamot'Os NFT</p>
                 <p style={{ fontSize: '14px', fontWeight: '500' }}>Digital Collectible (10kb)</p>
                 <p
                   style={{
@@ -268,7 +268,7 @@ export default function Redeem({
             <ImgStyle src={sent} alt="Logo" hasPickedAmount={hasPickedAmount} hasBurnt={hasBurnt} />
             <InfoFrame>
               <Owned>
-                <p>You got socks!</p>
+                <p>You got cereal!</p>
               </Owned>
             </InfoFrame>
           </TopFrame>

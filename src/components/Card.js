@@ -14,7 +14,7 @@ export default function Card({ totalSupply, dollarPrice, reserveSOCKSToken }) {
       options={{ scale: 1.01, max: 10, glare: true, 'max-glare': 1, speed: 1000 }}
     >
       <CardWrapper>
-        <Title>Unisocks Edition 0</Title>
+        <Title>Nakamot'Os</Title>
         <SubTitle>${TOKEN_SYMBOL}</SubTitle>
         <Gallery />
         <MarketData>

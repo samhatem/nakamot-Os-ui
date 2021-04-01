@@ -118,7 +118,7 @@ export default function Confirmed({ hash, type, amount, clearLastTransaction, cl
           <ImgStyle src={sent} alt="Logo" />
           <InfoFrame>
             <Owned>
-              <p>You sold socks!</p>
+              <p>You sold cereal!</p>
             </Owned>
           </InfoFrame>
         </TopFrame>

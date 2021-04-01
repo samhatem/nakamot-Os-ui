@@ -106,13 +106,13 @@ export default function BuyAndSell({
         if (pending && hash) {
           return 'Waiting for confirmation'
         } else {
-          return 'Sell Socks'
+          return 'Sell Cereal'
         }
       } else {
         if (pending && hash) {
           return 'Waiting for confirmation'
         } else {
-          return 'Buy Socks'
+          return 'Buy Cereal'
         }
       }
     } else {
