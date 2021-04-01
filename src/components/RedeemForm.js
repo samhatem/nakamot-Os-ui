@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import { useWeb3Context } from 'web3-react'
 import ReCAPTCHA from 'react-google-recaptcha'
 
+import { TOKEN_SYMBOL } from '../utils'
+
 // we need to capture the full address into netlify...
 // https://www.netlify.com/blog/2017/07/20/how-to-integrate-netlifys-form-handling-in-a-react-app/
 function encode(data) {
@@ -39,7 +41,7 @@ const nameMap = {
   [email]: 'Email',
   [address]: 'Ethereum Address',
   [timestamp]: 'Time',
-  [numberBurned]: 'SOCKS Redeemed'
+  [numberBurned]: `${TOKEN_SYMBOL} Redeemed`
 }
 
 // the order for fields that will be submitted
@@ -303,7 +305,7 @@ const FormFrame = styled.form`
     box-sizing: border-box;
   }
   input:required {
-    box-shadow: inset 0 0 0 1px rgba(254, 109, 222, 0.5);
+    box-shadow: inset 0 0 0 1px rgba(254, 135, 0, 0.5);
   }
   input:valid {
     border: nne;

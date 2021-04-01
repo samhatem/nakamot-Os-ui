@@ -10,7 +10,8 @@ import {
   useExchangeReserves,
   useExchangeAllowance,
   useTotalSupply,
-  useRouterContract
+  useRouterContract,
+  useClaimableNFTS,
 } from '../../hooks'
 import Body from '../Body'
 import Stats from '../Stats'
@@ -90,7 +91,7 @@ function calculateAmount(
   reserveSelectedTokenToken
 ) {
   // eth to token - buy
-  if (inputTokenSymbol === TOKEN_SYMBOLS.ETH && outputTokenSymbol === TOKEN_SYMBOLS.SOCKS) {
+  if (inputTokenSymbol === TOKEN_SYMBOLS.ETH && outputTokenSymbol === TOKEN_SYMBOLS.BKFT) {
     const amount = calculateEtherTokenInputFromOutput(SOCKSAmount, reserveBKFTWETH, reserveBKFTToken)
     if (amount.lte(ethers.constants.Zero) || amount.gte(ethers.constants.MaxUint256)) {
       throw Error()
@@ -99,7 +100,7 @@ function calculateAmount(
   }
 
   // token to eth - sell
-  if (inputTokenSymbol === TOKEN_SYMBOLS.SOCKS && outputTokenSymbol === TOKEN_SYMBOLS.ETH) {
+  if (inputTokenSymbol === TOKEN_SYMBOLS.BKFT && outputTokenSymbol === TOKEN_SYMBOLS.ETH) {
     const amount = calculateEtherTokenOutputFromInput(SOCKSAmount, reserveBKFTToken, reserveBKFTWETH)
     if (amount.lte(ethers.constants.Zero) || amount.gte(ethers.constants.MaxUint256)) {
       throw Error()
@@ -109,7 +110,7 @@ function calculateAmount(
   }
 
   // token to token - buy or sell
-  const buyingSOCKS = outputTokenSymbol === TOKEN_SYMBOLS.SOCKS
+  const buyingSOCKS = outputTokenSymbol === TOKEN_SYMBOLS.BKFT
 
   if (buyingSOCKS) {
     // eth needed to buy x socks
@@ -195,6 +196,8 @@ export default function Main({ stats, status }) {
   const reserveUSDCToken = useAddressBalance(usdcWethExchangeAddress, TOKEN_ADDRESSES.USDC)
 
   const [USDExchangeRateETH, setUSDExchangeRateETH] = useState()
+
+  const claimableNFTs = useClaimableNFTS();
 
   const ready = !!(
     (account === null || allowanceBKFT) &&
@@ -288,7 +291,7 @@ export default function Main({ stats, status }) {
       try {
         requiredValueInSelectedToken = calculateAmount(
           selectedTokenSymbol,
-          TOKEN_SYMBOLS.SOCKS,
+          TOKEN_SYMBOLS.BKFT,
           parsedValue,
           reserveBKFTWETH,
           reserveBKFTToken,
@@ -378,14 +381,14 @@ export default function Main({ stats, status }) {
         maximumInputValue,
         ethers.constants.MaxUint256,
         deadline,
-        TOKEN_ADDRESSES.SOCKS
+        TOKEN_ADDRESSES.BKFT
       )
       return exchangeContractSelectedToken.tokenToTokenSwapOutput(
         outputValue,
         maximumInputValue,
         ethers.constants.MaxUint256,
         deadline,
-        TOKEN_ADDRESSES.SOCKS,
+        TOKEN_ADDRESSES.BKFT,
         {
           gasLimit: calculateGasMargin(estimatedGasLimit, GAS_MARGIN),
           gasPrice: estimatedGasPrice
@@ -411,7 +414,7 @@ export default function Main({ stats, status }) {
       let requiredValueInSelectedToken
       try {
         requiredValueInSelectedToken = calculateAmount(
-          TOKEN_SYMBOLS.SOCKS,
+          TOKEN_SYMBOLS.BKFT,
           selectedTokenSymbol,
           parsedValue,
           reserveBKFTWETH,
@@ -552,6 +555,7 @@ export default function Main({ stats, status }) {
       balanceBKFT={balanceBKFT}
       reserveBKFTToken={reserveBKFTToken}
       totalSupply={totalSupply}
+      claimableNFTs={claimableNFTs}
     />
   )
 }

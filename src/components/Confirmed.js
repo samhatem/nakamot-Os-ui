@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
-import { amountFormatter, TRADE_TYPES } from '../utils'
+import { amountFormatter, TRADE_TYPES, TOKEN_SYMBOL } from '../utils'
 import Button from './Button'
 
 import close from './Gallery/close.svg'
@@ -89,7 +89,7 @@ export default function Confirmed({ hash, type, amount, clearLastTransaction, cl
           <ImgStyle src={sent} alt="Logo" />
           <InfoFrame>
             <Owned>
-              <p> {`You got ${amountFormatter(amount, 18, 0)} SOCKS!`}</p>
+              <p> {`You got ${amountFormatter(amount, 18, 0)} ${TOKEN_SYMBOL}!`}</p>
             </Owned>
           </InfoFrame>
         </TopFrame>
@@ -99,7 +99,7 @@ export default function Confirmed({ hash, type, amount, clearLastTransaction, cl
           </EtherscanLink>
         </CheckoutPrompt>
         <ButtonFrame
-          text={`Redeem your SOCKS now`}
+          text={`Redeem your ${TOKEN_SYMBOL} now`}
           type={'cta'}
           onClick={() => {
             clearLastTransaction()

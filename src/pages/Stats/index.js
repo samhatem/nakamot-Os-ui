@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useAppContext } from '../../context'
 import { Header } from '../Body'
-import { amountFormatter } from '../../utils'
+import { amountFormatter, TOKEN_SYMBOL } from '../../utils'
 
 export default function Body({ totalSupply, reserveBKFTToken, ready, balanceBKFT }) {
   const [state] = useAppContext()
@@ -11,22 +11,22 @@ export default function Body({ totalSupply, reserveBKFTToken, ready, balanceBKFT
     <AppWrapper overlay={state.visible}>
       <Header totalSupply={totalSupply} ready={ready} balanceBKFT={balanceBKFT} setShowConnect={() => {}} />
       <Content>
-        <Title>SOCKS Stats</Title>
+        <Title>{TOKEN_SYMBOL} Stats</Title>
         <Description>
           <p>
             <span role="img" aria-label="socks">
-              🧦
+              🥄
             </span>
-            Initial SOCKS
+            Initial {TOKEN_SYMBOL}
           </p>
-          <p>500</p>
+          <p>2100</p>
         </Description>
         <Description>
           <p>
             <span role="img" aria-label="socks">
-              🔥
+              🚀
             </span>
-            Redeemed SOCKS
+            Redeemed {TOKEN_SYMBOL}
           </p>
           <p>{500 - totalSupply}</p>
         </Description>
@@ -35,13 +35,13 @@ export default function Body({ totalSupply, reserveBKFTToken, ready, balanceBKFT
             <span role="img" aria-label="socks">
               💦
             </span>
-            SOCKS Pool
+            {TOKEN_SYMBOL} Pool
           </p>
           <p>{amountFormatter(reserveBKFTToken, 18, 0)}</p>
         </Description>
         <Shim />
         <Footer>
-          The price of SOCKS changes when tokens are bought and sold.
+          The price of {TOKEN_SYMBOL} changes when tokens are bought and sold.
           <br />
           <br />
           <a

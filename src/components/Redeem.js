@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { useAppContext } from '../context'
 import Button from './Button'
 import RedeemForm from './RedeemForm'
-import { amountFormatter } from '../utils'
+import { amountFormatter, TOKEN_SYMBOL } from '../utils'
 
 import IncrementToken from './IncrementToken'
 import test from './Gallery/test.png'
@@ -95,7 +95,7 @@ export default function Redeem({
         <ButtonFrame
           className="button"
           disabled={false}
-          text={account === null ? 'Connect Wallet' : 'Redeem SOCKS'}
+          text={account === null ? 'Connect Wallet' : `Redeem ${TOKEN_SYMBOL}`}
           type={'cta'}
           onClick={() => {
             setConnector('Injected', { suppressAndThrowErrors: true }).catch(() => {
@@ -113,7 +113,7 @@ export default function Redeem({
             <InfoFrame pending={pending}>
               <Owned>
                 <SockCount>You own {balanceBKFT && `${amountFormatter(balanceBKFT, 18, 0)}`}</SockCount>
-                <p>Redeem SOCKS</p>
+                <p>Redeem {TOKEN_SYMBOL}</p>
               </Owned>
               <IncrementToken
                 initialValue={Number(amountFormatter(balanceBKFT, 18, 0))}
@@ -226,7 +226,7 @@ export default function Redeem({
             disabled={pending}
             pending={pending}
             // text={pending ? `Waiting for confirmation...` : `Redeem ${numberBurned} SOCKS`}
-            text={pending ? `Waiting for confirmation...` : `Place order (Redeem ${numberBurned} SOCKS) `}
+            text={pending ? `Waiting for confirmation...` : `Place order (Redeem ${numberBurned} ${TOKEN_SYMBOL}) `}
             type={'cta'}
             onClick={() => {
               burn(numberBurned.toString())

@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom'
 import { Header } from '../Body'
 import Button from '../../components/Button'
 import { EtherscanLink } from '../../components/Works'
+import { TOKEN_SYMBOL } from "../../utils"
 
 const OrderDiv = styled.div`
   display: flex;
@@ -90,7 +91,7 @@ export default function Body({ totalSupply, ready, balanceBKFT }) {
                           timeStyle: 'short'
                         })}
                       </li>
-                      <li>SOCKS Redeemed: {d.numberOfSocks}</li>
+                      <li>{TOKEN_SYMBOL} Redeemed: {d.numberOfSocks}</li>
                       <li>
                         Status:{' '}
                         {d.invalid

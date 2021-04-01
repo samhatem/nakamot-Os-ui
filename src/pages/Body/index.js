@@ -10,7 +10,7 @@ import RedeemButton from '../../components/RedeemButton'
 import Checkout from '../../components/Checkout'
 import { amountFormatter, INITIAL_SUPPLY } from '../../utils'
 
-export function Header({ totalSupply, ready, balanceBKFT, setShowConnect }) {
+export function Header({ totalSupply, ready, balanceBKFT, setShowConnect, claimableNFTs }) {
   const { account, setConnector } = useWeb3Context()
 
   function handleAccount() {
@@ -18,6 +18,8 @@ export function Header({ totalSupply, ready, balanceBKFT, setShowConnect }) {
       setShowConnect(true)
     })
   }
+
+  console.log({ claimableNFTs })
 
   return (
     <HeaderFrame balanceBKFT={balanceBKFT}>
@@ -30,6 +32,11 @@ export function Header({ totalSupply, ready, balanceBKFT, setShowConnect }) {
         </Unicorn>
       </Link>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
+        {claimableNFTs > 0 && (
+          <Claims>
+            {amountFormatter(claimableNFTs, 18, 0)} Claimable NFTs
+          </Claims>
+        )}
         {totalSupply && (
           <Link to="/stats" style={{ textDecoration: 'none' }}>
             <Burned>
@@ -85,9 +92,27 @@ const Account = styled.div`
   }
 `
 
+const Claims = styled.div`
+  border: 1px solid ${props => props.theme.orange};
+  margin-right: 1rem;
+  padding: 0.75rem;
+  cursor: pointer;
+  transform: scale(1);
+  transition: transform 0.3s ease;
+  line-height: 1;
+
+  :hover {
+    transform: scale(1.02);
+  }
+
+  font-weight: 500;
+  font-size: 14px;
+  color: ${props => props.theme.black};
+`
+
 const Burned = styled.div`
   background-color: none;
-  border: 1px solid ${props => props.theme.black};;
+  border: 1px solid ${props => props.theme.black};
   margin-right: 1rem;
   padding: 0.75rem;
   cursor: pointer;
@@ -143,7 +168,8 @@ export default function Body({
   dollarPrice,
   balanceBKFT,
   reserveBKFTToken,
-  totalSupply
+  totalSupply,
+  claimableNFTs
 }) {
   const { account } = useWeb3Context()
   const [currentTransaction, _setCurrentTransaction] = useState({})
@@ -165,6 +191,7 @@ export default function Body({
         dollarPrice={dollarPrice}
         balanceBKFT={balanceBKFT}
         setShowConnect={setShowConnect}
+        claimableNFTs={claimableNFTs}
       />
       <Content>
         <Card totalSupply={totalSupply} dollarPrice={dollarPrice} reserveBKFTToken={reserveBKFTToken} />{' '}

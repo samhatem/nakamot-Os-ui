@@ -6,7 +6,7 @@ import Button from './Button'
 import SelectToken from './SelectToken'
 import IncrementToken from './IncrementToken'
 import { useAppContext } from '../context'
-import { ERROR_CODES, amountFormatter, TRADE_TYPES } from '../utils'
+import { ERROR_CODES, amountFormatter, TRADE_TYPES, TOKEN_SYMBOL } from '../utils'
 import test from './Gallery/test.png'
 // import { ethers } from 'ethers'
 
@@ -244,7 +244,7 @@ export default function BuyAndSell({
       )}
       {shouldRenderUnlock ? (
         <ButtonFrame
-          text={`Unlock ${buying ? selectedTokenSymbol : 'SOCKS'}`}
+          text={`Unlock ${buying ? selectedTokenSymbol : TOKEN_SYMBOL}`}
           type={'cta'}
           pending={pending}
           onClick={() => {
