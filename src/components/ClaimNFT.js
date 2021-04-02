@@ -5,6 +5,7 @@ import { ethers } from 'ethers'
 
 import { Controls } from './Redeem'
 import { NFT_ADDRESS } from '../utils'
+import Button from './Button'
 
 const Frame = styled.div`
   width: 100%;
@@ -30,8 +31,8 @@ const SelectFrame = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  color: #000;
-  background-color: #fff;
+  color: #fff;
+  background-color: #000;
   padding: 8px 12px 8px 12px;
   max-width: 84px;
   font-weight: 600;
@@ -120,11 +121,12 @@ export default function ClaimNFT({ closeCheckout, claimableNFTs }) {
   return (
     <Frame>
       <Controls closeCheckout={closeCheckout} theme={'dark'} hideHeader />
-      <Title>Claim</Title>
+      <Title>Claim Your Nakamot-Os NFTs</Title>
       <IncrementToken count={count} incrementCount={incrementCount} decrementCount={decrementCount} />
-      <div>
-        blah blah blah
-      </div>
+      <Button
+        text='Claim'
+        onClick={handleClaim}
+      />
     </Frame>
   )
 }
