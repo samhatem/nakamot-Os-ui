@@ -11,6 +11,7 @@ import {
   getRouterContract,
   TOKEN_ADDRESSES,
   getClaimableNFTs,
+  getNFTBalance,
 } from '../utils'
 import { utils } from 'ethers'
 
@@ -137,6 +138,41 @@ export function useClaimableNFTS() {
   useBlockEffect(updateBalance)
 
   return claimableNFTs && Math.floor(Number(utils.formatEther(claimableNFTs)))
+}
+
+export function useNFTBalance() {
+  const { library, account } = useWeb3Context()
+
+  const [nftBalance, setNFTBalance] = useState()
+
+  const updateBalance = useCallback(() => {
+    let stale = false
+
+    getNFTBalance(account, library)
+      .then(value => {
+        if (!stale) {
+          setNFTBalance(value)
+        }
+      })
+      .catch((error) => {
+        if (!stale) {
+          setNFTBalance(null)
+        }
+      })
+
+    return () => {
+      stale = true
+      setNFTBalance()
+    }
+  }, [account, library])
+
+  useEffect(() => {
+    return updateBalance()
+  }, [updateBalance])
+
+  useBlockEffect(updateBalance)
+
+  return nftBalance && nftBalance.toNumber()
 }
 
 export function useTotalSupply(contract) {

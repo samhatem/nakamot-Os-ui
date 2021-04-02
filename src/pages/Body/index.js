@@ -10,7 +10,7 @@ import RedeemButton from '../../components/RedeemButton'
 import Checkout from '../../components/Checkout'
 import { amountFormatter, INITIAL_SUPPLY } from '../../utils'
 
-export function Header({ totalSupply, ready, balanceBKFT, setShowConnect, claimableNFTs, setShowClaimNFT }) {
+export function Header({ totalSupply, ready, balanceBKFT, setShowConnect, claimableNFTs, setShowClaimNFT, nftBalance }) {
   const { account, setConnector } = useWeb3Context()
   const [, setState] = useAppContext()
 
@@ -36,6 +36,11 @@ export function Header({ totalSupply, ready, balanceBKFT, setShowConnect, claima
         </Unicorn>
       </Link>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
+        {nftBalance && (
+          <NFTBalance>
+            {nftBalance} Nakamot-O NFTs
+          </NFTBalance>
+        )}
         {claimableNFTs > 0 && (
           <Claims onClick={handleShowClaimModal}>
             {claimableNFTs} Claimable NFTs
@@ -94,6 +99,24 @@ const Account = styled.div`
     transform: ${props => (props.balanceBKFT ? 'scale(1)' : 'scale(1.02)')};
     text-decoration: underline;
   }
+`
+
+const NFTBalance = styled.div`
+  margin-right: 1rem;
+  padding: 0.75rem;
+  cursor: pointer;
+  transform: scale(1);
+  transition: transform 0.3s ease;
+  line-height: 1;
+
+  :hover {
+    transform: scale(1.02);
+  }
+
+  font-weight: 500;
+  font-size: 14px;
+  color: #fff;
+  background-color: ${props => props.theme.orange};
 `
 
 const Claims = styled.button`
@@ -173,7 +196,8 @@ export default function Body({
   balanceBKFT,
   reserveBKFTToken,
   totalSupply,
-  claimableNFTs
+  claimableNFTs,
+  nftBalance,
 }) {
   const { account } = useWeb3Context()
   const [currentTransaction, _setCurrentTransaction] = useState({})
@@ -198,6 +222,7 @@ export default function Body({
         setShowConnect={setShowConnect}
         claimableNFTs={claimableNFTs}
         setShowClaimNFT={setShowClaimNFT}
+        nftBalance={nftBalance}
       />
       <Content>
         <Card totalSupply={totalSupply} dollarPrice={dollarPrice} reserveBKFTToken={reserveBKFTToken} />{' '}

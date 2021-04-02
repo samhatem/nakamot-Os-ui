@@ -1,7 +1,7 @@
 import { ethers } from 'ethers'
 import { Token, Pair } from '@uniswap/sdk'
 import UncheckedJsonRpcSigner from './signer'
-import { CHAIN_ID, ROUTER_ADDRESS, BKFT_ADDRESS } from "./constants"
+import { CHAIN_ID, ROUTER_ADDRESS, BKFT_ADDRESS, NFT_ADDRESS } from "./constants"
 
 import ERC20_ABI from './erc20.json'
 import ROUTER_ABI from './router.json'
@@ -102,6 +102,18 @@ export async function getClaimableNFTs(address, library) {
     "type": "function"
   }], library)
   return tokenContract.nftClaims(address);
+}
+
+export async function getNFTBalance(address, library) {
+  if (!isAddress(address)) {
+    throw Error(
+      `Invalid 'address' + '${address}'`
+    )
+  }
+
+  const tokenContract = new ethers.Contract(NFT_ADDRESS, ['function balanceOf(address owner) public view returns (uint256)'], library)
+
+  return tokenContract.balanceOf(address)
 }
 
 export function amountFormatter(amount, baseDecimals = 18, displayDecimals = 3, useLessThan = true) {

@@ -107,6 +107,7 @@ function IncrementToken({ count, decrementCount, incrementCount }) {
 export default function ClaimNFT({ closeCheckout, claimableNFTs }) {
   const { account, library } = useWeb3Context()
   const [count, incrementCount, decrementCount] = useCount(claimableNFTs, claimableNFTs)
+  const [loading, setLoading] = useState(false)
 
   async function handleClaim() {
     const nftContract = new ethers.Contract(
@@ -115,7 +116,9 @@ export default function ClaimNFT({ closeCheckout, claimableNFTs }) {
       library.getSigner(account),
     );
 
+    setLoading(true)
     await nftContract.mint(ethers.BigNumber.from(count))
+    setLoading(false)
   }
 
   return (
@@ -126,6 +129,7 @@ export default function ClaimNFT({ closeCheckout, claimableNFTs }) {
       <Button
         text='Claim'
         onClick={handleClaim}
+        pending={loading}
       />
     </Frame>
   )
