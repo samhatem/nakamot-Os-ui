@@ -31,21 +31,23 @@ const config = {
   colors: ['#a864fd', '#29cdff', '#78ff44', '#ff718d', '#fdff6a']
 }
 
-export function Controls({ closeCheckout, theme, type }) {
+export function Controls({ closeCheckout, theme, type, hideHeader }) {
   return (
     <FrameControls>
-      <Unicorn theme={theme}>
-        <span role="img" aria-label="unicorn">
-          👑
-        </span>{' '}
-        Pay{' '}
-        <span style={{ color: '#737373' }}>
-          {' '}
-          {type === 'confirm' ? ' / Order Details' : type === 'shipping' ? ' / Shipping Details' : ''}
-        </span>
-      </Unicorn>
-
       <Close src={theme === 'dark' ? closeDark : close} onClick={() => closeCheckout()} alt="close" />
+
+      {!hideHeader && (
+        <Unicorn theme={theme}>
+          <span role="img" aria-label="unicorn">
+            👑
+          </span>{' '}
+          Pay{' '}
+          <span style={{ color: '#737373' }}>
+            {' '}
+            {type === 'confirm' ? ' / Order Details' : type === 'shipping' ? ' / Shipping Details' : ''}
+          </span>
+        </Unicorn>
+      )}
     </FrameControls>
   )
 }
@@ -316,7 +318,7 @@ const TopFrame = styled.div`
 
 const FrameControls = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
   flex-wrap: nowrap;
   justify-content: space-between;
   width: 100%;

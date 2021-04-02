@@ -10,13 +10,19 @@ import RedeemButton from '../../components/RedeemButton'
 import Checkout from '../../components/Checkout'
 import { amountFormatter, INITIAL_SUPPLY } from '../../utils'
 
-export function Header({ totalSupply, ready, balanceBKFT, setShowConnect, claimableNFTs }) {
+export function Header({ totalSupply, ready, balanceBKFT, setShowConnect, claimableNFTs, setShowClaimNFT }) {
   const { account, setConnector } = useWeb3Context()
+  const [, setState] = useAppContext()
 
   function handleAccount() {
     setConnector('Injected', { suppressAndThrowErrors: true }).catch(error => {
       setShowConnect(true)
     })
+  }
+
+  function handleShowClaimModal() {
+    setState(state => ({ ...state, visible: !state.visible }))
+    setShowClaimNFT(true)
   }
 
   return (
@@ -30,8 +36,8 @@ export function Header({ totalSupply, ready, balanceBKFT, setShowConnect, claima
         </Unicorn>
       </Link>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
-        {claimableNFTs && claimableNFTs > 0 && (
-          <Claims>
+        {claimableNFTs > 0 && (
+          <Claims onClick={handleShowClaimModal}>
             {claimableNFTs} Claimable NFTs
           </Claims>
         )}
@@ -90,7 +96,7 @@ const Account = styled.div`
   }
 `
 
-const Claims = styled.div`
+const Claims = styled.button`
   border: 1px solid ${props => props.theme.orange};
   margin-right: 1rem;
   padding: 0.75rem;
@@ -180,6 +186,7 @@ export default function Body({
   const [state, setState] = useAppContext()
   const [showConnect, setShowConnect] = useState(false)
   const [showWorks, setShowWorks] = useState(false)
+  const [showClaimNFT, setShowClaimNFT] = useState(false)
 
   return (
     <AppWrapper overlay={state.visible}>
@@ -190,6 +197,7 @@ export default function Body({
         balanceBKFT={balanceBKFT}
         setShowConnect={setShowConnect}
         claimableNFTs={claimableNFTs}
+        setShowClaimNFT={setShowClaimNFT}
       />
       <Content>
         <Card totalSupply={totalSupply} dollarPrice={dollarPrice} reserveBKFTToken={reserveBKFTToken} />{' '}
@@ -253,6 +261,9 @@ export default function Body({
         clearCurrentTransaction={clearCurrentTransaction}
         showWorks={showWorks}
         setShowWorks={setShowWorks}
+        setShowClaimNFT={setShowClaimNFT}
+        showClaimNFT={showClaimNFT}
+        claimableNFTs={claimableNFTs}
       />
     </AppWrapper>
   )
