@@ -14,7 +14,7 @@ export default function Card({ totalSupply, dollarPrice, reserveSOCKSToken }) {
       options={{ scale: 1.01, max: 10, glare: true, 'max-glare': 1, speed: 1000 }}
     >
       <CardWrapper>
-        <Title>Nakamot'Os</Title>
+        <Title>Nakamot-Os</Title>
         <SubTitle>${TOKEN_SYMBOL}</SubTitle>
         <Gallery />
         <MarketData>
@@ -65,7 +65,6 @@ const Title = styled.p`
 
 const SubTitle = styled.p`
   color: #6c7284;
-  font-family: Inter;
   font-style: normal;
   font-weight: 500;
   font-size: 18px;

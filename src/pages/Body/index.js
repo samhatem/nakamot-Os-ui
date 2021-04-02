@@ -32,7 +32,7 @@ export function Header({ totalSupply, ready, balanceBKFT, setShowConnect, claima
           <span role="img" aria-label="crown">
             👑
           </span>{' '}
-          Nakamot'Os
+          Nakamot-Os
         </Unicorn>
       </Link>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
