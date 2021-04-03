@@ -116,6 +116,7 @@ const NFTBalance = styled.div`
   font-weight: 500;
   font-size: 14px;
   color: #fff;
+  font-family: inherit;
   background-color: ${props => props.theme.orange};
 `
 
