@@ -332,10 +332,10 @@ const ButtonFrame = styled.button`
   cursor: pointer;
   pointer-events: ${props => (props.disabled ? 'none' : 'auto')};
 
-  background: linear-gradient(97.28deg, #fe6dde 2.08%, #ff9dea 106.51%);
-  box-shadow: 0px 4px 20px rgba(239, 162, 250, 0.7);
-  background: ${props => (props.disabled ? '#f1f2f6' : 'linear-gradient(97.28deg, #fe6dde 2.08%, #ff9dea 106.51%)')};
-  box-shadow: ${props => (props.disabled ? 'none' : '0px 4px 20px rgba(239, 162, 250, 0.7)')};
+  background: linear-gradient(90deg, #FE8700 4.52%, #FFA743 100%);
+  box-shadow: 0px 4px 20px rgba(254,135,0,1, 0.4);
+  background: ${props => (props.disabled ? '#f1f2f6' : 'linear-gradient(90deg, #FE8700 4.52%, #FFA743 100%)')};
+  box-shadow: ${props => (props.disabled ? 'none' : '0px 4px 20px rgba(254,135,0,1, 0.4)')};
   color: ${props => (props.disabled ? '#aeaeae' : props.theme.white)};
   transform: scale(1);
   transition: transform 0.3s ease;

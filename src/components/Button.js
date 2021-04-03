@@ -29,7 +29,7 @@ const ButtonFrame = styled.button`
       ? props.disabled
         ? // ? 'linear-gradient(97.28deg, rgba(254, 109, 222, 0.2) 2.08%, rgba(255, 157, 234, 0.2) 106.51%)'
           '#f1f2f6'
-        : props.theme.orange
+        : 'linear-gradient(90deg, #FE8700 4.52%, #FFA743 100%)'
       : props.disabled // ? 'linear-gradient(97.28deg, rgba(254, 109, 222, 0.2) 2.08%, rgba(255, 157, 234, 0.2) 106.51%)'
       ? '#f1f2f6'
       : 'none'};
