@@ -8,11 +8,13 @@ import { TOKEN_SYMBOL } from '../utils'
 
 // we need to capture the full address into netlify...
 // https://www.netlify.com/blog/2017/07/20/how-to-integrate-netlifys-form-handling-in-a-react-app/
+/*
 function encode(data) {
   return Object.keys(data)
     .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
     .join('&')
 }
+*/
 
 // variables for the netlify names of each form field
 const bot = 'beep-boop'
@@ -247,10 +249,10 @@ export default function RedeemForm({ setHasConfirmedAddress, setUserAddress, num
           const autoMessage = `${nameMap[address]}: ${account}\n${nameMap[timestamp]}: ${timestampToSign}\n${nameMap[numberBurned]}: ${actualNumberBurned}`
 
           signer.signMessage(`${header}\n\n${formDataMessage}\n${autoMessage}`).then(returnedSignature => {
-            fetch('/', {
+            fetch('/.netlify/functions/submission-created', {
               method: 'POST',
-              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-              body: encode({
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
                 'form-name': 'redeem',
                 ...{
                   ...formState,

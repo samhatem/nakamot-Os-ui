@@ -29,8 +29,7 @@ function returnSuccess(data, statusCode = 200) {
 }
 
 export async function handler(event) {
-  const { payload } = JSON.parse(event.body)
-  const { data } = payload
+  const data = JSON.parse(event.body)
 
   const {
     name,
@@ -56,7 +55,7 @@ export async function handler(event) {
 
   const m1 = `PLEASE VERIFY YOUR ADDRESS.\nYour data will never be shared publicly.`
   const m2 = `Name: ${name}\nStreet Address: ${line1}\nUnit: ${line2}\nCity: ${city}\nState: ${state}\nZIP: ${zip}\nCountry: ${country}\nEmail: ${email}`
-  const m3 = `Ethereum Address: ${address}\nTime: ${timestamp}\nSOCKS Redeemed: ${numberBurned}`
+  const m3 = `Ethereum Address: ${address}\nTime: ${timestamp}\nBOX Redeemed: ${numberBurned}`
 
   const addressOfSigner = ethers.utils.verifyMessage(`${m1}\n\n${m2}\n${m3}`, signature)
   const isInvalid = addressOfSigner !== address
