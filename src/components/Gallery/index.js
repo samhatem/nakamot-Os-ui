@@ -1,9 +1,9 @@
 import * as React from 'react'
 import styled from 'styled-components'
 
-import test from './test.png'
+import test from './Nakmot-Os.png'
 
-const GalleryFrame = styled.div`
+export const GalleryFrame = styled.div`
   width: 100%;
   height: 80%;
   min-height: 258px;

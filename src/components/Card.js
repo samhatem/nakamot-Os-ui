@@ -5,7 +5,7 @@ import Tilt from 'react-tilt'
 
 import { amountFormatter, TOKEN_SYMBOL } from '../utils'
 
-import Gallery from './Gallery'
+import Gallery3D from './Gallery/3DGallery'
 
 export default function Card({ totalSupply, dollarPrice, reserveSOCKSToken }) {
   return (
@@ -16,7 +16,7 @@ export default function Card({ totalSupply, dollarPrice, reserveSOCKSToken }) {
       <CardWrapper>
         <Title>Nakamot-Os</Title>
         <SubTitle>${TOKEN_SYMBOL}</SubTitle>
-        <Gallery />
+        <Gallery3D />
         <MarketData>
           <span>
             <CurrentPrice>{dollarPrice ? `$${amountFormatter(dollarPrice, 18, 2)} USD` : '$0.00'}</CurrentPrice>
