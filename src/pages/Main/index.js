@@ -84,7 +84,7 @@ function getExchangeRate(inputValue, outputValue, invert = false) {
 function calculateAmount(
   inputTokenSymbol,
   outputTokenSymbol,
-  SOCKSAmount,
+  BKFTAmount,
   reserveBKFTWETH,
   reserveBKFTToken,
   reserveSelectedTokenETH,
@@ -92,7 +92,7 @@ function calculateAmount(
 ) {
   // eth to token - buy
   if (inputTokenSymbol === TOKEN_SYMBOLS.ETH && outputTokenSymbol === TOKEN_SYMBOLS.BKFT) {
-    const amount = calculateEtherTokenInputFromOutput(SOCKSAmount, reserveBKFTWETH, reserveBKFTToken)
+    const amount = calculateEtherTokenInputFromOutput(BKFTAmount, reserveBKFTWETH, reserveBKFTToken)
     if (amount.lte(ethers.constants.Zero) || amount.gte(ethers.constants.MaxUint256)) {
       throw Error()
     }
@@ -101,7 +101,7 @@ function calculateAmount(
 
   // token to eth - sell
   if (inputTokenSymbol === TOKEN_SYMBOLS.BKFT && outputTokenSymbol === TOKEN_SYMBOLS.ETH) {
-    const amount = calculateEtherTokenOutputFromInput(SOCKSAmount, reserveBKFTToken, reserveBKFTWETH)
+    const amount = calculateEtherTokenOutputFromInput(BKFTAmount, reserveBKFTToken, reserveBKFTWETH)
     if (amount.lte(ethers.constants.Zero) || amount.gte(ethers.constants.MaxUint256)) {
       throw Error()
     }
@@ -110,11 +110,11 @@ function calculateAmount(
   }
 
   // token to token - buy or sell
-  const buyingSOCKS = outputTokenSymbol === TOKEN_SYMBOLS.BKFT
+  const buyingBKFT = outputTokenSymbol === TOKEN_SYMBOLS.BKFT
 
-  if (buyingSOCKS) {
-    // eth needed to buy x socks
-    const intermediateValue = calculateEtherTokenInputFromOutput(SOCKSAmount, reserveBKFTWETH, reserveBKFTToken)
+  if (buyingBKFT) {
+    // eth needed to buy x bkft
+    const intermediateValue = calculateEtherTokenInputFromOutput(BKFTAmount, reserveBKFTWETH, reserveBKFTToken)
     // calculateEtherTokenOutputFromInput
     if (intermediateValue.lte(ethers.constants.Zero) || intermediateValue.gte(ethers.constants.MaxUint256)) {
       throw Error()
@@ -130,8 +130,8 @@ function calculateAmount(
     }
     return amount
   } else {
-    // eth gained from selling x socks
-    const intermediateValue = calculateEtherTokenOutputFromInput(SOCKSAmount, reserveBKFTToken, reserveBKFTWETH)
+    // eth gained from selling x bkft
+    const intermediateValue = calculateEtherTokenOutputFromInput(BKFTAmount, reserveBKFTToken, reserveBKFTWETH)
     if (intermediateValue.lte(ethers.constants.Zero) || intermediateValue.gte(ethers.constants.MaxUint256)) {
       throw Error()
     }
@@ -249,9 +249,9 @@ export default function Main({ stats, status }) {
   const [dollarPrice, setDollarPrice] = useState()
   useEffect(() => {
     try {
-      const SOCKSExchangeRateETH = getExchangeRate(reserveBKFTToken, reserveBKFTWETH)
+      const BKFTExchangeRateETH = getExchangeRate(reserveBKFTToken, reserveBKFTWETH)
       setDollarPrice(
-        SOCKSExchangeRateETH.mul(USDExchangeRateETH).div(
+        BKFTExchangeRateETH.mul(USDExchangeRateETH).div(
           ethers.BigNumber.from(10).pow(ethers.BigNumber.from(18))
         )
       )
@@ -260,9 +260,9 @@ export default function Main({ stats, status }) {
     }
   }, [USDExchangeRateETH, reserveBKFTToken, reserveBKFTWETH])
 
-  async function unlock(buyingSOCKS = true) {
-    const contract = buyingSOCKS ? tokenContractSelectedToken : tokenContractBKFT
-    const spenderAddress = bkftWethExchangeAddress // buyingSOCKS ? exchangeContractSelectedToken.address : exchangeContractSOCKS.address
+  async function unlock(buyingBKFT = true) {
+    const contract = buyingBKFT ? tokenContractSelectedToken : tokenContractBKFT
+    const spenderAddress = bkftWethExchangeAddress
 
     const estimatedGasLimit = await contract.estimateGas.approve(spenderAddress, ethers.constants.MaxUint256)
     const estimatedGasPrice = await library
@@ -277,11 +277,11 @@ export default function Main({ stats, status }) {
 
   // buy functionality
   const validateBuy = useCallback(
-    numberOfSOCKS => {
+    numberOfBKFT => {
       // validate passed amount
       let parsedValue
       try {
-        parsedValue = ethers.utils.parseUnits(numberOfSOCKS, 18)
+        parsedValue = ethers.utils.parseUnits(numberOfBKFT, 18)
       } catch (error) {
         error.code = ERROR_CODES.INVALID_AMOUNT
         throw error
@@ -400,11 +400,11 @@ export default function Main({ stats, status }) {
 
   // sell functionality
   const validateSell = useCallback(
-    numberOfSOCKS => {
+    numberOfBKFT => {
       // validate passed amount
       let parsedValue
       try {
-        parsedValue = ethers.utils.parseUnits(numberOfSOCKS, 18)
+        parsedValue = ethers.utils.parseUnits(numberOfBKFT, 18)
       } catch (error) {
         error.code = ERROR_CODES.INVALID_AMOUNT
         throw error
@@ -441,7 +441,7 @@ export default function Main({ stats, status }) {
         }
       }
 
-      // validate minimum socks balance
+      // validate minimum bkft balance
       if (balanceBKFT.lt(parsedValue)) {
         const error = Error()
         error.code = ERROR_CODES.INSUFFICIENT_SELECTED_TOKEN_BALANCE

@@ -6,7 +6,7 @@ import Button from './Button'
 import SelectToken from './SelectToken'
 import IncrementToken from './IncrementToken'
 import { useAppContext } from '../context'
-import { ERROR_CODES, amountFormatter, TRADE_TYPES, TOKEN_SYMBOL } from '../utils'
+import { ERROR_CODES, amountFormatter, TRADE_TYPES, TOKEN_SYMBOL, INITIAL_SUPPLY } from '../utils'
 import test from './Gallery/Nakmot-Os.png'
 // import { ethers } from 'ethers'
 
@@ -67,7 +67,7 @@ export default function BuyAndSell({
   validateSell,
   dollarPrice,
   pending,
-  reserveSOCKSToken,
+  reserveBKFTToken,
   sell,
   dollarize,
   setCurrentTransaction,
@@ -205,7 +205,7 @@ export default function BuyAndSell({
         {/* <button onClick={() => fake()}>test</button> */}
         <Unicorn>
           <span role="img" aria-label="unicorn">
-            🦄
+            👑
           </span>{' '}
           Pay
         </Unicorn>
@@ -214,7 +214,7 @@ export default function BuyAndSell({
           <CurrentPrice>
             {/* {dollarPrice && `$${amountFormatter(dollarPrice, 18, 2)} USD`} */}
             <USDPrice>{renderFormData()}</USDPrice>
-            <SockCount>{reserveSOCKSToken && `${amountFormatter(reserveSOCKSToken, 18, 0)}/500 available`}</SockCount>
+            <SockCount>{reserveBKFTToken && `${amountFormatter(reserveBKFTToken, 18, 0)}/${INITIAL_SUPPLY} available`}</SockCount>
           </CurrentPrice>
           <IncrementToken />
         </InfoFrame>

@@ -7,7 +7,7 @@ import { amountFormatter, TOKEN_SYMBOL } from '../utils'
 
 import Gallery3D from './Gallery/3DGallery'
 
-export default function Card({ totalSupply, dollarPrice, reserveSOCKSToken }) {
+export default function Card({ totalSupply, dollarPrice, reserveBKFTToken }) {
   return (
     <Tilt
       style={{ background: '#000', borderRadius: '8px' }}
@@ -21,8 +21,8 @@ export default function Card({ totalSupply, dollarPrice, reserveSOCKSToken }) {
           <span>
             <CurrentPrice>{dollarPrice ? `$${amountFormatter(dollarPrice, 18, 2)} USD` : '$0.00'}</CurrentPrice>
             <SockCount>
-              {reserveSOCKSToken && totalSupply
-                ? `${amountFormatter(reserveSOCKSToken, 18, 0)}/${totalSupply} available`
+              {reserveBKFTToken && totalSupply
+                ? `${amountFormatter(reserveBKFTToken, 18, 0)}/${totalSupply} available`
                 : ''}
             </SockCount>
           </span>

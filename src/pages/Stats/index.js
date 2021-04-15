@@ -14,7 +14,7 @@ export default function Body({ totalSupply, reserveBKFTToken, ready, balanceBKFT
         <Title>{TOKEN_SYMBOL} Stats</Title>
         <Description>
           <p>
-            <span role="img" aria-label="socks">
+            <span role="img" aria-label="box">
               🥄
             </span>
             Initial {TOKEN_SYMBOL}
@@ -23,7 +23,7 @@ export default function Body({ totalSupply, reserveBKFTToken, ready, balanceBKFT
         </Description>
         <Description>
           <p>
-            <span role="img" aria-label="socks">
+            <span role="img" aria-label="box">
               🚀
             </span>
             Redeemed {TOKEN_SYMBOL}
@@ -32,7 +32,7 @@ export default function Body({ totalSupply, reserveBKFTToken, ready, balanceBKFT
         </Description>
         <Description>
           <p>
-            <span role="img" aria-label="socks">
+            <span role="img" aria-label="box">
               💦
             </span>
             {TOKEN_SYMBOL} Pool

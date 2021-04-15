@@ -145,8 +145,7 @@ export default function Redeem({
               <ImgStyle src={test} alt="Logo" hasPickedAmount={hasPickedAmount} />
               <Owned>
                 <p>{state.count} Boxes</p>
-                <p style={{ fontSize: '20px', fontWeight: '400', color: '#AEAEAE' }}>One size fits most</p>
-                <p style={{ fontSize: '14px', fontWeight: '500', marginTop: '16px', color: '#AEAEAE' }}>Edition 0</p>
+                <p style={{ fontSize: '14px', fontWeight: '500', marginTop: '16px', color: '#AEAEAE' }}>ICO Edition</p>
               </Owned>
             </InfoFrame>
           </TopFrame>
@@ -221,13 +220,11 @@ export default function Redeem({
           >
             back
           </Back>
-          <Count>2/3</Count>
-          <CheckoutPrompt>BURN THE SOCKS?</CheckoutPrompt> */}
+          <Count>2/3</Count> */}
           <ButtonFrame
             className="button"
             disabled={pending}
             pending={pending}
-            // text={pending ? `Waiting for confirmation...` : `Redeem ${numberBurned} SOCKS`}
             text={pending ? `Waiting for confirmation...` : `Place order (Redeem ${numberBurned} ${TOKEN_SYMBOL}) `}
             type={'cta'}
             onClick={() => {

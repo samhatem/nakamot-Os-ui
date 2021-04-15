@@ -71,7 +71,7 @@ export default function Checkout({
   burn,
   balanceBKFT,
   dollarPrice,
-  reserveSOCKSToken,
+  reserveBKFTToken,
   dollarize,
   currentTransactionHash,
   currentTransactionType,
@@ -161,8 +161,8 @@ export default function Checkout({
             currentTransactionHash={currentTransactionHash}
             setShowConnect={setShowConnect}
             dollarPrice={dollarPrice}
-            reserveSOCKSToken={reserveSOCKSToken}
             pending={pending}
+            reserveBKFTToken={reserveBKFTToken}
           />
         )
       } else {
