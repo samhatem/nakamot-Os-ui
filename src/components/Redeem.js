@@ -9,7 +9,7 @@ import RedeemForm from './RedeemForm'
 import { amountFormatter, TOKEN_SYMBOL } from '../utils'
 
 import IncrementToken from './IncrementToken'
-import test from './Gallery/test.png'
+import test from './Gallery/Nakmot-Os.png'
 import nfc from './Gallery/nfc.png'
 import sent from './Gallery/sent.png'
 
@@ -303,9 +303,8 @@ export default function Redeem({
 const TopFrame = styled.div`
   width: 100%;
   max-width: 375px;
-  background: #000000;
-  background: linear-gradient(162.92deg, #2b2b2b 12.36%, #000000 94.75%);
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
+  background: #fff;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
   color: white;
   display: flex;
   flex-direction: column;
@@ -326,7 +325,7 @@ const FrameControls = styled.div`
 `
 
 const Unicorn = styled.p`
-  color: ${props => (props.theme === 'dark' ? '#000' : '#fff')};
+  color: #000;
   font-weight: 600;
   margin: 0px;
   font-size: 16px;
@@ -368,7 +367,7 @@ const InfoFrame = styled.div`
 
 const Owned = styled.div`
   font-weight: 700;
-  color: #efe7e4;
+  color: rgb(55, 53, 47);
   font-size: 24px;
   margin-bottom: 12px;
   margin: 0px;

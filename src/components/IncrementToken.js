@@ -8,8 +8,8 @@ const SelectFrame = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  color: #000;
-  background-color: #fff;
+  color: #fff;
+  background-color: #000;
   padding: 8px 12px 8px 12px;
   max-width: 84px;
   font-weight: 600;
@@ -34,6 +34,7 @@ const SelectMenu = styled.div`
   border: none;
   /* padding: 0px 1rem 0px 1rem; */
   text-align: center;
+  color: #fff;
 `
 
 const IncrementButton = styled.span`

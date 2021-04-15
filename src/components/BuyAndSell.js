@@ -7,7 +7,7 @@ import SelectToken from './SelectToken'
 import IncrementToken from './IncrementToken'
 import { useAppContext } from '../context'
 import { ERROR_CODES, amountFormatter, TRADE_TYPES, TOKEN_SYMBOL } from '../utils'
-import test from './Gallery/test.png'
+import test from './Gallery/Nakmot-Os.png'
 // import { ethers } from 'ethers'
 
 export function useCount() {
