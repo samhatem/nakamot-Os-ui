@@ -9,7 +9,6 @@ import Redeem from './Redeem'
 import Confirmed from './Confirmed'
 import { useAppContext } from '../context'
 import { TRADE_TYPES } from '../utils'
-import ClaimNFT from './ClaimNFT'
 
 import Confetti from 'react-dom-confetti'
 
@@ -83,9 +82,6 @@ export default function Checkout({
   showConnect,
   showWorks,
   setShowWorks,
-  setShowClaimNFT,
-  showClaimNFT,
-  claimableNFTs
 }) {
   const { library } = useWeb3Context()
   const [state, setState] = useAppContext()
@@ -125,7 +121,6 @@ export default function Checkout({
     if (state.visible) {
       setShowWorks(false)
       setLastTransactionHash('')
-      setShowClaimNFT(false)
       setState(state => ({ ...state, visible: !state.visible }))
     }
   }
@@ -135,8 +130,6 @@ export default function Checkout({
       return <Connect setShowConnect={setShowConnect} closeCheckout={closeCheckout} />
     } else if (showWorks) {
       return <Works closeCheckout={closeCheckout} />
-    } else if (showClaimNFT) {
-      return <ClaimNFT closeCheckout={closeCheckout} claimableNFTs={claimableNFTs}/>
     } else if (lastTransactionHash) {
       return (
         <Confirmed
