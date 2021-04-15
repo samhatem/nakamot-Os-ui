@@ -10,8 +10,6 @@ import { amountFormatter, TOKEN_SYMBOL } from '../utils'
 
 import IncrementToken from './IncrementToken'
 import test from './Gallery/Nakmot-Os.png'
-import nfc from './Gallery/nfc.png'
-import sent from './Gallery/sent.png'
 
 import close from './Gallery/close.svg'
 import closeDark from './Gallery/close_dark.svg'
@@ -193,7 +191,7 @@ export default function Redeem({
               </Owned>
             </InfoFrame>
             <InfoFrame hasPickedAmount={hasPickedAmount}>
-              <ImgStyle src={nfc} alt="Logo" hasPickedAmount={hasPickedAmount} />
+              <ImgStyle src={test} alt="Logo" hasPickedAmount={hasPickedAmount} />
               <Bonus>Bonus</Bonus>
               <Owned>
                 <p style={{ fontSize: '18px' }}>{state.count} Nakamot'Os NFT</p>
@@ -264,7 +262,7 @@ export default function Redeem({
         <>
           <TopFrame hasPickedAmount={hasPickedAmount}>
             <Controls closeCheckout={closeCheckout} />
-            <ImgStyle src={sent} alt="Logo" hasPickedAmount={hasPickedAmount} hasBurnt={hasBurnt} />
+            <ImgStyle src={test} alt="Logo" hasPickedAmount={hasPickedAmount} hasBurnt={hasBurnt} />
             <InfoFrame>
               <Owned>
                 <p>You got cereal!</p>

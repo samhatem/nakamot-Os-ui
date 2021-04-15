@@ -5,7 +5,7 @@ import { amountFormatter, TRADE_TYPES, TOKEN_SYMBOL } from '../utils'
 import Button from './Button'
 
 import close from './Gallery/close.svg'
-import sent from './Gallery/sent.png'
+import sent from './Gallery/Nakmot-Os.png'
 import { useAppContext } from '../context'
 
 const ConfirmedFrame = styled.div`
@@ -23,7 +23,7 @@ function Controls({ closeCheckout }) {
     <FrameControls>
       <Unicorn>
         <span role="img" aria-label="unicorn">
-          🦄
+          👑
         </span>{' '}
         Pay
       </Unicorn>
@@ -42,7 +42,7 @@ const FrameControls = styled.div`
 `
 
 const Unicorn = styled.p`
-  color: #fff;
+  color: #000;
   font-weight: 600;
   margin: 0px;
   font-size: 16px;
@@ -136,9 +136,8 @@ export default function Confirmed({ hash, type, amount, clearLastTransaction, cl
 const TopFrame = styled.div`
   width: 100%;
   max-width: 375px;
-  background: #000000;
-  background: linear-gradient(162.92deg, #2b2b2b 12.36%, #000000 94.75%);
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
+  background: #fff;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
   color: white;
   display: flex;
   flex-direction: column;
@@ -191,7 +190,7 @@ const InfoFrame = styled.div`
 
 const Owned = styled.div`
   font-weight: 700;
-  color: #efe7e4;
+  color: #000;
   font-size: 24px;
   margin-bottom: 12px;
   margin: 0px;
