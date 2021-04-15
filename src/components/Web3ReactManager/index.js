@@ -56,7 +56,10 @@ export default function Web3ReactManager({ children }) {
     return showLoader ? (
       <MessageContainer>
         <Message>Initializing...</Message>
-        <Message>If this page does not refresh automatically, please make sure you are on mainnet.</Message>
+        <Message>
+          If this page does not refresh automatically, please make sure you are on mainnet.
+          Then try refreshing the page.
+        </Message>
       </MessageContainer>
     ) : null
   } else {
