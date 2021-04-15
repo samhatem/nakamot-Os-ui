@@ -10,19 +10,13 @@ import RedeemButton from '../../components/RedeemButton'
 import Checkout from '../../components/Checkout'
 import { amountFormatter, INITIAL_SUPPLY } from '../../utils'
 
-export function Header({ totalSupply, ready, balanceBKFT, setShowConnect, claimableNFTs, setShowClaimNFT, nftBalance }) {
+export function Header({ totalSupply, ready, balanceBKFT, setShowConnect, nftBalance }) {
   const { account, setConnector } = useWeb3Context()
-  const [, setState] = useAppContext()
 
   function handleAccount() {
     setConnector('Injected', { suppressAndThrowErrors: true }).catch(error => {
       setShowConnect(true)
     })
-  }
-
-  function handleShowClaimModal() {
-    setState(state => ({ ...state, visible: !state.visible }))
-    setShowClaimNFT(true)
   }
 
   return (
@@ -36,15 +30,10 @@ export function Header({ totalSupply, ready, balanceBKFT, setShowConnect, claima
         </Unicorn>
       </Link>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
-        {nftBalance && (
+        {!!nftBalance && (
           <NFTBalance>
             {nftBalance} Nakamot-O NFTs
           </NFTBalance>
-        )}
-        {claimableNFTs > 0 && (
-          <Claims onClick={handleShowClaimModal}>
-            {claimableNFTs} Claimable NFTs
-          </Claims>
         )}
         {totalSupply && (
           <Link to="/stats" style={{ textDecoration: 'none' }}>
@@ -120,24 +109,6 @@ const NFTBalance = styled.div`
   background-color: ${props => props.theme.orange};
 `
 
-const Claims = styled.button`
-  border: 1px solid ${props => props.theme.orange};
-  margin-right: 1rem;
-  padding: 0.75rem;
-  cursor: pointer;
-  transform: scale(1);
-  transition: transform 0.3s ease;
-  line-height: 1;
-
-  :hover {
-    transform: scale(1.02);
-  }
-
-  font-weight: 500;
-  font-size: 14px;
-  color: ${props => props.theme.black};
-`
-
 const Burned = styled.div`
   background-color: none;
   border: 1px solid ${props => props.theme.black};
@@ -197,7 +168,6 @@ export default function Body({
   balanceBKFT,
   reserveBKFTToken,
   totalSupply,
-  claimableNFTs,
   nftBalance,
 }) {
   const { account } = useWeb3Context()
@@ -211,7 +181,6 @@ export default function Body({
   const [state, setState] = useAppContext()
   const [showConnect, setShowConnect] = useState(false)
   const [showWorks, setShowWorks] = useState(false)
-  const [showClaimNFT, setShowClaimNFT] = useState(false)
 
   return (
     <AppWrapper overlay={state.visible}>
@@ -221,8 +190,6 @@ export default function Body({
         dollarPrice={dollarPrice}
         balanceBKFT={balanceBKFT}
         setShowConnect={setShowConnect}
-        claimableNFTs={claimableNFTs}
-        setShowClaimNFT={setShowClaimNFT}
         nftBalance={nftBalance}
       />
       <Content>
@@ -287,9 +254,6 @@ export default function Body({
         clearCurrentTransaction={clearCurrentTransaction}
         showWorks={showWorks}
         setShowWorks={setShowWorks}
-        setShowClaimNFT={setShowClaimNFT}
-        showClaimNFT={showClaimNFT}
-        claimableNFTs={claimableNFTs}
       />
     </AppWrapper>
   )

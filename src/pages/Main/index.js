@@ -11,7 +11,6 @@ import {
   useExchangeAllowance,
   useTotalSupply,
   useRouterContract,
-  useClaimableNFTS,
   useNFTBalance,
 } from '../../hooks'
 import Body from '../Body'
@@ -198,7 +197,6 @@ export default function Main({ stats, status }) {
 
   const [USDExchangeRateETH, setUSDExchangeRateETH] = useState()
 
-  const claimableNFTs = useClaimableNFTS();
   const nftBalance = useNFTBalance();
 
   const ready = !!(
@@ -557,7 +555,6 @@ export default function Main({ stats, status }) {
       balanceBKFT={balanceBKFT}
       reserveBKFTToken={reserveBKFTToken}
       totalSupply={totalSupply}
-      claimableNFTs={claimableNFTs}
       nftBalance={nftBalance}
     />
   )
