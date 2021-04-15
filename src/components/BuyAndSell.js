@@ -7,7 +7,7 @@ import SelectToken from './SelectToken'
 import IncrementToken from './IncrementToken'
 import { useAppContext } from '../context'
 import { ERROR_CODES, amountFormatter, TRADE_TYPES, TOKEN_SYMBOL, INITIAL_SUPPLY } from '../utils'
-import test from './Gallery/Nakmot-Os.png'
+import test from './Gallery/Nakmot-Os-big.png'
 // import { ethers } from 'ethers'
 
 export function useCount() {
@@ -287,9 +287,8 @@ export default function BuyAndSell({
 const TopFrame = styled.div`
   width: 100%;
   max-width: 375px;
-  background: #000000;
-  background: linear-gradient(162.92deg, #2b2b2b 12.36%, #000000 94.75%);
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
+  background: #fff;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
   color: white;
   display: flex;
   flex-direction: column;
@@ -302,7 +301,7 @@ const TopFrame = styled.div`
 
 const Unicorn = styled.p`
   width: 100%;
-  color: #fff;
+  color: #000;
   font-weight: 600;
   margin: 0px;
   font-size: 16px;
