@@ -1,8 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { useWeb3Context } from 'web3-react'
 import { ethers } from 'ethers'
+import styled from 'styled-components'
 
 import { Message } from './styles'
+
+const MessageContainer = styled.div`
+  max-width: 50%;
+  margin: auto;
+
+  @media (max-width: 800px) {
+    max-width: 90%;
+  }
+`
 
 export default function Web3ReactManager({ children }) {
   const { setConnector, error, active } = useWeb3Context()
@@ -43,7 +53,12 @@ export default function Web3ReactManager({ children }) {
     console.error(error)
     return <Message>Connection Error.</Message>
   } else if (!active) {
-    return showLoader ? <Message>Initializing...</Message> : null
+    return showLoader ? (
+      <MessageContainer>
+        <Message>Initializing...</Message>
+        <Message>If this page does not refresh automatically, please make sure you are on mainnet.</Message>
+      </MessageContainer>
+    ) : null
   } else {
     return children
   }
