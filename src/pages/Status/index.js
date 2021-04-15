@@ -133,7 +133,7 @@ export default function Body({ totalSupply, ready, balanceBKFT }) {
           <p style={{ fontSize: '.75rem', textAlign: 'center' }}>
             Problem with an order?{' '}
             <a
-              href={`mailto:contact@uniswap.io?Subject=Unipig%20Order%20for%20${account}`}
+              href={`mailto:Satoshi@breakfast.exchange?Subject=NakamotOs%20Order%20for%20${account}`}
               target="_blank"
               rel="noopener noreferrer"
             >
