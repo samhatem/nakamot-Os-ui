@@ -123,9 +123,11 @@ export default function Confirmed({ hash, type, amount, clearLastTransaction, cl
           </InfoFrame>
         </TopFrame>
         <CheckoutPrompt>
-          <EtherscanLink href={link(hash)} target="_blank" rel="noopener noreferrer">
-            Transaction Details ↗
-          </EtherscanLink>
+          <SoldTxLink>
+            <EtherscanLink href={link(hash)} target="_blank" rel="noopener noreferrer">
+              Transaction Details ↗
+            </EtherscanLink>
+          </SoldTxLink>
         </CheckoutPrompt>
         {/* <Shim /> */}
       </ConfirmedFrame>
@@ -218,4 +220,8 @@ const EtherscanLink = styled.a`
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
+`
+
+const SoldTxLink = styled.div`
+  margin-bottom: 16px;
 `
