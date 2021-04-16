@@ -8,7 +8,7 @@ import Card from '../../components/Card'
 import BuyButtons from '../../components/Buttons'
 import RedeemButton from '../../components/RedeemButton'
 import Checkout from '../../components/Checkout'
-import { amountFormatter, INITIAL_SUPPLY } from '../../utils'
+import { amountFormatter, INITIAL_SUPPLY, TOKEN_SYMBOL } from '../../utils'
 import { useNftContext } from '../../context/nftContext'
 
 export function Header({ totalSupply, ready, balanceBKFT, setShowConnect, setShowNftModal }) {
@@ -56,7 +56,7 @@ export function Header({ totalSupply, ready, balanceBKFT, setShowConnect, setSho
         <Account onClick={() => handleAccount()} balanceBKFT={balanceBKFT}>
           {account ? (
             balanceBKFT > 0 ? (
-              <SockCount>{balanceBKFT && `${amountFormatter(balanceBKFT, 18, 0)}`} BKFT</SockCount>
+              <SockCount>{balanceBKFT && `${amountFormatter(balanceBKFT, 18, 0)}`} {TOKEN_SYMBOL}</SockCount>
             ) : (
               <SockCount>{account.slice(0, 6)}...</SockCount>
             )
