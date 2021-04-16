@@ -76,8 +76,6 @@ export default function Redeem({
 
   const { supply: nftSupply } = useNftTotalSupply()
 
-  console.log({ nftSupply });
-
   const pending = !!transactionHash
 
   useEffect(() => {
