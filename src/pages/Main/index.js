@@ -11,13 +11,12 @@ import {
   useExchangeAllowance,
   useTotalSupply,
   useRouterContract,
-  useNFTBalance,
 } from '../../hooks'
 import Body from '../Body'
 import Stats from '../Stats'
 import Status from '../Status'
 import { getExchangeAddress } from "../../utils"
-import { SupplyProvider } from "../../context/nftSupplyContext"
+import { NftProvider } from "../../context/nftContext"
 
 // denominated in bips
 const GAS_MARGIN = ethers.BigNumber.from(1000)
@@ -197,8 +196,6 @@ export default function Main({ stats, status }) {
   const reserveUSDCToken = useAddressBalance(usdcWethExchangeAddress, TOKEN_ADDRESSES.USDC)
 
   const [USDExchangeRateETH, setUSDExchangeRateETH] = useState()
-
-  const nftBalance = useNFTBalance();
 
   const ready = !!(
     (account === null || allowanceBKFT) &&
@@ -541,7 +538,7 @@ export default function Main({ stats, status }) {
   ) : status ? (
     <Status totalSupply={totalSupply} ready={ready} balanceBKFT={balanceBKFT} />
   ) : (
-    <SupplyProvider>
+    <NftProvider>
       <Body
         selectedTokenSymbol={selectedTokenSymbol}
         setSelectedTokenSymbol={setSelectedTokenSymbol}
@@ -557,8 +554,7 @@ export default function Main({ stats, status }) {
         balanceBKFT={balanceBKFT}
         reserveBKFTToken={reserveBKFTToken}
         totalSupply={totalSupply}
-        nftBalance={nftBalance}
       />
-    </SupplyProvider>
+    </NftProvider>
   )
 }

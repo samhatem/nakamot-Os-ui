@@ -87,6 +87,24 @@ export async function getNFTBalance(address, library) {
   return tokenContract.balanceOf(address)
 }
 
+export async function getNFTIndices(address, library, tokensOwned) {
+  if (!isAddress(address)) {
+    throw Error(
+      `Invalid 'address' + '${address}'`
+    )
+  }
+
+  const tokenContract = new ethers.Contract(NFT_ADDRESS, ['function tokenOfOwnerByIndex(address owner, uint256 index) public view returns (uint256)'], library)
+
+  const promises = []
+
+  for (let i = 0; i < tokensOwned; i += 1) {
+    promises.push(tokenContract.tokenOfOwnerByIndex(address, i).then(index => index && index.toNumber()))
+  }
+
+  return Promise.all(promises)
+}
+
 export async function getNFTSupply(library) {
   const tokenContract = new ethers.Contract(NFT_ADDRESS, ['function totalSupply() public view returns (uint256)'], library)
 

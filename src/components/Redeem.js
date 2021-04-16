@@ -4,7 +4,7 @@ import { useWeb3Context } from 'web3-react'
 import { Link } from 'react-router-dom'
 
 import { useAppContext } from '../context'
-import { useNftTotalSupply } from '../context/nftSupplyContext'
+import { useNftContext } from '../context/nftContext'
 import Button from './Button'
 import RedeemForm from './RedeemForm'
 import { amountFormatter, TOKEN_SYMBOL, NFT_URI, NFT_MAX_SUPPLY } from '../utils'
@@ -74,7 +74,7 @@ export default function Redeem({
   const [hasBurnt, setHasBurnt] = useState(false)
   const [userAddress, setUserAddress] = useState('')
 
-  const { supply: nftSupply } = useNftTotalSupply()
+  const { supply: nftSupply } = useNftContext()
 
   const pending = !!transactionHash
 

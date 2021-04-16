@@ -9,9 +9,11 @@ import BuyButtons from '../../components/Buttons'
 import RedeemButton from '../../components/RedeemButton'
 import Checkout from '../../components/Checkout'
 import { amountFormatter, INITIAL_SUPPLY } from '../../utils'
+import { useNftContext } from '../../context/nftContext'
 
-export function Header({ totalSupply, ready, balanceBKFT, setShowConnect, nftBalance }) {
+export function Header({ totalSupply, ready, balanceBKFT, setShowConnect }) {
   const { account, setConnector } = useWeb3Context()
+  const { nftBalance } = useNftContext()
 
   function handleAccount() {
     setConnector('Injected', { suppressAndThrowErrors: true }).catch(error => {
@@ -168,7 +170,6 @@ export default function Body({
   balanceBKFT,
   reserveBKFTToken,
   totalSupply,
-  nftBalance,
 }) {
   const { account } = useWeb3Context()
   const [currentTransaction, _setCurrentTransaction] = useState({})
@@ -190,7 +191,6 @@ export default function Body({
         dollarPrice={dollarPrice}
         balanceBKFT={balanceBKFT}
         setShowConnect={setShowConnect}
-        nftBalance={nftBalance}
       />
       <Content>
         <Card totalSupply={totalSupply} dollarPrice={dollarPrice} reserveBKFTToken={reserveBKFTToken} />{' '}

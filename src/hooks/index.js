@@ -12,6 +12,7 @@ import {
   TOKEN_ADDRESSES,
   getNFTBalance,
   getNFTSupply,
+  getNFTIndices,
 } from '../utils'
 import { utils } from 'ethers'
 
@@ -105,6 +106,46 @@ export function useAddressBalance(address, tokenAddress) {
   return balance
 }
 
+export function useNFTIndices(tokensOwned) {
+  const { library, account } = useWeb3Context()
+
+  const [nftIndices, setNftIndices] = useState()
+
+  const updateIndices = useCallback(() => {
+    if (!tokensOwned) {
+      return
+    }
+
+    let stale = false
+
+    getNFTIndices(account, library, tokensOwned)
+      .then(indices => {
+        if (!stale) {
+          setNftIndices(indices)
+        }
+      })
+      .catch(error => {
+        console.log({ error })
+        if (!stale) {
+          setNftIndices(null)
+        }
+      })
+
+    return () => {
+      stale = true
+      setNftIndices()
+    }
+  }, [library, account, tokensOwned])
+
+  useEffect(() => {
+    return updateIndices()
+  }, [updateIndices])
+
+  useBlockEffect(updateIndices)
+
+  return nftIndices
+}
+
 export function useNFTBalance() {
   const { library, account } = useWeb3Context()
 
@@ -155,8 +196,6 @@ export function useNFTSupply() {
         }
       })
       .catch(error => {
-        console.log("Error in get NFT Supply")
-        console.log({ error })
         if (!stale) {
           setNFTSupply(null)
         }
