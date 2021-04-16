@@ -17,6 +17,7 @@ import Body from '../Body'
 import Stats from '../Stats'
 import Status from '../Status'
 import { getExchangeAddress } from "../../utils"
+import { SupplyProvider } from "../../context/nftSupplyContext"
 
 // denominated in bips
 const GAS_MARGIN = ethers.BigNumber.from(1000)
@@ -540,22 +541,24 @@ export default function Main({ stats, status }) {
   ) : status ? (
     <Status totalSupply={totalSupply} ready={ready} balanceBKFT={balanceBKFT} />
   ) : (
-    <Body
-      selectedTokenSymbol={selectedTokenSymbol}
-      setSelectedTokenSymbol={setSelectedTokenSymbol}
-      ready={ready}
-      unlock={unlock}
-      validateBuy={validateBuy}
-      buy={buy}
-      validateSell={validateSell}
-      sell={sell}
-      burn={burn}
-      dollarize={dollarize}
-      dollarPrice={dollarPrice}
-      balanceBKFT={balanceBKFT}
-      reserveBKFTToken={reserveBKFTToken}
-      totalSupply={totalSupply}
-      nftBalance={nftBalance}
-    />
+    <SupplyProvider>
+      <Body
+        selectedTokenSymbol={selectedTokenSymbol}
+        setSelectedTokenSymbol={setSelectedTokenSymbol}
+        ready={ready}
+        unlock={unlock}
+        validateBuy={validateBuy}
+        buy={buy}
+        validateSell={validateSell}
+        sell={sell}
+        burn={burn}
+        dollarize={dollarize}
+        dollarPrice={dollarPrice}
+        balanceBKFT={balanceBKFT}
+        reserveBKFTToken={reserveBKFTToken}
+        totalSupply={totalSupply}
+        nftBalance={nftBalance}
+      />
+    </SupplyProvider>
   )
 }

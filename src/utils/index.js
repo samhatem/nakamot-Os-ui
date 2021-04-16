@@ -87,6 +87,12 @@ export async function getNFTBalance(address, library) {
   return tokenContract.balanceOf(address)
 }
 
+export async function getNFTSupply(library) {
+  const tokenContract = new ethers.Contract(NFT_ADDRESS, ['function totalSupply() public view returns (uint256)'], library)
+
+  return tokenContract.totalSupply()
+}
+
 export function amountFormatter(amount, baseDecimals = 18, displayDecimals = 3, useLessThan = true) {
   if (baseDecimals > 18 || displayDecimals > 18 || displayDecimals > baseDecimals) {
     throw Error(`Invalid combination of baseDecimals '${baseDecimals}' and displayDecimals '${displayDecimals}.`)

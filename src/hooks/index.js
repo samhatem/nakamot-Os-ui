@@ -11,6 +11,7 @@ import {
   getRouterContract,
   TOKEN_ADDRESSES,
   getNFTBalance,
+  getNFTSupply,
 } from '../utils'
 import { utils } from 'ethers'
 
@@ -137,6 +138,43 @@ export function useNFTBalance() {
   useBlockEffect(updateBalance)
 
   return nftBalance && nftBalance.toNumber()
+}
+
+export function useNFTSupply() {
+  const { library } = useWeb3Context()
+
+  const [nftSupply, setNFTSupply] = useState()
+
+  const updateSupply = useCallback(() => {
+    let stale = false
+
+    getNFTSupply(library)
+      .then(value => {
+        if (!stale) {
+          setNFTSupply(value)
+        }
+      })
+      .catch(error => {
+        console.log("Error in get NFT Supply")
+        console.log({ error })
+        if (!stale) {
+          setNFTSupply(null)
+        }
+      })
+
+    return () => {
+      stale = true
+      setNFTSupply()
+    }
+  }, [library])
+
+  useEffect(() => {
+    return updateSupply()
+  }, [updateSupply])
+
+  useBlockEffect(updateSupply)
+
+  return nftSupply && nftSupply.toNumber()
 }
 
 export function useTotalSupply(contract) {

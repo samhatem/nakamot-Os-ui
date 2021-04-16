@@ -4,9 +4,10 @@ import { useWeb3Context } from 'web3-react'
 import { Link } from 'react-router-dom'
 
 import { useAppContext } from '../context'
+import { useNftTotalSupply } from '../context/nftSupplyContext'
 import Button from './Button'
 import RedeemForm from './RedeemForm'
-import { amountFormatter, TOKEN_SYMBOL, NFT_URI } from '../utils'
+import { amountFormatter, TOKEN_SYMBOL, NFT_URI, NFT_MAX_SUPPLY } from '../utils'
 
 import IncrementToken from './IncrementToken'
 import test from './Gallery/Nakmot-Os.png'
@@ -72,6 +73,10 @@ export default function Redeem({
 
   const [hasBurnt, setHasBurnt] = useState(false)
   const [userAddress, setUserAddress] = useState('')
+
+  const { supply: nftSupply } = useNftTotalSupply()
+
+  console.log({ nftSupply });
 
   const pending = !!transactionHash
 
@@ -190,26 +195,28 @@ export default function Redeem({
                 </p>
               </Owned>
             </InfoFrame>
-            <InfoFrame hasPickedAmount={hasPickedAmount}>
-              <ImgStyle src={NFT_URI} alt="Logo" hasPickedAmount={hasPickedAmount} />
-              <Bonus>Bonus</Bonus>
-              <Owned>
-                <p style={{ fontSize: '18px' }}>{state.count} Nakamot'Os NFT</p>
-                <p style={{ fontSize: '14px', fontWeight: '500' }}>Digital Collectible (6.9mb)</p>
-                <p
-                  style={{
-                    fontSize: '12px',
-                    fontWeight: '500',
-                    color: '#AEAEAE',
-                    marginTop: '16px',
-                    marginRight: '16px',
-                    wordBreak: 'break-all'
-                  }}
-                >
-                  {account}
-                </p>
-              </Owned>
-            </InfoFrame>
+            {nftSupply < NFT_MAX_SUPPLY && (
+              <InfoFrame hasPickedAmount={hasPickedAmount}>
+                <ImgStyle src={NFT_URI} alt="Logo" hasPickedAmount={hasPickedAmount} />
+                <Bonus>Bonus</Bonus>
+                <Owned>
+                  <p style={{ fontSize: '18px' }}>{state.count} Nakamot'Os NFT</p>
+                  <p style={{ fontSize: '14px', fontWeight: '500' }}>Digital Collectible (6.9mb)</p>
+                  <p
+                    style={{
+                      fontSize: '12px',
+                      fontWeight: '500',
+                      color: '#AEAEAE',
+                      marginTop: '16px',
+                      marginRight: '16px',
+                      wordBreak: 'break-all'
+                    }}
+                  >
+                    {account}
+                  </p>
+                </Owned>
+              </InfoFrame>
+            )}
           </TopFrame>
           {/* <Back
             onClick={() => {
