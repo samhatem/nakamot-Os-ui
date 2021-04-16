@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { useAppContext } from '../context'
 import Button from './Button'
 import RedeemForm from './RedeemForm'
-import { amountFormatter, TOKEN_SYMBOL } from '../utils'
+import { amountFormatter, TOKEN_SYMBOL, NFT_URI } from '../utils'
 
 import IncrementToken from './IncrementToken'
 import test from './Gallery/Nakmot-Os.png'
@@ -191,11 +191,11 @@ export default function Redeem({
               </Owned>
             </InfoFrame>
             <InfoFrame hasPickedAmount={hasPickedAmount}>
-              <ImgStyle src={test} alt="Logo" hasPickedAmount={hasPickedAmount} />
+              <ImgStyle src={NFT_URI} alt="Logo" hasPickedAmount={hasPickedAmount} />
               <Bonus>Bonus</Bonus>
               <Owned>
                 <p style={{ fontSize: '18px' }}>{state.count} Nakamot'Os NFT</p>
-                <p style={{ fontSize: '14px', fontWeight: '500' }}>Digital Collectible (10kb)</p>
+                <p style={{ fontSize: '14px', fontWeight: '500' }}>Digital Collectible (6.9mb)</p>
                 <p
                   style={{
                     fontSize: '12px',
