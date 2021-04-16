@@ -7,6 +7,7 @@ import Works from './Works'
 import BuyAndSell from './BuyAndSell'
 import Redeem from './Redeem'
 import Confirmed from './Confirmed'
+import NftModal from './NftModal'
 import { useAppContext } from '../context'
 import { TRADE_TYPES } from '../utils'
 
@@ -82,6 +83,8 @@ export default function Checkout({
   showConnect,
   showWorks,
   setShowWorks,
+  showNftModal,
+  setShowNftModal,
 }) {
   const { library } = useWeb3Context()
   const [state, setState] = useAppContext()
@@ -119,6 +122,7 @@ export default function Checkout({
   function closeCheckout() {
     setShowConnect(false)
     if (state.visible) {
+      setShowNftModal(false)
       setShowWorks(false)
       setLastTransactionHash('')
       setState(state => ({ ...state, visible: !state.visible }))
@@ -128,6 +132,8 @@ export default function Checkout({
   function renderContent() {
     if (showConnect) {
       return <Connect setShowConnect={setShowConnect} closeCheckout={closeCheckout} />
+    } else if (showNftModal) {
+      return <NftModal closeCheckout={closeCheckout} />
     } else if (showWorks) {
       return <Works closeCheckout={closeCheckout} />
     } else if (lastTransactionHash) {

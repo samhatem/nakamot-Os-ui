@@ -11,14 +11,20 @@ import Checkout from '../../components/Checkout'
 import { amountFormatter, INITIAL_SUPPLY } from '../../utils'
 import { useNftContext } from '../../context/nftContext'
 
-export function Header({ totalSupply, ready, balanceBKFT, setShowConnect }) {
+export function Header({ totalSupply, ready, balanceBKFT, setShowConnect, setShowNftModal }) {
   const { account, setConnector } = useWeb3Context()
   const { nftBalance } = useNftContext()
+  const [, setState] = useAppContext()
 
   function handleAccount() {
     setConnector('Injected', { suppressAndThrowErrors: true }).catch(error => {
       setShowConnect(true)
     })
+  }
+
+  function handleShowNftModal() {
+    setState(state => ({ ...state, visible: !state.visible }))
+    setShowNftModal(true)
   }
 
   return (
@@ -33,7 +39,7 @@ export function Header({ totalSupply, ready, balanceBKFT, setShowConnect }) {
       </Link>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         {!!nftBalance && (
-          <NFTBalance>
+          <NFTBalance onClick={handleShowNftModal}>
             {nftBalance} Nakamot-O NFTs
           </NFTBalance>
         )}
@@ -182,6 +188,7 @@ export default function Body({
   const [state, setState] = useAppContext()
   const [showConnect, setShowConnect] = useState(false)
   const [showWorks, setShowWorks] = useState(false)
+  const [showNftModal, setShowNftModal] = useState(false)
 
   return (
     <AppWrapper overlay={state.visible}>
@@ -191,6 +198,7 @@ export default function Body({
         dollarPrice={dollarPrice}
         balanceBKFT={balanceBKFT}
         setShowConnect={setShowConnect}
+        setShowNftModal={setShowNftModal}
       />
       <Content>
         <Card totalSupply={totalSupply} dollarPrice={dollarPrice} reserveBKFTToken={reserveBKFTToken} />{' '}
@@ -254,6 +262,8 @@ export default function Body({
         clearCurrentTransaction={clearCurrentTransaction}
         showWorks={showWorks}
         setShowWorks={setShowWorks}
+        showNftModal={showNftModal}
+        setShowNftModal={setShowNftModal}
       />
     </AppWrapper>
   )
