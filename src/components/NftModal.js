@@ -23,10 +23,12 @@ const Title = styled.p`
 `
 
 const ImgStyle = styled.img`
-  width: ${props => (props.hasPickedAmount ? (props.hasBurnt ? '300px' : '120px') : '300px')};
-  padding: ${props => (props.hasPickedAmount ? (props.hasBurnt ? '0px' : '0 1rem 0 0') : '2rem 0 2rem 0')};
+  width: 100%;
+  margin: 2rem 0px;
   box-sizing: border-box;
-  height: 258px;
+  height: 213px;
+  border: 2px solid black;
+  max-width: 300px;
 `
 
 export default function NftModal({ closeCheckout }) {
