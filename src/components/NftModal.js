@@ -26,7 +26,7 @@ const ImgStyle = styled.img`
   width: ${props => (props.hasPickedAmount ? (props.hasBurnt ? '300px' : '120px') : '300px')};
   padding: ${props => (props.hasPickedAmount ? (props.hasBurnt ? '0px' : '0 1rem 0 0') : '2rem 0 2rem 0')};
   box-sizing: border-box;
-  min-height: 200px;
+  height: 258px;
 `
 
 export default function NftModal({ closeCheckout }) {
