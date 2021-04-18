@@ -1,6 +1,8 @@
 {
   "dependencies": {
+    "axios": "^0.21.1",
     "ethers": "^5.0.32",
     "faunadb": "^2.6.1"
-  }
+  },
+  "devDependencies": {}
 }

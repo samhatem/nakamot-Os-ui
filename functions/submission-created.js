@@ -1,4 +1,5 @@
 import { ethers } from 'ethers'
+import { getCustomer } from './helpers/getCustomer'
 const faunadb = require('faunadb')
 
 const q = faunadb.query
@@ -66,6 +67,16 @@ export async function handler(event) {
     console.log('Unauthorized!', `${m1}\n\n${m2}\n${m3}`, signature, address)
     return returnError("Unauthorized. Signature Invalid", 401)
   }
+
+  let customer
+  try {
+    customer = await getCustomer(address, data)
+  } catch (e) {
+    console.log({ e, message: "unable to get customer" })
+    return returnError("Unable to get customer")
+  }
+
+  console.log({ customer })
 
   try {
     await client.query(

@@ -1,4 +1,5 @@
 import { ethers } from 'ethers'
+// import { getCustomer } from './helpers/getCustomer'
 const faunadb = require('faunadb')
 
 const q = faunadb.query
@@ -43,6 +44,8 @@ export async function handler(event) {
   if (addressOfSigner !== address || Math.round(Date.now() / 1000) - timestamp >= 60 * 60) {
     return returnError('Unauthorized', 401)
   }
+
+  // await getCustomer(address, client)
 
   try {
     const allRefs = await client.query(q.Paginate(q.Match(q.Index('get_by_address'), address)))
