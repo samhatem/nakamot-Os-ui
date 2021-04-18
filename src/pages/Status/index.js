@@ -61,6 +61,13 @@ export default function Body({ totalSupply, ready, balanceBKFT }) {
     }
   }, [account, signature, timestamp])
 
+  function getFormattedDate (timestamp) {
+    const date = new Date(Number(timestamp) * 1000)
+    const formatted = date.toLocaleDateString()
+
+    return formatted
+  }
+
   if (!account) {
     return <Redirect to={'/'} />
   } else {
@@ -86,10 +93,7 @@ export default function Body({ totalSupply, ready, balanceBKFT }) {
                     <ul>
                       <li>
                         Order Date:{' '}
-                        {new Date(Number(d.timestamp) * 1000).toLocaleDateString(undefined, {
-                          dateStyle: 'long',
-                          timeStyle: 'short'
-                        })}
+                        {getFormattedDate(d.timestamp)}
                       </li>
                       <li>{TOKEN_SYMBOL} Redeemed: {d.numberOfSocks}</li>
                       <li>
