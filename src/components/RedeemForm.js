@@ -18,7 +18,8 @@ function encode(data) {
 
 // variables for the netlify names of each form field
 const bot = 'beep-boop'
-const name = 'name'
+const firstName = 'firstName'
+const lastName = 'lastName'
 const line1 = 'line1'
 const line2 = 'line2'
 const city = 'city'
@@ -33,7 +34,8 @@ const signature = 'signature'
 
 // map from variables to display text for each field
 const nameMap = {
-  [name]: 'Name',
+  [firstName]: 'First Name',
+  [lastName]: 'Last Name',
   [line1]: 'Street Address',
   [line2]: 'Unit',
   [city]: 'City',
@@ -47,12 +49,13 @@ const nameMap = {
 }
 
 // the order for fields that will be submitted
-const nameOrder = [name, line1, line2, city, state, zip, country, email]
+const nameOrder = [firstName, lastName, line1, line2, city, state, zip, country, email]
 
 // default for each form field
 const defaultState = {
   [bot]: '',
-  [name]: '',
+  [firstName]: '',
+  [lastName]: '',
   [line1]: '',
   [line2]: '',
   [city]: '',
@@ -142,7 +145,8 @@ export default function RedeemForm({ setHasConfirmedAddress, setUserAddress, num
   */
 
   const canSign =
-    formState[name] &&
+    formState[firstName] &&
+    formState[lastName] &&
     formState[line1] &&
     formState[city] &&
     formState[state] &&
@@ -159,15 +163,27 @@ export default function RedeemForm({ setHasConfirmedAddress, setUserAddress, num
   return (
     <FormFrame autoComplete="off">
       <input hidden autoComplete="false" type="text" name="beep-boop" value={formState[bot]} onChange={handleChange} />
-      <input
-        required
-        name={name}
-        value={formState[name]}
-        onChange={handleChange}
-        placeholder={nameMap[name]}
-        autoComplete="off"
-        type="text"
-      />
+      <Compressed>
+        <input
+          style={{ marginRight: '8px' }}
+          required
+          name={firstName}
+          value={formState[firstName]}
+          onChange={handleChange}
+          placeholder={nameMap[firstName]}
+          autoComplete="off"
+          type="text"
+        />
+        <input
+          required
+          name={lastName}
+          value={formState[lastName]}
+          onChange={handleChange}
+          placeholder={nameMap[lastName]}
+          autoComplete="off"
+          type="text"
+        />
+      </Compressed>
       <input
         type="text"
         value={formState[line1]}

@@ -33,6 +33,8 @@ export async function handler(event) {
 
   const {
     name,
+    firstName,
+    lastName,
     line1,
     line2,
     city,
@@ -54,7 +56,7 @@ export async function handler(event) {
   }
 
   const m1 = `PLEASE VERIFY YOUR ADDRESS.\nYour data will never be shared publicly.`
-  const m2 = `Name: ${name}\nStreet Address: ${line1}\nUnit: ${line2}\nCity: ${city}\nState: ${state}\nZIP: ${zip}\nCountry: ${country}\nEmail: ${email}`
+  const m2 = `First Name: ${firstName}\nLast Name: ${lastName}\nStreet Address: ${line1}\nUnit: ${line2}\nCity: ${city}\nState: ${state}\nZIP: ${zip}\nCountry: ${country}\nEmail: ${email}`
   const m3 = `Ethereum Address: ${address}\nTime: ${timestamp}\nBOX Redeemed: ${numberBurned}`
 
   const addressOfSigner = ethers.utils.verifyMessage(`${m1}\n\n${m2}\n${m3}`, signature)
@@ -62,6 +64,7 @@ export async function handler(event) {
 
   if (isInvalid) {
     console.log('Unauthorized!', `${m1}\n\n${m2}\n${m3}`, signature, address)
+    return returnError("Unauthorized. Signature Invalid", 401)
   }
 
   try {
