@@ -70,7 +70,7 @@ export async function handler(event) {
 
   let customer
   try {
-    customer = await getCustomer(address, data)
+    customer = await getCustomer(address, data, true)
   } catch (e) {
     console.log({ e, message: "unable to get customer" })
     return returnError("Unable to get customer")
@@ -78,32 +78,5 @@ export async function handler(event) {
 
   console.log({ customer })
 
-  try {
-    await client.query(
-      q.Create(q.Collection('addresses'), {
-        data: {
-          numberOfSocks: Number(numberBurned),
-          timestamp: Number(timestamp),
-          addressPhysical: {
-            name,
-            line1,
-            line2,
-            city,
-            state,
-            zip,
-            country,
-            email
-          },
-          addressEthereum: address,
-          signature,
-          invalid: isInvalid,
-          matched: false
-        }
-      })
-    )
-    return returnSuccess({ message: 'Success' })
-  } catch (error) {
-    console.error(error)
-    return returnError('Unknown Error')
-  }
+  return returnSuccess({ message: 'Success' })
 }

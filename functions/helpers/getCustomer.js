@@ -6,7 +6,11 @@ const client = new faunadb.Client({
   secret: process.env.FAUNADB_SERVER_SECRET
 })
 
-export async function getCustomer (address, customerInfo) {
+export function findAddress (customer, info) {
+  return customer.addresses.find(addr => addr.address1 === info.line1 && addr.zip === info.zip)
+}
+
+export async function getCustomer (address, customerInfo, shouldCreateAddress = false) {
   const allRefs = await client.query(q.Paginate(q.Match(q.Index('get_by_customer'), address)))
 
   if (allRefs.data.length === 0) {
@@ -15,7 +19,42 @@ export async function getCustomer (address, customerInfo) {
 
   const query = await client.query(allRefs.data.map(ref => q.Get(ref)))
 
-  return query[0]
+  const { shopifyId } = query[0].data
+  const { data: { customer } } = await axios({
+    url: `/admin/api/2021-04/customers/${shopifyId}.json`,
+    method: 'get'
+  })
+
+  if (shouldCreateAddress) {
+    if (!findAddress(customer, customerInfo)) {
+      const newAddress = await createAddress(customer, customerInfo)
+      customer.addresses = [...customer.addresses, newAddress]
+    }
+  }
+
+  return customer
+}
+
+async function createAddress (customer, info) {
+  const { data: { customer_address: newAddress } } = await axios({
+    url: `/admin/api/2021-04/customers/${customer.id}/addresses.json`,
+    method: 'post',
+    data: {
+      address: {
+        address1: info.line1,
+        address2: info.line2,
+        city: info.city,
+        province: info.state,
+        zip: info.zip,
+        last_name: info.lastName,
+        first_name: info.firstName,
+        country: info.country
+      }
+    }
+  })
+
+  console.log({ newAddress })
+  return newAddress
 }
 
 async function createCustomer (address, customerInfo) {
