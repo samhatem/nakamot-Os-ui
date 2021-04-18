@@ -114,7 +114,7 @@ const NFTBalance = styled.div`
   font-size: 14px;
   color: #fff;
   font-family: inherit;
-  background-color: ${props => props.theme.orange};
+  background: linear-gradient(90deg,#FE8700 4.52%,#FFA743 100%);
 `
 
 const Burned = styled.div`
