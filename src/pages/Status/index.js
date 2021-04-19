@@ -5,7 +5,6 @@ import { useAppContext } from '../../context'
 import { Redirect } from 'react-router-dom'
 import { Header } from '../Body'
 import Button from '../../components/Button'
-import { EtherscanLink } from '../../components/Works'
 import { TOKEN_SYMBOL } from "../../utils"
 
 const OrderDiv = styled.div`
@@ -62,7 +61,7 @@ export default function Body({ totalSupply, ready, balanceBKFT }) {
   }, [account, signature, timestamp])
 
   function getFormattedDate (timestamp) {
-    const date = new Date(Number(timestamp) * 1000)
+    const date = new Date(timestamp)
     const formatted = date.toLocaleDateString()
 
     return formatted
@@ -93,18 +92,13 @@ export default function Body({ totalSupply, ready, balanceBKFT }) {
                     <ul>
                       <li>
                         Order Date:{' '}
-                        {getFormattedDate(d.timestamp)}
+                        {getFormattedDate(d.created_at)}
                       </li>
-                      <li>{TOKEN_SYMBOL} Redeemed: {d.numberOfSocks}</li>
+                      <li>{TOKEN_SYMBOL} Redeemed: {d.line_items[0].fulfillable_quantity}</li>
                       <li>
-                        Status:{' '}
-                        {d.invalid
-                          ? 'Invalid Order'
-                          : d.matched
-                          ? d.shippingId
-                            ? 'Shipped!'
-                            : 'Processing Order'
-                          : 'Order Received'}
+                        <a href={d.order_status_url} target="_blank" rel="noopener noreferrer">
+                          Order Status
+                        </a>
                       </li>
                       {d.shippingId && (
                         <li>
@@ -120,16 +114,6 @@ export default function Body({ totalSupply, ready, balanceBKFT }) {
                         </li>
                       )}
                     </ul>
-                    {d.NFTTransactionHash && (
-                      <EtherscanLink
-                        style={{ marginBottom: '.5rem' }}
-                        href={`https://etherscan.io/tx/${d.NFTTransactionHash}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        View ERC-721 Transaction
-                      </EtherscanLink>
-                    )}
                   </OrderDiv>
                 )
               })
