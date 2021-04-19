@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { useAppContext } from '../context'
 import { useNftContext } from '../context/nftContext'
 import Button from './Button'
-import RedeemForm from './RedeemForm'
+import RedeemForm, { defaultState, address } from './RedeemForm'
 import { amountFormatter, TOKEN_SYMBOL, NFT_URI, NFT_MAX_SUPPLY } from '../utils'
 
 import IncrementToken from './IncrementToken'
@@ -70,6 +70,8 @@ export default function Redeem({
   const [hasConfirmedAddress, setHasConfirmedAddress] = useState(false)
   const [transactionHash, setTransactionHash] = useState('')
   const [lastTransactionHash, setLastTransactionHash] = useState('')
+
+  const [formState, setFormState] = useState(defaultState)
 
   const [hasBurnt, setHasBurnt] = useState(false)
   const [userAddress, setUserAddress] = useState('')
@@ -158,6 +160,8 @@ export default function Redeem({
             setHasConfirmedAddress={setHasConfirmedAddress}
             setUserAddress={setUserAddress}
             numberBurned={numberBurned}
+            formState={formState}
+            setFormState={setFormState}
           />
           <Back>
             <span
@@ -233,7 +237,23 @@ export default function Redeem({
             onClick={() => {
               burn(numberBurned.toString())
                 .then(response => {
-                  setTransactionHash(response.hash)
+                  // save transaction hash
+                  fetch('/.netlify/functions/create-order', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      ...{
+                        ...formState,
+                        [address]: account,
+                        'number-burned': numberBurned,
+                        burnHash: response.hash
+                      }
+                    })
+                  })
+                    .then(() => {
+                      setTransactionHash(response.hash)
+                    })
+                    .catch(console.error)
                 })
                 .catch(error => {
                   console.error(error)

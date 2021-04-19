@@ -27,7 +27,7 @@ const state = 'state'
 const zip = 'zip'
 const country = 'country'
 const email = 'email'
-const address = 'address'
+export const address = 'address'
 const timestamp = 'timestamp'
 const numberBurned = 'number-burned'
 const signature = 'signature'
@@ -52,7 +52,7 @@ const nameMap = {
 const nameOrder = [firstName, lastName, line1, line2, city, state, zip, country, email]
 
 // default for each form field
-const defaultState = {
+export const defaultState = {
   [bot]: '',
   [firstName]: '',
   [lastName]: '',
@@ -78,13 +78,11 @@ const addressMapping = [
 
 const recaptchaEnabled = false
 
-export default function RedeemForm({ setHasConfirmedAddress, setUserAddress, numberBurned: actualNumberBurned }) {
+export default function RedeemForm({ setHasConfirmedAddress, setUserAddress, numberBurned: actualNumberBurned, formState, setFormState }) {
   const { library, account } = useWeb3Context()
   const [recaptcha, setRecaptcha] = useState()
   // const [autoAddress, setAutoAddress] = useState([])
   // const [inputY, setInputY] = useState(0)
-
-  const [formState, setFormState] = useState(defaultState)
 
   function handleChange(event) {
     const { name, value } = event.target

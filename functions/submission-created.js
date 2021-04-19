@@ -33,7 +33,6 @@ export async function handler(event) {
   const data = JSON.parse(event.body)
 
   const {
-    name,
     firstName,
     lastName,
     line1,
@@ -68,15 +67,12 @@ export async function handler(event) {
     return returnError("Unauthorized. Signature Invalid", 401)
   }
 
-  let customer
   try {
-    customer = await getCustomer(address, data, true)
+    await getCustomer(address, data, true)
   } catch (e) {
     console.log({ e, message: "unable to get customer" })
     return returnError("Unable to get customer")
   }
-
-  console.log({ customer })
 
   return returnSuccess({ message: 'Success' })
 }

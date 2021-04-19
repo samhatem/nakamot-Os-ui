@@ -53,7 +53,6 @@ async function createAddress (customer, info) {
     }
   })
 
-  console.log({ newAddress })
   return newAddress
 }
 
