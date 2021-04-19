@@ -74,9 +74,10 @@ export async function handler(event) {
     "financial_status": "paid"
   }
 
+  let orderId
   try {
     // create order with shopify
-    await axios({
+    const { data: { order: { id } } } = await axios({
       url: '/admin/api/2021-04/orders.json',
       method: 'post',
       data: {
@@ -84,6 +85,7 @@ export async function handler(event) {
       }
     })
 
+    orderId = id
   } catch (e) {
     console.log({ e, message: "unable to get customer" })
     console.log("response data", e.response.data)
@@ -95,6 +97,8 @@ export async function handler(event) {
       q.Create(q.Collection('orders'), {
         data: {
           burnHash,
+          orderId,
+          addressEthereum: address,
           order: orderData
         }
       })
