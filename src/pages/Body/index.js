@@ -38,11 +38,7 @@ export function Header({ totalSupply, ready, balanceBKFT, setShowConnect, setSho
         </Unicorn>
       </Link>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
-        {!!nftBalance && (
-          <NFTBalance onClick={handleShowNftModal}>
-            {nftBalance} Nakamot-O NFTs
-          </NFTBalance>
-        )}
+        {!!nftBalance && <NFTBalance onClick={handleShowNftModal}>{nftBalance} Nakamot-O NFTs</NFTBalance>}
         {totalSupply && (
           <Link to="/stats" style={{ textDecoration: 'none' }}>
             <Burned>
@@ -56,7 +52,9 @@ export function Header({ totalSupply, ready, balanceBKFT, setShowConnect, setSho
         <Account onClick={() => handleAccount()} balanceBKFT={balanceBKFT}>
           {account ? (
             balanceBKFT > 0 ? (
-              <SockCount>{balanceBKFT && `${amountFormatter(balanceBKFT, 18, 0)}`} {TOKEN_SYMBOL}</SockCount>
+              <SockCount>
+                {balanceBKFT && `${amountFormatter(balanceBKFT, 18, 0)}`} {TOKEN_SYMBOL}
+              </SockCount>
             ) : (
               <SockCount>{account.slice(0, 6)}...</SockCount>
             )
@@ -114,11 +112,11 @@ const NFTBalance = styled.div`
   font-size: 14px;
   color: #fff;
   font-family: inherit;
-  background: linear-gradient(90deg,#FE8700 4.52%,#FFA743 100%);
+  background: linear-gradient(90deg, #fe8700 4.52%, #ffa743 100%);
 `
 
 const Burned = styled.div`
-  background-color: none;
+  background-color: white;
   border: 1px solid ${props => props.theme.black};
   margin-right: 1rem;
   padding: 0.75rem;
@@ -175,7 +173,7 @@ export default function Body({
   dollarPrice,
   balanceBKFT,
   reserveBKFTToken,
-  totalSupply,
+  totalSupply
 }) {
   const { account } = useWeb3Context()
   const [currentTransaction, _setCurrentTransaction] = useState({})
@@ -200,7 +198,9 @@ export default function Body({
         setShowConnect={setShowConnect}
         setShowNftModal={setShowNftModal}
       />
+
       <Content>
+        <StyledImage src="nakamotos-title.png" alt="Nakamot-Os" />
         <Card totalSupply={totalSupply} dollarPrice={dollarPrice} reserveBKFTToken={reserveBKFTToken} />{' '}
         <Info>
           <div style={{ marginBottom: '4px' }}>Buy and sell real cereal with digital currency.</div>
@@ -319,8 +319,13 @@ const OrderStatusLink = styled.p`
 `
 
 const Unicorn = styled.p`
-  color: ${props => props.theme.black};
+  color: white;
   font-weight: 600;
   margin: auto 0px;
   font-size: 16px;
+`
+
+const StyledImage = styled.img`
+  margin-bottom: 50px;
+  margin-top: 50px;
 `

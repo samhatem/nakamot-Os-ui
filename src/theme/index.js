@@ -12,7 +12,7 @@ export default createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: Tomorrow, sans-serif;
-    /* background-color: #F1F2F6; */
+    background-image: url("stars.png")
   }
 `
 
