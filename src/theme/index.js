@@ -12,7 +12,10 @@ export default createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: Tomorrow, sans-serif;
-    background-image: url("stars.png")
+    background-image: url('moon-overlay.png'), url("stars.png"); 
+    background-repeat: no-repeat, repeat;
+    background-position: left bottom;
+    background-size: 60%, 100%;
   }
 `
 

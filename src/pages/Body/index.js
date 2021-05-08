@@ -199,8 +199,10 @@ export default function Body({
         setShowNftModal={setShowNftModal}
       />
 
-      <Content>
+      <StyledImageContainer>
         <StyledImage src="nakamotos-title.png" alt="Nakamot-Os" />
+      </StyledImageContainer>
+      <Content>
         <Card totalSupply={totalSupply} dollarPrice={dollarPrice} reserveBKFTToken={reserveBKFTToken} />{' '}
         <Info>
           <div style={{ marginBottom: '4px' }}>Buy and sell real cereal with digital currency.</div>
@@ -328,4 +330,12 @@ const Unicorn = styled.p`
 const StyledImage = styled.img`
   margin-bottom: 50px;
   margin-top: 50px;
+  float: left;
+`
+
+const StyledImageContainer = styled.div`
+  width: calc(100vw - 32px);
+  max-width: 375px;
+  margin-top: 72px;
+  margin-right: 100px;
 `
