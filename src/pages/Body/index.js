@@ -275,7 +275,7 @@ const AppWrapper = styled.div`
   width: 100vw;
   height: 100%;
   margin: 0px auto;
-  margin-bottom: 1rem;
+  margin-bottom: 20rem;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
