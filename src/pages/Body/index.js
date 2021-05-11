@@ -10,6 +10,7 @@ import RedeemButton from '../../components/RedeemButton'
 import Checkout from '../../components/Checkout'
 import { amountFormatter, INITIAL_SUPPLY, TOKEN_SYMBOL } from '../../utils'
 import { useNftContext } from '../../context/nftContext'
+import Facts from '../../components/Facts'
 
 export function Header({ totalSupply, ready, balanceBKFT, setShowConnect, setShowNftModal }) {
   const { account, setConnector } = useWeb3Context()
@@ -159,118 +160,6 @@ const Status = styled.div`
   // props.account === null ? props.theme.orange : props.theme.green};
 `
 
-export default function Body({
-  selectedTokenSymbol,
-  setSelectedTokenSymbol,
-  ready,
-  unlock,
-  validateBuy,
-  buy,
-  validateSell,
-  sell,
-  burn,
-  dollarize,
-  dollarPrice,
-  balanceBKFT,
-  reserveBKFTToken,
-  totalSupply
-}) {
-  const { account } = useWeb3Context()
-  const [currentTransaction, _setCurrentTransaction] = useState({})
-  const setCurrentTransaction = useCallback((hash, type, amount) => {
-    _setCurrentTransaction({ hash, type, amount })
-  }, [])
-  const clearCurrentTransaction = useCallback(() => {
-    _setCurrentTransaction({})
-  }, [])
-  const [state, setState] = useAppContext()
-  const [showConnect, setShowConnect] = useState(false)
-  const [showWorks, setShowWorks] = useState(false)
-  const [showNftModal, setShowNftModal] = useState(false)
-
-  return (
-    <AppWrapper overlay={state.visible}>
-      <Header
-        totalSupply={totalSupply}
-        ready={ready}
-        dollarPrice={dollarPrice}
-        balanceBKFT={balanceBKFT}
-        setShowConnect={setShowConnect}
-        setShowNftModal={setShowNftModal}
-      />
-
-      <StyledImageContainer>
-        <StyledImage src="nakamotos-title.png" alt="Nakamot-Os" />
-      </StyledImageContainer>
-      <Content>
-        <Card totalSupply={totalSupply} dollarPrice={dollarPrice} reserveBKFTToken={reserveBKFTToken} />{' '}
-        <Info>
-          <div style={{ marginBottom: '4px' }}>Buy and sell real cereal with digital currency.</div>
-          <div style={{ marginBottom: '4px' }}>
-            Delivered on demand.{' '}
-            <a
-              href="/"
-              onClick={e => {
-                e.preventDefault()
-                setState(state => ({ ...state, visible: !state.visible }))
-                setShowWorks(true)
-              }}
-            >
-              Learn more
-            </a>
-          </div>
-          {/* <SubInfo>
-            An experiment in pricing and user experience by the team at Uniswap.{' '}
-            <a
-              href="/"
-              onClick={e => {
-                e.preventDefault()
-                setState(state => ({ ...state, visible: !state.visible }))
-                setShowWorks(true)
-              }}
-            >
-              How it works.
-            </a>
-          </SubInfo> */}
-        </Info>
-        <BuyButtons balanceBKFT={balanceBKFT} />
-        <RedeemButton balanceBKFT={balanceBKFT} />
-        {!!account && (
-          <Link style={{ textDecoration: 'none' }} to="/status">
-            <OrderStatusLink>Check order status?</OrderStatusLink>
-          </Link>
-        )}
-      </Content>
-      <Checkout
-        selectedTokenSymbol={selectedTokenSymbol}
-        setSelectedTokenSymbol={setSelectedTokenSymbol}
-        ready={ready}
-        unlock={unlock}
-        validateBuy={validateBuy}
-        buy={buy}
-        validateSell={validateSell}
-        sell={sell}
-        burn={burn}
-        balanceBKFT={balanceBKFT}
-        dollarPrice={dollarPrice}
-        reserveBKFTToken={reserveBKFTToken}
-        dollarize={dollarize}
-        showConnect={showConnect}
-        setShowConnect={setShowConnect}
-        currentTransactionHash={currentTransaction.hash}
-        currentTransactionType={currentTransaction.type}
-        currentTransactionAmount={currentTransaction.amount}
-        setCurrentTransaction={setCurrentTransaction}
-        clearCurrentTransaction={clearCurrentTransaction}
-        showWorks={showWorks}
-        setShowWorks={setShowWorks}
-        showNftModal={showNftModal}
-        setShowNftModal={setShowNftModal}
-      />
-    </AppWrapper>
-  )
-}
-
 const AppWrapper = styled.div`
   width: 100vw;
   height: 100%;
@@ -339,3 +228,125 @@ const StyledImageContainer = styled.div`
   margin-top: 72px;
   margin-right: 100px;
 `
+
+const StyledRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+`
+
+export default function Body({
+  selectedTokenSymbol,
+  setSelectedTokenSymbol,
+  ready,
+  unlock,
+  validateBuy,
+  buy,
+  validateSell,
+  sell,
+  burn,
+  dollarize,
+  dollarPrice,
+  balanceBKFT,
+  reserveBKFTToken,
+  totalSupply
+}) {
+  const { account } = useWeb3Context()
+  const [currentTransaction, _setCurrentTransaction] = useState({})
+  const setCurrentTransaction = useCallback((hash, type, amount) => {
+    _setCurrentTransaction({ hash, type, amount })
+  }, [])
+  const clearCurrentTransaction = useCallback(() => {
+    _setCurrentTransaction({})
+  }, [])
+  const [state, setState] = useAppContext()
+  const [showConnect, setShowConnect] = useState(false)
+  const [showWorks, setShowWorks] = useState(false)
+  const [showNftModal, setShowNftModal] = useState(false)
+
+  return (
+    <AppWrapper overlay={state.visible}>
+      <Header
+        totalSupply={totalSupply}
+        ready={ready}
+        dollarPrice={dollarPrice}
+        balanceBKFT={balanceBKFT}
+        setShowConnect={setShowConnect}
+        setShowNftModal={setShowNftModal}
+      />
+
+      <StyledImageContainer>
+        <StyledImage src="nakamotos-title.png" alt="Nakamot-Os" />
+      </StyledImageContainer>
+      <StyledRow>
+        <Card totalSupply={totalSupply} dollarPrice={dollarPrice} reserveBKFTToken={reserveBKFTToken} />
+        <Facts />
+      </StyledRow>
+      <Content>
+        <Info>
+          <div style={{ marginBottom: '4px' }}>Buy and sell real cereal with digital currency.</div>
+          <div style={{ marginBottom: '4px' }}>
+            Delivered on demand.{' '}
+            <a
+              href="/"
+              onClick={e => {
+                e.preventDefault()
+                setState(state => ({ ...state, visible: !state.visible }))
+                setShowWorks(true)
+              }}
+            >
+              Learn more
+            </a>
+          </div>
+          {/* <SubInfo>
+            An experiment in pricing and user experience by the team at Uniswap.{' '}
+            <a
+              href="/"
+              onClick={e => {
+                e.preventDefault()
+                setState(state => ({ ...state, visible: !state.visible }))
+                setShowWorks(true)
+              }}
+            >
+              How it works.
+            </a>
+          </SubInfo> */}
+        </Info>
+        <BuyButtons balanceBKFT={balanceBKFT} />
+        <RedeemButton balanceBKFT={balanceBKFT} />
+        {!!account && (
+          <Link style={{ textDecoration: 'none' }} to="/status">
+            <OrderStatusLink>Check order status?</OrderStatusLink>
+          </Link>
+        )}
+      </Content>
+      <Checkout
+        selectedTokenSymbol={selectedTokenSymbol}
+        setSelectedTokenSymbol={setSelectedTokenSymbol}
+        ready={ready}
+        unlock={unlock}
+        validateBuy={validateBuy}
+        buy={buy}
+        validateSell={validateSell}
+        sell={sell}
+        burn={burn}
+        balanceBKFT={balanceBKFT}
+        dollarPrice={dollarPrice}
+        reserveBKFTToken={reserveBKFTToken}
+        dollarize={dollarize}
+        showConnect={showConnect}
+        setShowConnect={setShowConnect}
+        currentTransactionHash={currentTransaction.hash}
+        currentTransactionType={currentTransaction.type}
+        currentTransactionAmount={currentTransaction.amount}
+        setCurrentTransaction={setCurrentTransaction}
+        clearCurrentTransaction={clearCurrentTransaction}
+        showWorks={showWorks}
+        setShowWorks={setShowWorks}
+        showNftModal={showNftModal}
+        setShowNftModal={setShowNftModal}
+      />
+    </AppWrapper>
+  )
+}
