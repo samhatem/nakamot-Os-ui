@@ -49,7 +49,7 @@ const StyledSubHeader = styled.h2`
 export default function Facts() {
   return (
     <Tilt
-      style={{ background: '#000', borderRadius: '8px' }}
+      style={{ background: 'transparent', borderRadius: '8px' }}
       options={{ scale: 1.01, max: 10, glare: true, 'max-glare': 1, speed: 1000 }}
     >
       <CardWrapper>

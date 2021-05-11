@@ -96,7 +96,7 @@ const MarketData = styled.div`
 export default function Card({ totalSupply, dollarPrice, reserveBKFTToken }) {
   return (
     <Tilt
-      style={{ background: '#000', borderRadius: '8px' }}
+      style={{ background: 'transparent', borderRadius: '8px' }}
       options={{ scale: 1.01, max: 10, glare: true, 'max-glare': 1, speed: 1000 }}
     >
       <CardWrapper>

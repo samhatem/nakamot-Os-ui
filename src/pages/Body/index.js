@@ -161,7 +161,7 @@ const Status = styled.div`
 `
 
 const AppWrapper = styled.div`
-  width: 100vw;
+  width: 60vw;
   height: 100%;
   margin: 0px auto;
   margin-bottom: 20rem;
@@ -234,6 +234,34 @@ const StyledRow = styled.div`
   flex-direction: row;
   justify-content: center;
   width: 100%;
+  background-color: rgba(226, 226, 226, 0.95);
+`
+
+const MarketData = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  margin-top: 1rem;
+`
+const CurrentPrice = styled.p`
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0px;
+  margin-bottom: 0.5rem;
+  font-feature-settings: 'tnum' on, 'onum' on;
+`
+
+const SubTitle = styled.p`
+  color: #6c7284;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 156.7%;
+  width: 100%;
+  margin: 0;
+  font-feature-settings: 'tnum' on, 'onum' on;
 `
 
 export default function Body({
@@ -283,44 +311,42 @@ export default function Body({
         <Card totalSupply={totalSupply} dollarPrice={dollarPrice} reserveBKFTToken={reserveBKFTToken} />
         <Facts />
       </StyledRow>
-      <Content>
-        <Info>
-          <div style={{ marginBottom: '4px' }}>Buy and sell real cereal with digital currency.</div>
-          <div style={{ marginBottom: '4px' }}>
-            Delivered on demand.{' '}
-            <a
-              href="/"
-              onClick={e => {
-                e.preventDefault()
-                setState(state => ({ ...state, visible: !state.visible }))
-                setShowWorks(true)
-              }}
-            >
-              Learn more
-            </a>
-          </div>
-          {/* <SubInfo>
-            An experiment in pricing and user experience by the team at Uniswap.{' '}
-            <a
-              href="/"
-              onClick={e => {
-                e.preventDefault()
-                setState(state => ({ ...state, visible: !state.visible }))
-                setShowWorks(true)
-              }}
-            >
-              How it works.
-            </a>
-          </SubInfo> */}
-        </Info>
-        <BuyButtons balanceBKFT={balanceBKFT} />
-        <RedeemButton balanceBKFT={balanceBKFT} />
-        {!!account && (
-          <Link style={{ textDecoration: 'none' }} to="/status">
-            <OrderStatusLink>Check order status?</OrderStatusLink>
-          </Link>
-        )}
-      </Content>
+      <StyledRow>
+        <span>
+          <CurrentPrice>{dollarPrice ? `$${amountFormatter(dollarPrice, 18, 2)} USD` : '$0.00 USD'}</CurrentPrice>
+          <SockCount>
+            {reserveBKFTToken && totalSupply
+              ? `${amountFormatter(reserveBKFTToken, 18, 0)}/${totalSupply} available`
+              : ''}
+          </SockCount>
+        </span>
+        <div>${TOKEN_SYMBOL}</div>
+        <Content>
+          <Info>
+            <div style={{ marginBottom: '4px' }}>Buy and sell real cereal with digital currency.</div>
+            <div style={{ marginBottom: '4px' }}>
+              Delivered on demand.{' '}
+              <a
+                href="/"
+                onClick={e => {
+                  e.preventDefault()
+                  setState(state => ({ ...state, visible: !state.visible }))
+                  setShowWorks(true)
+                }}
+              >
+                Learn more
+              </a>
+            </div>
+          </Info>
+          <BuyButtons balanceBKFT={balanceBKFT} />
+          <RedeemButton balanceBKFT={balanceBKFT} />
+          {!!account && (
+            <Link style={{ textDecoration: 'none' }} to="/status">
+              <OrderStatusLink>Check order status?</OrderStatusLink>
+            </Link>
+          )}
+        </Content>
+      </StyledRow>
       <Checkout
         selectedTokenSymbol={selectedTokenSymbol}
         setSelectedTokenSymbol={setSelectedTokenSymbol}
