@@ -13,7 +13,6 @@ const CardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  justify-content: center;
   align-items: center;
   cursor: default;
   padding: 24px;
@@ -47,6 +46,26 @@ const StyledSubHeader = styled.h2`
   line-height: 16px;
 `
 
+const StyledText = styled.h3`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-family: Domine;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+`
+
+const Line = styled.div`
+  width: 191px;
+  height: 10px;
+  left: 595px;
+  top: 159px;
+
+  background: #000000;
+`
+
 export default function Facts() {
   return (
     <Tilt
@@ -57,6 +76,28 @@ export default function Facts() {
         <StyledTextContainer>
           <StyledTitle>Lottery Facts</StyledTitle>
           <StyledSubHeader>Entry: 1 Redemption</StyledSubHeader>
+          <Line />
+          <StyledText>
+            <>NFTs Available</>
+            <b>10</b>
+          </StyledText>
+          <StyledText>
+            <>Your Entries</>
+            <b>0</b>
+          </StyledText>
+          <StyledText>
+            <>Total Entries</>
+            <b>69</b>
+          </StyledText>
+          <StyledText>
+            <>Blocks Til Lottery</>
+            <b>40,000</b>
+          </StyledText>
+          <Line />
+          <StyledText>
+            When you redeem your $BOX before the lottery block, not only will you receive the physical box, but you’ll
+            also automatically be eligible for a Nakamot-Os NFT. They’ll only be 10 NFTs every. Talk about sound cereal.
+          </StyledText>
         </StyledTextContainer>
       </CardWrapper>
     </Tilt>

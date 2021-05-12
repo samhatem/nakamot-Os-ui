@@ -12,6 +12,7 @@ const BuyButtonFrame = styled.div`
   flex-direction: center;
   flex-direction: row;
   color: ${props => props.theme.black};
+  width: 100%;
 
   div {
     width: 100%;

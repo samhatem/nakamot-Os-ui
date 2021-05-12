@@ -175,32 +175,8 @@ const AppWrapper = styled.div`
 `
 
 const Content = styled.div`
-  width: calc(100vw - 32px);
-  max-width: 375px;
+  width: 40%;
   margin-top: 16px;
-`
-
-const Info = styled.div`
-  color: ${props => props.theme.text};
-  font-weight: 500;
-  margin: 0px;
-  font-size: 14px;
-  padding: 20px;
-  padding-top: 32px;
-  margin-bottom: 12px;
-  margin-top: -12px;
-  /* margin-top: 16px; */
-  background-color: ${props => '#f1f2f6'};
-  a {
-    color: ${props => props.theme.orange};
-    text-decoration: none;
-    /* padding-top: 8px; */
-    /* font-size: 14px; */
-  }
-  a:hover {
-    cursor: pointer;
-    text-decoration: underline;
-  }
 `
 
 const OrderStatusLink = styled.p`
@@ -337,7 +313,7 @@ export default function Body({
         <Facts />
       </StyledRow>
       <StyledInfoRow>
-        <div style={{ width: '30%', textAlign: 'left', marginTop: '26px' }}>
+        <div style={{ width: '40%', textAlign: 'left', marginTop: '26px' }}>
           Buy and sell real cereal with digital currency. Delivered on demand.{' '}
           <a
             href="/"
@@ -352,7 +328,7 @@ export default function Body({
         </div>
       </StyledInfoRow>
       <StyledBoxDetailsRow>
-        <span styled={{ marginRight: '140px' }}>
+        <span styled={{ marginRight: '22%' }}>
           <CurrentPrice>{dollarPrice ? `$${amountFormatter(dollarPrice, 18, 2)} USD` : '$0.00 USD'}</CurrentPrice>
           <SockCount>
             {(reserveBKFTToken && totalSupply) || true
@@ -360,7 +336,7 @@ export default function Body({
               : ''}
           </SockCount>
         </span>
-        <div style={{ marginLeft: '140px' }}>${TOKEN_SYMBOL}</div>
+        <div style={{ marginLeft: '22%' }}>${TOKEN_SYMBOL}</div>
       </StyledBoxDetailsRow>
       <StyledRow>
         <Content>
