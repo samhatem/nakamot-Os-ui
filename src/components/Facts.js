@@ -10,9 +10,6 @@ const CardWrapper = styled.div`
   background: #fff;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
   color: white;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
   align-items: center;
   cursor: default;
   padding: 24px;
@@ -24,7 +21,7 @@ const CardWrapper = styled.div`
 `
 
 const StyledTextContainer = styled.div`
-  width: 190px;
+  width: 100%;
   height: 34px;
   left: 597px;
   font-family: Domine;
@@ -33,32 +30,42 @@ const StyledTextContainer = styled.div`
 `
 
 const StyledTitle = styled.h1`
-  top: 104px;
   font-weight: bold;
-  font-size: 25px;
+  font-size: 30px;
   line-height: 29px;
 `
 
 const StyledSubHeader = styled.h2`
-  top: 138px;
   font-weight: normal;
-  font-size: 14px;
+  font-size: 20px;
   line-height: 16px;
 `
 
 const StyledText = styled.h3`
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   font-family: Domine;
   font-style: normal;
   font-weight: normal;
-  font-size: 14px;
-  line-height: 18px;
+  font-size: 18px;
+  line-height: 16px;
+`
+
+const StyledParagraph = styled.p`
+  width: 100%;
+  line-height: 16px;
+  font-family: Domine;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  color: #000000;
 `
 
 const Line = styled.div`
-  width: 191px;
+  width: 100%;
   height: 10px;
   left: 595px;
   top: 159px;
@@ -94,10 +101,10 @@ export default function Facts() {
             <b>40,000</b>
           </StyledText>
           <Line />
-          <StyledText>
+          <StyledParagraph>
             When you redeem your $BOX before the lottery block, not only will you receive the physical box, but you’ll
             also automatically be eligible for a Nakamot-Os NFT. They’ll only be 10 NFTs every. Talk about sound cereal.
-          </StyledText>
+          </StyledParagraph>
         </StyledTextContainer>
       </CardWrapper>
     </Tilt>
