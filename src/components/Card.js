@@ -20,6 +20,7 @@ const CardWrapper = styled.div`
   z-index: 1;
   transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);
   margin-right: 74px;
+  margin-top: 97px;
 `
 
 const Title = styled.p`

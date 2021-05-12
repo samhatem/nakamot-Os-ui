@@ -177,7 +177,7 @@ const AppWrapper = styled.div`
 const Content = styled.div`
   width: calc(100vw - 32px);
   max-width: 375px;
-  margin-top: 72px;
+  margin-top: 16px;
 `
 
 const Info = styled.div`
@@ -235,6 +235,31 @@ const StyledRow = styled.div`
   justify-content: center;
   width: 100%;
   background-color: rgba(226, 226, 226, 0.95);
+`
+
+const StyledBoxDetailsRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  background-color: rgba(226, 226, 226, 0.95);
+  padding-top: 32px;
+`
+
+const StyledInfoRow = styled.div`
+  display: flex;
+  text-align: left;
+  justify-content: center;
+  width: 100%;
+  background-color: rgba(226, 226, 226, 0.95);
+  a {
+    color: ${props => props.theme.orange};
+    text-decoration: none;
+  }
+  a:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
 `
 
 const MarketData = styled.div`
@@ -311,33 +336,34 @@ export default function Body({
         <Card totalSupply={totalSupply} dollarPrice={dollarPrice} reserveBKFTToken={reserveBKFTToken} />
         <Facts />
       </StyledRow>
-      <StyledRow>
-        <span>
+      <StyledInfoRow>
+        <div style={{ width: '30%', textAlign: 'left', marginTop: '26px' }}>
+          Buy and sell real cereal with digital currency. Delivered on demand.{' '}
+          <a
+            href="/"
+            onClick={e => {
+              e.preventDefault()
+              setState(state => ({ ...state, visible: !state.visible }))
+              setShowWorks(true)
+            }}
+          >
+            Learn more
+          </a>
+        </div>
+      </StyledInfoRow>
+      <StyledBoxDetailsRow>
+        <span styled={{ marginRight: '140px' }}>
           <CurrentPrice>{dollarPrice ? `$${amountFormatter(dollarPrice, 18, 2)} USD` : '$0.00 USD'}</CurrentPrice>
           <SockCount>
-            {reserveBKFTToken && totalSupply
+            {(reserveBKFTToken && totalSupply) || true
               ? `${amountFormatter(reserveBKFTToken, 18, 0)}/${totalSupply} available`
               : ''}
           </SockCount>
         </span>
-        <div>${TOKEN_SYMBOL}</div>
+        <div style={{ marginLeft: '140px' }}>${TOKEN_SYMBOL}</div>
+      </StyledBoxDetailsRow>
+      <StyledRow>
         <Content>
-          <Info>
-            <div style={{ marginBottom: '4px' }}>Buy and sell real cereal with digital currency.</div>
-            <div style={{ marginBottom: '4px' }}>
-              Delivered on demand.{' '}
-              <a
-                href="/"
-                onClick={e => {
-                  e.preventDefault()
-                  setState(state => ({ ...state, visible: !state.visible }))
-                  setShowWorks(true)
-                }}
-              >
-                Learn more
-              </a>
-            </div>
-          </Info>
           <BuyButtons balanceBKFT={balanceBKFT} />
           <RedeemButton balanceBKFT={balanceBKFT} />
           {!!account && (
