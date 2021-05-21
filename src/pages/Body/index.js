@@ -10,6 +10,7 @@ import RedeemButton from '../../components/RedeemButton'
 import Checkout from '../../components/Checkout'
 import { amountFormatter, INITIAL_SUPPLY, TOKEN_SYMBOL } from '../../utils'
 import { useNftContext } from '../../context/nftContext'
+import Facts from '../../components/Facts'
 
 export function Header({ totalSupply, ready, balanceBKFT, setShowConnect, setShowNftModal }) {
   const { account, setConnector } = useWeb3Context()
@@ -38,11 +39,7 @@ export function Header({ totalSupply, ready, balanceBKFT, setShowConnect, setSho
         </Unicorn>
       </Link>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
-        {!!nftBalance && (
-          <NFTBalance onClick={handleShowNftModal}>
-            {nftBalance} Nakamot-O NFTs
-          </NFTBalance>
-        )}
+        {!!nftBalance && <NFTBalance onClick={handleShowNftModal}>{nftBalance} Nakamot-O NFTs</NFTBalance>}
         {totalSupply && (
           <Link to="/stats" style={{ textDecoration: 'none' }}>
             <Burned>
@@ -56,7 +53,9 @@ export function Header({ totalSupply, ready, balanceBKFT, setShowConnect, setSho
         <Account onClick={() => handleAccount()} balanceBKFT={balanceBKFT}>
           {account ? (
             balanceBKFT > 0 ? (
-              <SockCount>{balanceBKFT && `${amountFormatter(balanceBKFT, 18, 0)}`} {TOKEN_SYMBOL}</SockCount>
+              <SockCount>
+                {balanceBKFT && `${amountFormatter(balanceBKFT, 18, 0)}`} {TOKEN_SYMBOL}
+              </SockCount>
             ) : (
               <SockCount>{account.slice(0, 6)}...</SockCount>
             )
@@ -114,11 +113,11 @@ const NFTBalance = styled.div`
   font-size: 14px;
   color: #fff;
   font-family: inherit;
-  background: linear-gradient(90deg,#FE8700 4.52%,#FFA743 100%);
+  background: linear-gradient(90deg, #fe8700 4.52%, #ffa743 100%);
 `
 
 const Burned = styled.div`
-  background-color: none;
+  background-color: white;
   border: 1px solid ${props => props.theme.black};
   margin-right: 1rem;
   padding: 0.75rem;
@@ -161,6 +160,111 @@ const Status = styled.div`
   // props.account === null ? props.theme.orange : props.theme.green};
 `
 
+const AppWrapper = styled.div`
+  width: 60vw;
+  height: 100%;
+  margin: 0px auto;
+  margin-bottom: 20rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  overflow: ${props => (props.overlay ? 'hidden' : 'scroll')};
+  scroll-behavior: smooth;
+  position: ${props => (props.overlay ? 'fixed' : 'initial')};
+`
+
+const Content = styled.div`
+  width: 40%;
+  margin-top: 16px;
+`
+
+const OrderStatusLink = styled.p`
+  color: ${props => props.theme.orange};
+  text-align: center;
+  font-size: 0.6rem;
+`
+
+const Unicorn = styled.p`
+  color: white;
+  font-weight: 600;
+  margin: auto 0px;
+  font-size: 16px;
+`
+
+const StyledImage = styled.img`
+  margin-bottom: 50px;
+  margin-top: 50px;
+  float: left;
+`
+
+const StyledImageContainer = styled.div`
+  width: calc(100vw - 32px);
+  max-width: 375px;
+  margin-top: 72px;
+  margin-right: 100px;
+`
+
+const StyledRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  background-color: rgba(226, 226, 226, 0.95);
+`
+
+const StyledBoxDetailsRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  background-color: rgba(226, 226, 226, 0.95);
+  padding-top: 32px;
+`
+
+const StyledInfoRow = styled.div`
+  display: flex;
+  text-align: left;
+  justify-content: center;
+  width: 100%;
+  background-color: rgba(226, 226, 226, 0.95);
+  a {
+    color: ${props => props.theme.orange};
+    text-decoration: none;
+  }
+  a:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+`
+
+const MarketData = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  margin-top: 1rem;
+`
+const CurrentPrice = styled.p`
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0px;
+  margin-bottom: 0.5rem;
+  font-feature-settings: 'tnum' on, 'onum' on;
+`
+
+const SubTitle = styled.p`
+  color: #6c7284;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 156.7%;
+  width: 100%;
+  margin: 0;
+  font-feature-settings: 'tnum' on, 'onum' on;
+`
+
 export default function Body({
   selectedTokenSymbol,
   setSelectedTokenSymbol,
@@ -175,7 +279,7 @@ export default function Body({
   dollarPrice,
   balanceBKFT,
   reserveBKFTToken,
-  totalSupply,
+  totalSupply
 }) {
   const { account } = useWeb3Context()
   const [currentTransaction, _setCurrentTransaction] = useState({})
@@ -200,45 +304,51 @@ export default function Body({
         setShowConnect={setShowConnect}
         setShowNftModal={setShowNftModal}
       />
-      <Content>
-        <Card totalSupply={totalSupply} dollarPrice={dollarPrice} reserveBKFTToken={reserveBKFTToken} />{' '}
-        <Info>
-          <div style={{ marginBottom: '4px' }}>Buy and sell real cereal with digital currency.</div>
-          <div style={{ marginBottom: '4px' }}>
-            Delivered on demand.{' '}
-            <a
-              href="/"
-              onClick={e => {
-                e.preventDefault()
-                setState(state => ({ ...state, visible: !state.visible }))
-                setShowWorks(true)
-              }}
-            >
-              Learn more
-            </a>
-          </div>
-          {/* <SubInfo>
-            An experiment in pricing and user experience by the team at Uniswap.{' '}
-            <a
-              href="/"
-              onClick={e => {
-                e.preventDefault()
-                setState(state => ({ ...state, visible: !state.visible }))
-                setShowWorks(true)
-              }}
-            >
-              How it works.
-            </a>
-          </SubInfo> */}
-        </Info>
-        <BuyButtons balanceBKFT={balanceBKFT} />
-        <RedeemButton balanceBKFT={balanceBKFT} />
-        {!!account && (
-          <Link style={{ textDecoration: 'none' }} to="/status">
-            <OrderStatusLink>Check order status?</OrderStatusLink>
-          </Link>
-        )}
-      </Content>
+
+      <StyledImageContainer>
+        <StyledImage src="nakamotos-title.png" alt="Nakamot-Os" />
+      </StyledImageContainer>
+      <StyledRow>
+        <Card totalSupply={totalSupply} dollarPrice={dollarPrice} reserveBKFTToken={reserveBKFTToken} />
+        <Facts />
+      </StyledRow>
+      <StyledInfoRow>
+        <div style={{ width: '40%', textAlign: 'left', marginTop: '26px' }}>
+          Buy and sell real cereal with digital currency. Delivered on demand.{' '}
+          <a
+            href="/"
+            onClick={e => {
+              e.preventDefault()
+              setState(state => ({ ...state, visible: !state.visible }))
+              setShowWorks(true)
+            }}
+          >
+            Learn more
+          </a>
+        </div>
+      </StyledInfoRow>
+      <StyledBoxDetailsRow>
+        <span styled={{ marginRight: '22%' }}>
+          <CurrentPrice>{dollarPrice ? `$${amountFormatter(dollarPrice, 18, 2)} USD` : '$0.00 USD'}</CurrentPrice>
+          <SockCount>
+            {(reserveBKFTToken && totalSupply) || true
+              ? `${amountFormatter(reserveBKFTToken, 18, 0)}/${totalSupply} available`
+              : ''}
+          </SockCount>
+        </span>
+        <div style={{ marginLeft: '22%' }}>${TOKEN_SYMBOL}</div>
+      </StyledBoxDetailsRow>
+      <StyledRow>
+        <Content>
+          <BuyButtons balanceBKFT={balanceBKFT} />
+          <RedeemButton balanceBKFT={balanceBKFT} />
+          {!!account && (
+            <Link style={{ textDecoration: 'none' }} to="/status">
+              <OrderStatusLink>Check order status?</OrderStatusLink>
+            </Link>
+          )}
+        </Content>
+      </StyledRow>
       <Checkout
         selectedTokenSymbol={selectedTokenSymbol}
         setSelectedTokenSymbol={setSelectedTokenSymbol}
@@ -268,59 +378,3 @@ export default function Body({
     </AppWrapper>
   )
 }
-
-const AppWrapper = styled.div`
-  width: 100vw;
-  height: 100%;
-  margin: 0px auto;
-  margin-bottom: 1rem;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-items: center;
-  overflow: ${props => (props.overlay ? 'hidden' : 'scroll')};
-  scroll-behavior: smooth;
-  position: ${props => (props.overlay ? 'fixed' : 'initial')};
-`
-
-const Content = styled.div`
-  width: calc(100vw - 32px);
-  max-width: 375px;
-  margin-top: 72px;
-`
-
-const Info = styled.div`
-  color: ${props => props.theme.text};
-  font-weight: 500;
-  margin: 0px;
-  font-size: 14px;
-  padding: 20px;
-  padding-top: 32px;
-  margin-bottom: 12px;
-  margin-top: -12px;
-  /* margin-top: 16px; */
-  background-color: ${props => '#f1f2f6'};
-  a {
-    color: ${props => props.theme.orange};
-    text-decoration: none;
-    /* padding-top: 8px; */
-    /* font-size: 14px; */
-  }
-  a:hover {
-    cursor: pointer;
-    text-decoration: underline;
-  }
-`
-
-const OrderStatusLink = styled.p`
-  color: ${props => props.theme.orange};
-  text-align: center;
-  font-size: 0.6rem;
-`
-
-const Unicorn = styled.p`
-  color: ${props => props.theme.black};
-  font-weight: 600;
-  margin: auto 0px;
-  font-size: 16px;
-`

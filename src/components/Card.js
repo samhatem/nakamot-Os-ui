@@ -6,42 +6,9 @@ import Tilt from 'react-tilt'
 import { amountFormatter, TOKEN_SYMBOL } from '../utils'
 
 import Gallery3D from './Gallery/3DGallery'
-
-export default function Card({ totalSupply, dollarPrice, reserveBKFTToken }) {
-  return (
-    <Tilt
-      style={{ background: '#000', borderRadius: '8px' }}
-      options={{ scale: 1.01, max: 10, glare: true, 'max-glare': 1, speed: 1000 }}
-    >
-      <CardWrapper>
-        <Title>Nakamot-Os</Title>
-        <SubTitle>${TOKEN_SYMBOL}</SubTitle>
-        <Gallery3D />
-        <MarketData>
-          <span>
-            <CurrentPrice>{dollarPrice ? `$${amountFormatter(dollarPrice, 18, 2)} USD` : '$0.00'}</CurrentPrice>
-            <SockCount>
-              {reserveBKFTToken && totalSupply
-                ? `${amountFormatter(reserveBKFTToken, 18, 0)}/${totalSupply} available`
-                : ''}
-            </SockCount>
-          </span>
-          <Link to="/stats">
-            <Info>
-              <InfoButton>?</InfoButton>
-              <Dynamic>Dynamic Pricing Stats</Dynamic>
-            </Info>
-          </Link>
-        </MarketData>
-      </CardWrapper>
-    </Tilt>
-  )
-}
-
 const CardWrapper = styled.div`
-  /* max-width: 300px; */
   background: #fff;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
+  /* box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4); */
   color: white;
   display: flex;
   flex-direction: column;
@@ -52,6 +19,8 @@ const CardWrapper = styled.div`
   padding: 24px;
   z-index: 1;
   transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);
+  margin-right: 74px;
+  margin-top: 97px;
 `
 
 const Title = styled.p`
@@ -124,3 +93,34 @@ const MarketData = styled.div`
   width: 100%;
   margin-top: 1rem;
 `
+
+export default function Card({ totalSupply, dollarPrice, reserveBKFTToken }) {
+  return (
+    <Tilt
+      style={{ background: 'transparent', borderRadius: '8px' }}
+      options={{ scale: 1.01, max: 10, glare: true, 'max-glare': 1, speed: 1000 }}
+    >
+      <CardWrapper>
+        <Title>Nakamot-Os</Title>
+        <SubTitle>${TOKEN_SYMBOL}</SubTitle>
+        <Gallery3D />
+        <MarketData>
+          <span>
+            <CurrentPrice>{dollarPrice ? `$${amountFormatter(dollarPrice, 18, 2)} USD` : '$0.00'}</CurrentPrice>
+            <SockCount>
+              {reserveBKFTToken && totalSupply
+                ? `${amountFormatter(reserveBKFTToken, 18, 0)}/${totalSupply} available`
+                : ''}
+            </SockCount>
+          </span>
+          <Link to="/stats">
+            <Info>
+              <InfoButton>?</InfoButton>
+              <Dynamic>Dynamic Pricing Stats</Dynamic>
+            </Info>
+          </Link>
+        </MarketData>
+      </CardWrapper>
+    </Tilt>
+  )
+}

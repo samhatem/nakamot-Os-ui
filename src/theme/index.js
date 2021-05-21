@@ -12,7 +12,10 @@ export default createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: Tomorrow, sans-serif;
-    /* background-color: #F1F2F6; */
+    background-image: url('cybertruck.png'), url('btc-flag.png'), url('moon-ground-overlay.png'), url("stars.png"); 
+    background-repeat: no-repeat, no-repeat, space, repeat;
+    background-position: left bottom, right bottom, center bottom;
+    background-size: 40%, 20%, 20%, 100%;
   }
 `
 
