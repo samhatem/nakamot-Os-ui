@@ -232,8 +232,7 @@ export function useOwnerTicketCount() {
 
   useBlockEffect(updateOwnerTicketCount)
 
-  ownerTicketCount && ownerTicketCount.toNumber()
-  return 5
+  return ownerTicketCount && ownerTicketCount.toNumber()
 }
 
 export function useTotalTicketCount() {
@@ -268,8 +267,7 @@ export function useTotalTicketCount() {
 
   useBlockEffect(updateTotalTicketCount)
 
-  const test = totalTicketCount && totalTicketCount.toNumber() + 1
-  return 69
+  return totalTicketCount && totalTicketCount.toNumber() + 1
 }
 
 export function useMaxNFTCount() {
@@ -304,8 +302,7 @@ export function useMaxNFTCount() {
 
   useBlockEffect(updateMaxNFTCount)
 
-  maxNFTCount && maxNFTCount.toNumber()
-  return 10
+  return maxNFTCount && maxNFTCount.toNumber()
 }
 
 export function useBlockTilLottery() {
@@ -340,8 +337,7 @@ export function useBlockTilLottery() {
 
   useBlockEffect(updateBlockTilLottery)
 
-  blockTilLottery && blockTilLottery.toNumber()
-  return 40000
+  return blockTilLottery && blockTilLottery.toNumber()
 }
 
 export function useHasMintedNFTs() {
@@ -376,8 +372,7 @@ export function useHasMintedNFTs() {
 
   useBlockEffect(updateHasMintedNFTs)
 
-  // return hasMintedNFTs
-  return true
+  return hasMintedNFTs
 }
 
 export function useLotteryWinners() {
@@ -412,7 +407,7 @@ export function useLotteryWinners() {
 
   useBlockEffect(updateLotteryWinners)
 
-  return (lotteryWinners && lotteryWinners.map(winner => winner.toNumber())) || TEST_ACCOUNTS
+  return lotteryWinners && lotteryWinners.map(winner => winner.toNumber())
 }
 
 export function useNFTSupply() {
