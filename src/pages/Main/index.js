@@ -10,12 +10,12 @@ import {
   useExchangeReserves,
   useExchangeAllowance,
   useTotalSupply,
-  useRouterContract,
+  useRouterContract
 } from '../../hooks'
 import Body from '../Body'
 import Stats from '../Stats'
 import Status from '../Status'
-import { getExchangeAddress } from "../../utils"
+import { getExchangeAddress } from '../../utils'
 
 // denominated in bips
 const GAS_MARGIN = ethers.BigNumber.from(1000)
@@ -152,7 +152,11 @@ export default function Main({ stats, status }) {
 
   const [selectedTokenSymbol, setSelectedTokenSymbol] = useState(TOKEN_SYMBOLS.ETH)
   const tokenContractSelectedToken = useTokenContract(TOKEN_ADDRESSES[selectedTokenSymbol])
-  const allowanceSelectedToken = useExchangeAllowance(account, TOKEN_ADDRESSES.BKFT, TOKEN_ADDRESSES[selectedTokenSymbol])
+  const allowanceSelectedToken = useExchangeAllowance(
+    account,
+    TOKEN_ADDRESSES.BKFT,
+    TOKEN_ADDRESSES[selectedTokenSymbol]
+  )
   const { reserveETH: reserveSelectedTokenETH, reserveToken: reserveSelectedTokenToken } = useExchangeReserves(
     TOKEN_ADDRESSES.BKFT,
     TOKEN_ADDRESSES[selectedTokenSymbol]
@@ -164,7 +168,7 @@ export default function Main({ stats, status }) {
   const tokenContractBKFT = useTokenContract(TOKEN_ADDRESSES.BKFT)
 
   // get router contract
-  const router = useRouterContract();
+  const router = useRouterContract()
 
   // get balances
   const balanceETH = useAddressBalance(account, TOKEN_ADDRESSES.ETH)
@@ -178,18 +182,11 @@ export default function Main({ stats, status }) {
   const totalSupply = useTotalSupply(tokenContractBKFT)
 
   // get allowances
-  const allowanceBKFT = useAddressAllowance(
-    account,
-    TOKEN_ADDRESSES.BKFT,
-    bkftWethExchangeAddress
-  )
+  const allowanceBKFT = useAddressAllowance(account, TOKEN_ADDRESSES.BKFT, bkftWethExchangeAddress)
 
   // get reserves
   const reserveBKFTWETH = useAddressBalance(bkftWethExchangeAddress, TOKEN_ADDRESSES.WETH)
-  const reserveBKFTToken = useAddressBalance(
-    bkftWethExchangeAddress,
-    TOKEN_ADDRESSES.BKFT
-  )
+  const reserveBKFTToken = useAddressBalance(bkftWethExchangeAddress, TOKEN_ADDRESSES.BKFT)
 
   const reserveUSDCETH = useAddressBalance(usdcWethExchangeAddress, TOKEN_ADDRESSES.WETH)
   const reserveUSDCToken = useAddressBalance(usdcWethExchangeAddress, TOKEN_ADDRESSES.USDC)
@@ -248,9 +245,7 @@ export default function Main({ stats, status }) {
     try {
       const BKFTExchangeRateETH = getExchangeRate(reserveBKFTToken, reserveBKFTWETH)
       setDollarPrice(
-        BKFTExchangeRateETH.mul(USDExchangeRateETH).div(
-          ethers.BigNumber.from(10).pow(ethers.BigNumber.from(18))
-        )
+        BKFTExchangeRateETH.mul(USDExchangeRateETH).div(ethers.BigNumber.from(10).pow(ethers.BigNumber.from(18)))
       )
     } catch {
       setDollarPrice()
@@ -341,7 +336,16 @@ export default function Main({ stats, status }) {
         error: errorAccumulator
       }
     },
-    [allowanceSelectedToken, balanceETH, balanceSelectedToken, reserveBKFTToken, reserveBKFTWETH, reserveSelectedTokenETH, reserveSelectedTokenToken, selectedTokenSymbol]
+    [
+      allowanceSelectedToken,
+      balanceETH,
+      balanceSelectedToken,
+      reserveBKFTToken,
+      reserveBKFTWETH,
+      reserveSelectedTokenETH,
+      reserveSelectedTokenToken,
+      selectedTokenSymbol
+    ]
   )
 
   async function buy(maximumInputValue, outputValue) {
@@ -353,22 +357,22 @@ export default function Main({ stats, status }) {
 
     if (selectedTokenSymbol === TOKEN_SYMBOLS.ETH) {
       const estimatedGasLimit = await router.estimateGas.swapETHForExactTokens(
-          outputValue,
-          [TOKEN_ADDRESSES.WETH, TOKEN_ADDRESSES.BKFT],
-          account,
-          deadline,
-          { value: maximumInputValue }
+        outputValue,
+        [TOKEN_ADDRESSES.WETH, TOKEN_ADDRESSES.BKFT],
+        account,
+        deadline,
+        { value: maximumInputValue }
       )
       return router.swapETHForExactTokens(
-          outputValue,
-          [TOKEN_ADDRESSES.WETH, TOKEN_ADDRESSES.BKFT],
-          account,
-          deadline,
-          {
-              value: maximumInputValue,
-              gasLimit: calculateGasMargin(estimatedGasLimit, GAS_MARGIN),
-              gasPrice: estimatedGasPrice
-          }
+        outputValue,
+        [TOKEN_ADDRESSES.WETH, TOKEN_ADDRESSES.BKFT],
+        account,
+        deadline,
+        {
+          value: maximumInputValue,
+          gasLimit: calculateGasMargin(estimatedGasLimit, GAS_MARGIN),
+          gasPrice: estimatedGasPrice
+        }
       )
     } else {
       throw new Error('No Support for swapping with tokens other than ETH')
@@ -463,7 +467,16 @@ export default function Main({ stats, status }) {
         error: errorAccumulator
       }
     },
-    [balanceETH, balanceBKFT, allowanceBKFT, selectedTokenSymbol, reserveBKFTWETH, reserveBKFTToken, reserveSelectedTokenETH, reserveSelectedTokenToken]
+    [
+      balanceETH,
+      balanceBKFT,
+      allowanceBKFT,
+      selectedTokenSymbol,
+      reserveBKFTWETH,
+      reserveBKFTToken,
+      reserveSelectedTokenETH,
+      reserveSelectedTokenToken
+    ]
   )
 
   async function sell(inputValue, minimumOutputValue) {
@@ -482,18 +495,18 @@ export default function Main({ stats, status }) {
         deadline
       )
       return router.swapExactTokensForETH(
-          inputValue,
-          minimumOutputValue,
-          [TOKEN_ADDRESSES.BKFT, TOKEN_ADDRESSES.WETH],
-          account,
-          deadline,
-          {
-              gasLimit: calculateGasMargin(estimatedGasLimit, GAS_MARGIN),
-              gasPrice: estimatedGasPrice
-          }
+        inputValue,
+        minimumOutputValue,
+        [TOKEN_ADDRESSES.BKFT, TOKEN_ADDRESSES.WETH],
+        account,
+        deadline,
+        {
+          gasLimit: calculateGasMargin(estimatedGasLimit, GAS_MARGIN),
+          gasPrice: estimatedGasPrice
+        }
       )
     } else {
-      throw new Error("Swaps for tokens other than ETH not yet supported")
+      throw new Error('Swaps for tokens other than ETH not yet supported')
       /*
       const estimatedGasLimit = await exchangeContractSOCKS.estimateGas.tokenToTokenSwapInput(
         inputValue,

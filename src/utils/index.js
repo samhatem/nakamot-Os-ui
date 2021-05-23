@@ -1,12 +1,13 @@
 import { ethers } from 'ethers'
 import { Token, Pair } from '@uniswap/sdk'
 import UncheckedJsonRpcSigner from './signer'
-import { CHAIN_ID, ROUTER_ADDRESS, NFT_ADDRESS } from "./constants"
+import { CHAIN_ID, ROUTER_ADDRESS, NFT_ADDRESS, BKFT_ADDRESS } from './constants'
 
 import ERC20_ABI from './erc20.json'
+import NFT_ABI from './nft.json'
 import ROUTER_ABI from './router.json'
 
-export * from "./constants";
+export * from './constants'
 
 export function isAddress(value) {
   try {
@@ -39,6 +40,10 @@ export function getTokenContract(tokenAddress, library, account) {
   return getContract(tokenAddress, ERC20_ABI, library, account)
 }
 
+export function getNFTContract(nftAddress, library, account) {
+  return getContract(nftAddress, NFT_ABI, library, account)
+}
+
 // get the ether balance of an address
 export async function getEtherBalance(address, library) {
   if (!isAddress(address)) {
@@ -49,10 +54,10 @@ export async function getEtherBalance(address, library) {
 }
 
 export function getExchangeAddress(tokenAddress0, tokenAddress1) {
-    const token0 = new Token(CHAIN_ID, tokenAddress0, 18, "TOKEN0", "TKN0")
-    const token1 = new Token(CHAIN_ID, tokenAddress1, 18, "TOKEN1", "TKN1")
+  const token0 = new Token(CHAIN_ID, tokenAddress0, 18, 'TOKEN0', 'TKN0')
+  const token1 = new Token(CHAIN_ID, tokenAddress1, 18, 'TOKEN1', 'TKN1')
 
-    return Pair.getAddress(token0, token1);
+  return Pair.getAddress(token0, token1)
 }
 
 // get the token balance of an address
@@ -77,24 +82,88 @@ export async function getTokenAllowance(address, tokenAddress, spenderAddress, l
 
 export async function getNFTBalance(address, library) {
   if (!isAddress(address)) {
-    throw Error(
-      `Invalid 'address' + '${address}'`
-    )
+    throw Error(`Invalid 'address' + '${address}'`)
   }
 
-  const tokenContract = new ethers.Contract(NFT_ADDRESS, ['function balanceOf(address owner) public view returns (uint256)'], library)
+  const tokenContract = new ethers.Contract(
+    NFT_ADDRESS,
+    ['function balanceOf(address owner) public view returns (uint256)'],
+    library
+  )
 
   return tokenContract.balanceOf(address)
 }
 
-export async function getNFTIndices(address, library, tokensOwned) {
+export async function getOwnerTicketCount(address, library) {
   if (!isAddress(address)) {
-    throw Error(
-      `Invalid 'address' + '${address}'`
-    )
+    throw Error(`Invalid 'address' + '${address}'`)
+  }
+  const erc20Contract = getTokenContract(BKFT_ADDRESS, library, address)
+
+  return erc20Contract.ownerTicketCount(address)
+}
+
+export async function getMaxNFTCount(address, library) {
+  if (!isAddress(address)) {
+    throw Error(`Invalid 'address' + '${address}'`)
+  }
+  const erc20Contract = getTokenContract(BKFT_ADDRESS, library, address)
+
+  return erc20Contract.maxNFTSupply()
+}
+
+export async function getTotalTicketCount(address, library) {
+  if (!isAddress(address)) {
+    throw Error(`Invalid 'address' + '${address}'`)
+  }
+  const erc20Contract = getTokenContract(BKFT_ADDRESS, library, address)
+
+  return erc20Contract.ticketCount()
+}
+
+export async function getBlocksTilLottery(address, library) {
+  if (!isAddress(address)) {
+    throw Error(`Invalid 'address' + '${address}'`)
+  }
+  const erc20Contract = getTokenContract(BKFT_ADDRESS, library, address)
+
+  return erc20Contract.lottoBlock()
+}
+
+export async function getHasMintedNFTs(address, library) {
+  if (!isAddress(address)) {
+    throw Error(`Invalid 'address' + '${address}'`)
+  }
+  const erc20Contract = getTokenContract(BKFT_ADDRESS, library, address)
+
+  return erc20Contract.hasMintedNFTs()
+}
+
+export async function getLotteryWinners(address, library) {
+  if (!isAddress(address)) {
+    throw Error(`Invalid 'address' + '${address}'`)
+  }
+  const nftContract = getNFTContract(NFT_ADDRESS, library, address)
+
+  const promises = []
+
+  for (let i = 0; i < 10; i += 1) {
+    promises.push(nftContract.ownerOf(i))
   }
 
-  const tokenContract = new ethers.Contract(NFT_ADDRESS, ['function tokenOfOwnerByIndex(address owner, uint256 index) public view returns (uint256)'], library)
+  return Promise.all(promises)
+}
+
+export async function getNFTIndices(address, library, tokensOwned) {
+  if (!isAddress(address)) {
+    throw Error(`Invalid 'address' + '${address}'`)
+  }
+
+  const tokenContract = new ethers.Contract(
+    NFT_ADDRESS,
+    ['function tokenOfOwnerByIndex(address owner, uint256 index) public view returns (uint256)'],
+    library
+  )
 
   const promises = []
 
@@ -106,7 +175,11 @@ export async function getNFTIndices(address, library, tokensOwned) {
 }
 
 export async function getNFTSupply(library) {
-  const tokenContract = new ethers.Contract(NFT_ADDRESS, ['function totalSupply() public view returns (uint256)'], library)
+  const tokenContract = new ethers.Contract(
+    NFT_ADDRESS,
+    ['function totalSupply() public view returns (uint256)'],
+    library
+  )
 
   return tokenContract.totalSupply()
 }
@@ -129,9 +202,7 @@ export function amountFormatter(amount, baseDecimals = 18, displayDecimals = 3, 
     // amount of 'wei' in 1 'ether'
     const baseAmount = ethers.BigNumber.from(10).pow(ethers.BigNumber.from(baseDecimals))
 
-    const minimumDisplayAmount = baseAmount.div(
-      ethers.BigNumber.from(10).pow(ethers.BigNumber.from(displayDecimals))
-    )
+    const minimumDisplayAmount = baseAmount.div(ethers.BigNumber.from(10).pow(ethers.BigNumber.from(displayDecimals)))
 
     // if balance is less than the minimum display amount
     if (amount.lt(minimumDisplayAmount)) {
@@ -151,8 +222,7 @@ export function amountFormatter(amount, baseDecimals = 18, displayDecimals = 3, 
       else {
         const [wholeComponent, decimalComponent] = stringAmount.split('.')
         const roundUpAmount = minimumDisplayAmount.div(ethers.constants.Two)
-        const roundedDecimalComponent = ethers.BigNumber
-          .from(decimalComponent.padEnd(baseDecimals, '0'))
+        const roundedDecimalComponent = ethers.BigNumber.from(decimalComponent.padEnd(baseDecimals, '0'))
           .add(roundUpAmount)
           .toString()
           .padStart(baseDecimals, '0')

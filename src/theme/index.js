@@ -5,17 +5,24 @@ export default createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Domine:wght@400;500;600;700&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=Tomorrow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600&display=swap');
 
-  body {
-    padding: 0;
-    margin: 0;
+  body {    
+    padding: 0px 0px 11vw;
     font-family: sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: Tomorrow, sans-serif;
     background-image: url('cybertruck.png'), url('btc-flag.png'), url('moon-ground-overlay.png'), url("stars.png"); 
-    background-repeat: no-repeat, no-repeat, space, repeat;
+    background-repeat: no-repeat, no-repeat, repeat-x, repeat;
     background-position: left bottom, right bottom, center bottom;
-    background-size: 40%, 20%, 20%, 100%;
+    background-size: 30%, 20%, 20%, 100%;
+
+    
+    @media only screen and (max-width: 480px) {
+      background-image: url("stars.png"); 
+      background-repeat: repeat;    
+      background-size: 100%;
+      padding-bottom: 50px;
+    }
   }
 `
 

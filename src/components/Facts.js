@@ -1,12 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
 import Tilt from 'react-tilt'
+import {
+  useBlockTilLottery,
+  useHasMintedNFTs,
+  useLotteryWinners,
+  useMaxNFTCount,
+  useOwnerTicketCount,
+  useTotalTicketCount
+} from '../hooks'
 
 const CardWrapper = styled.div`
-  border: 2px solid #000000;
   box-sizing: border-box;
   width: 348px;
-  height: 628px;
+  height: 648px;
   background: #fff;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
   color: white;
@@ -15,9 +22,14 @@ const CardWrapper = styled.div`
   padding: 24px;
   z-index: 1;
   transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);
-  border-radius: '8px';
-  margin-left: 74px;
-  margin-top: 97px;
+  border-radius: 8px;
+  margin-left: 4vw;
+  margin-top: 5vw;
+  @media only screen and (max-width: 480px) {
+    margin: auto;
+    margin-bottom: 40px;
+    width: 318px;
+  }
 `
 
 const StyledTextContainer = styled.div`
@@ -53,14 +65,24 @@ const StyledText = styled.h3`
   line-height: 16px;
 `
 
-const StyledParagraph = styled.p`
-  width: 100%;
-  line-height: 16px;
+const StyledWinnerText = styled.h4`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   font-family: Domine;
   font-style: normal;
   font-weight: normal;
-  font-size: 16px;
-  line-height: 22px;
+  font-size: 14px;
+  line-height: 12px;
+`
+
+const StyledParagraph = styled.p`
+  width: 100%;
+  line-height: 26px;
+  font-family: Domine;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
   color: #000000;
 `
 
@@ -74,6 +96,13 @@ const Line = styled.div`
 `
 
 export default function Facts() {
+  const maxNftCount = useMaxNFTCount()
+  const blocksTilLottery = useBlockTilLottery()
+  const totalTicketCount = useTotalTicketCount()
+  const ownerTicketCount = useOwnerTicketCount()
+  const hasMintedNFTs = useHasMintedNFTs()
+  const lotteryWinners = useLotteryWinners()
+
   return (
     <Tilt
       style={{ background: 'transparent', borderRadius: '8px' }}
@@ -81,25 +110,40 @@ export default function Facts() {
     >
       <CardWrapper>
         <StyledTextContainer>
-          <StyledTitle>Lottery Facts</StyledTitle>
+          <StyledTitle>{hasMintedNFTs ? 'Lottery Winners' : 'Lottery Facts'}</StyledTitle>
           <StyledSubHeader>Entry: 1 Redemption</StyledSubHeader>
           <Line />
-          <StyledText>
-            <>NFTs Available</>
-            <b>10</b>
-          </StyledText>
-          <StyledText>
-            <>Your Entries</>
-            <b>0</b>
-          </StyledText>
-          <StyledText>
-            <>Total Entries</>
-            <b>69</b>
-          </StyledText>
-          <StyledText>
-            <>Blocks Til Lottery</>
-            <b>40,000</b>
-          </StyledText>
+          {hasMintedNFTs ? (
+            lotteryWinners &&
+            lotteryWinners.map((winner, index) => {
+              const obfuscatedWinner = `${winner.slice(0, 8)}.... ${winner.slice(winner.length - 7, winner.length)}`
+              return (
+                <StyledWinnerText>
+                  <div>{`#${index + 1}`}</div>
+                  <div>{obfuscatedWinner}</div>
+                </StyledWinnerText>
+              )
+            })
+          ) : (
+            <>
+              <StyledText>
+                <>NFTs Available</>
+                <b>{maxNftCount}</b>
+              </StyledText>
+              <StyledText>
+                <>Your Entries</>
+                <b>{ownerTicketCount}</b>
+              </StyledText>
+              <StyledText>
+                <>Total Entries</>
+                <b>{totalTicketCount}</b>
+              </StyledText>
+              <StyledText>
+                <>Blocks Til Lottery</>
+                <b>{blocksTilLottery}</b>
+              </StyledText>
+            </>
+          )}
           <Line />
           <StyledParagraph>
             When you redeem your $BOX before the lottery block, not only will you receive the physical box, but you’ll
