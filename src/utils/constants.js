@@ -1,10 +1,10 @@
 import { ChainId } from '@uniswap/sdk'
 
-const isProd = process.env.NETWORK === 'mainnet'
+const isProd = process.env.REACT_APP_NETWORK === 'mainnet'
 
 export const PROVIDER_URL = isProd
   ? process.env.REACT_APP_MAINNET_PROVIDER_URL
-  : process.env.REACT_APP_GOERLI_PROVIDER_URL
+  : process.env.REACT_APP_KOVAN_PROVIDER_URL
 
 export const SUPPORTED_NETWORKS = isProd ? [1] : [1, 42]
 
@@ -24,11 +24,15 @@ export const ROUTER_ADDRESS = '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'
 
 export const FACTORY_ADDRESS = '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f'
 
-export const NFT_ADDRESS = isProd ? 'bad address' : '0x5AaeAeecf564E7D053e81e98f2e9116320f3bAF4'
+export const NFT_ADDRESS = isProd
+  ? '0x06603063c6Ceba8AE362E6A49Bc11A03493D8820'
+  : '0x5AaeAeecf564E7D053e81e98f2e9116320f3bAF4'
 
 export const NFT_URI = 'https://arweave.net/w8Vs3I-TmRIcZVNaSkxjVhtWc9ZJleCJeSRlpXEVdPM'
 
-export const BKFT_ADDRESS = isProd ? 'bad address' : '0xB821Eaa5ba43489A5679baC98783ffF4978e5954'
+export const BKFT_ADDRESS = isProd
+  ? '0x58189395C32318DecB3b34319CB44372500B680f'
+  : '0xB821Eaa5ba43489A5679baC98783ffF4978e5954'
 
 const WETH_ADDRESS = isProd
   ? '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
