@@ -19,9 +19,9 @@ const CardWrapper = styled.div`
   padding: 24px;
   transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);
   margin-right: 4vw;
-  margin-top: 5vw;
+  margin-top: 2vw;
   width: 348px;
-  height: 628px;
+  height: 528px;
   padding: 10px;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
   @media only screen and (max-width: 480px) {
@@ -114,14 +114,6 @@ export default function Card({ totalSupply, dollarPrice, reserveBKFTToken }) {
         <SubTitle>${TOKEN_SYMBOL}</SubTitle>
         <Gallery3D />
         <MarketData>
-          <span>
-            <CurrentPrice>{dollarPrice ? `$${amountFormatter(dollarPrice, 18, 2)} USD` : '$0.00'}</CurrentPrice>
-            <SockCount>
-              {reserveBKFTToken && totalSupply
-                ? `${amountFormatter(reserveBKFTToken, 18, 0)}/${totalSupply} available`
-                : ''}
-            </SockCount>
-          </span>
           <Link to="/stats">
             <Info>
               <InfoButton>?</InfoButton>

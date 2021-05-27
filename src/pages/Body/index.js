@@ -81,6 +81,7 @@ const HeaderFrame = styled.div`
   flex-direction: row;
   justify-content: space-between;
   padding: 1rem;
+  padding-top: 0px;
 `
 
 const Account = styled.div`
@@ -160,6 +161,7 @@ const Status = styled.div`
 `
 
 const AppWrapper = styled.div`
+  padding-top: 20px;
   width: 100%;
   height: 100%;
   display: flex;
@@ -203,19 +205,16 @@ const Unicorn = styled.p`
 `
 
 const StyledImage = styled.img`
-  margin-bottom: 50px;
-  margin-top: 50px;
   margin-right: 50px;
   float: left;
-  width: 100%;
+  width: 80%;
 `
 
 const StyledImageContainer = styled.div`
   width: calc(100vw - 32px);
   max-width: 375px;
-  margin-top: 72px;
-  margin-bottom: 64px;
-  margin-left: 24px;
+  margin-bottom: 34px;
+  margin-left: 74px;
   @media only screen and (max-width: 480px) {
     margin-top: 0px;
     margin-bottom: 20px;
@@ -226,7 +225,7 @@ const StyledRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 60%;
+  width: 50%;
   background-color: rgba(226, 226, 226);
 
   @media screen and (max-width: 480px) {
@@ -240,7 +239,7 @@ const StyledBoxDetailsRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 60%;
+  width: 50%;
   background-color: rgba(226, 226, 226);
   padding-top: 32px;
 
@@ -251,7 +250,7 @@ const StyledBoxDetailsRow = styled.div`
 `
 
 const StyledDetailsText = styled.span`
-  margin: auto 12%;
+  width: 50%;
   @media only screen and (max-width: 480px) {
     margin-left: 30%;
     padding: 0px;
@@ -263,7 +262,7 @@ const StyledInfoRow = styled.div`
   display: flex;
   text-align: left;
   justify-content: center;
-  width: 60%;
+  width: 50%;
   background-color: rgba(226, 226, 226);
   a {
     color: ${props => props.theme.orange};
@@ -360,7 +359,7 @@ export default function Body({
           </StyledDescription>
         </StyledInfoRow>
         <StyledBoxDetailsRow>
-          <StyledDetailsText styled={{ marginRight: '22%' }}>
+          <StyledDetailsText style={{ marginLeft: '30%' }}>
             <CurrentPrice>{dollarPrice ? `$${amountFormatter(dollarPrice, 18, 2)} USD` : '$0.00 USD'}</CurrentPrice>
             <SockCount>
               {(reserveBKFTToken && totalSupply) || true

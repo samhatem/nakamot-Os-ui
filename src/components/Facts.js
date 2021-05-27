@@ -13,7 +13,7 @@ import {
 const CardWrapper = styled.div`
   box-sizing: border-box;
   width: 348px;
-  height: 648px;
+  height: 548px;
   background: #fff;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
   color: white;
@@ -24,17 +24,18 @@ const CardWrapper = styled.div`
   transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);
   border-radius: 8px;
   margin-left: 4vw;
-  margin-top: 5vw;
+  margin-top: 2vw;
   @media only screen and (max-width: 480px) {
     margin: auto;
     margin-bottom: 40px;
     width: 318px;
+    height: 648px;
   }
 `
 
 const StyledTextContainer = styled.div`
   width: 100%;
-  height: 34px;
+  height: 32px;
   left: 597px;
   font-family: Domine;
   font-style: normal;
@@ -44,13 +45,14 @@ const StyledTextContainer = styled.div`
 const StyledTitle = styled.h1`
   font-weight: bold;
   font-size: 30px;
-  line-height: 29px;
+  line-height: 25px;
+  margin-top: 0px;
 `
 
 const StyledSubHeader = styled.h2`
   font-weight: normal;
   font-size: 20px;
-  line-height: 16px;
+  line-height: 10px;
 `
 
 const StyledText = styled.h3`
@@ -62,7 +64,7 @@ const StyledText = styled.h3`
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
-  line-height: 16px;
+  line-height: 10px;
 `
 
 const StyledWinnerText = styled.h4`
@@ -73,12 +75,12 @@ const StyledWinnerText = styled.h4`
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
-  line-height: 12px;
+  line-height: 10px;
 `
 
 const StyledParagraph = styled.p`
   width: 100%;
-  line-height: 26px;
+  line-height: 20px;
   font-family: Domine;
   font-style: normal;
   font-weight: normal;

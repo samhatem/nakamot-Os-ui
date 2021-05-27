@@ -39,10 +39,8 @@ export default function NftModal({ closeCheckout }) {
       <Controls closeCheckout={closeCheckout} theme={'dark'} hideHeader />
       <ImgStyle src={NFT_URI} alt="NFT" />
       <Title>Your Nakamot-Os NFTs</Title>
-      {nftIndices.map((index) => (
-        <div>
-          #{index}
-        </div>
+      {nftIndices.map(index => (
+        <div>#{index}</div>
       ))}
     </NftFrame>
   )

@@ -84,7 +84,7 @@ export default function Checkout({
   showWorks,
   setShowWorks,
   showNftModal,
-  setShowNftModal,
+  setShowNftModal
 }) {
   const { library } = useWeb3Context()
   const [state, setState] = useAppContext()

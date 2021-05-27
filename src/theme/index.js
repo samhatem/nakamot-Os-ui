@@ -13,10 +13,16 @@ export default createGlobalStyle`
     font-family: Tomorrow, sans-serif;
     background-image: url('cybertruck.png'), url('btc-flag.png'), url('moon-ground-overlay.png'), url("stars.png"); 
     background-repeat: no-repeat, no-repeat, repeat-x, repeat;
-    background-position: left bottom, right bottom, center bottom;
-    background-size: 30%, 20%, 20%, 100%;
+    background-position: 0% 60%, right bottom, center ;
+    background-size: 30%, 20%, 25%, 100%;
+    padding-right: 2%;
 
-    
+    @media not screen and (max-width: 480px) {
+      overflow: hidden;
+      height: 100vh;
+      /* overflow-y: hidden; */
+    }
+
     @media only screen and (max-width: 480px) {
       background-image: url("stars.png"); 
       background-repeat: repeat;    
