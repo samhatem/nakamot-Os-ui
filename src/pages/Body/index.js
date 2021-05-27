@@ -71,7 +71,7 @@ export function Header({ totalSupply, ready, balanceBKFT, setShowConnect, setSho
 }
 
 const HeaderFrame = styled.div`
-  position: fixed;
+  position: sticky;
   width: 100%;
   box-sizing: border-box;
   margin: 0px;
@@ -157,26 +157,36 @@ const Status = styled.div`
   float: right;
   background-color: ${props =>
     props.account === null ? props.theme.orange : props.ready ? props.theme.green : props.theme.orange};
-  // props.account === null ? props.theme.orange : props.theme.green};
 `
 
 const AppWrapper = styled.div`
-  width: 60vw;
+  width: 100%;
   height: 100%;
-  margin: 0px auto;
-  margin-bottom: 20rem;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   align-items: center;
-  overflow: ${props => (props.overlay ? 'hidden' : 'scroll')};
   scroll-behavior: smooth;
   position: ${props => (props.overlay ? 'fixed' : 'initial')};
+
+  @media only screen and (max-width: 480px) {
+    width: 100%;
+  }
+
+  @media not screen and (max-width: 480px) {
+    margin: 0px auto;
+    margin-bottom: 20vh;
+  }
 `
 
 const Content = styled.div`
   width: 40%;
   margin-top: 16px;
+  margin-bottom: 16px;
+
+  @media only screen and (max-width: 480px) {
+    margin-left: 30%;
+  }
 `
 
 const OrderStatusLink = styled.p`
@@ -195,39 +205,66 @@ const Unicorn = styled.p`
 const StyledImage = styled.img`
   margin-bottom: 50px;
   margin-top: 50px;
+  margin-right: 50px;
   float: left;
+  width: 100%;
 `
 
 const StyledImageContainer = styled.div`
   width: calc(100vw - 32px);
   max-width: 375px;
   margin-top: 72px;
-  margin-right: 100px;
+  margin-bottom: 64px;
+  margin-left: 24px;
+  @media only screen and (max-width: 480px) {
+    margin-top: 0px;
+    margin-bottom: 20px;
+  }
 `
 
 const StyledRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 100%;
-  background-color: rgba(226, 226, 226, 0.95);
+  width: 60%;
+  background-color: rgba(226, 226, 226);
+
+  @media screen and (max-width: 480px) {
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+  }
 `
 
 const StyledBoxDetailsRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 100%;
-  background-color: rgba(226, 226, 226, 0.95);
+  width: 60%;
+  background-color: rgba(226, 226, 226);
   padding-top: 32px;
+
+  @media only screen and (max-width: 480px) {
+    flex-direction: column;
+    width: 100%;
+  }
+`
+
+const StyledDetailsText = styled.span`
+  margin: auto 12%;
+  @media only screen and (max-width: 480px) {
+    margin-left: 30%;
+    padding: 0px;
+  }
 `
 
 const StyledInfoRow = styled.div`
+  padding-top: 12px;
   display: flex;
   text-align: left;
   justify-content: center;
-  width: 100%;
-  background-color: rgba(226, 226, 226, 0.95);
+  width: 60%;
+  background-color: rgba(226, 226, 226);
   a {
     color: ${props => props.theme.orange};
     text-decoration: none;
@@ -236,32 +273,26 @@ const StyledInfoRow = styled.div`
     cursor: pointer;
     text-decoration: underline;
   }
+
+  @media only screen and (max-width: 480px) {
+    width: 100%;
+  }
 `
 
-const MarketData = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-end;
-  width: 100%;
-  margin-top: 1rem;
+const StyledDescription = styled.div`
+  width: 40%;
+  text-align: left;
+  margin-top: 26px;
+  @media only screen and (max-width: 480px) {
+    width: 80%;
+    text-align: center;
+  }
 `
 const CurrentPrice = styled.p`
   font-weight: 600;
   font-size: 18px;
   margin: 0px;
   margin-bottom: 0.5rem;
-  font-feature-settings: 'tnum' on, 'onum' on;
-`
-
-const SubTitle = styled.p`
-  color: #6c7284;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 156.7%;
-  width: 100%;
-  margin: 0;
   font-feature-settings: 'tnum' on, 'onum' on;
 `
 
@@ -295,86 +326,88 @@ export default function Body({
   const [showNftModal, setShowNftModal] = useState(false)
 
   return (
-    <AppWrapper overlay={state.visible}>
-      <Header
-        totalSupply={totalSupply}
-        ready={ready}
-        dollarPrice={dollarPrice}
-        balanceBKFT={balanceBKFT}
-        setShowConnect={setShowConnect}
-        setShowNftModal={setShowNftModal}
-      />
+    <>
+      <AppWrapper overlay={state.visible}>
+        <Header
+          totalSupply={totalSupply}
+          ready={ready}
+          dollarPrice={dollarPrice}
+          balanceBKFT={balanceBKFT}
+          setShowConnect={setShowConnect}
+          setShowNftModal={setShowNftModal}
+        />
 
-      <StyledImageContainer>
-        <StyledImage src="nakamotos-title.png" alt="Nakamot-Os" />
-      </StyledImageContainer>
-      <StyledRow>
-        <Card totalSupply={totalSupply} dollarPrice={dollarPrice} reserveBKFTToken={reserveBKFTToken} />
-        <Facts />
-      </StyledRow>
-      <StyledInfoRow>
-        <div style={{ width: '40%', textAlign: 'left', marginTop: '26px' }}>
-          Buy and sell real cereal with digital currency. Delivered on demand.{' '}
-          <a
-            href="/"
-            onClick={e => {
-              e.preventDefault()
-              setState(state => ({ ...state, visible: !state.visible }))
-              setShowWorks(true)
-            }}
-          >
-            Learn more
-          </a>
-        </div>
-      </StyledInfoRow>
-      <StyledBoxDetailsRow>
-        <span styled={{ marginRight: '22%' }}>
-          <CurrentPrice>{dollarPrice ? `$${amountFormatter(dollarPrice, 18, 2)} USD` : '$0.00 USD'}</CurrentPrice>
-          <SockCount>
-            {(reserveBKFTToken && totalSupply) || true
-              ? `${amountFormatter(reserveBKFTToken, 18, 0)}/${totalSupply} available`
-              : ''}
-          </SockCount>
-        </span>
-        <div style={{ marginLeft: '22%' }}>${TOKEN_SYMBOL}</div>
-      </StyledBoxDetailsRow>
-      <StyledRow>
-        <Content>
-          <BuyButtons balanceBKFT={balanceBKFT} />
-          <RedeemButton balanceBKFT={balanceBKFT} />
-          {!!account && (
-            <Link style={{ textDecoration: 'none' }} to="/status">
-              <OrderStatusLink>Check order status?</OrderStatusLink>
-            </Link>
-          )}
-        </Content>
-      </StyledRow>
-      <Checkout
-        selectedTokenSymbol={selectedTokenSymbol}
-        setSelectedTokenSymbol={setSelectedTokenSymbol}
-        ready={ready}
-        unlock={unlock}
-        validateBuy={validateBuy}
-        buy={buy}
-        validateSell={validateSell}
-        sell={sell}
-        burn={burn}
-        balanceBKFT={balanceBKFT}
-        dollarPrice={dollarPrice}
-        reserveBKFTToken={reserveBKFTToken}
-        dollarize={dollarize}
-        showConnect={showConnect}
-        setShowConnect={setShowConnect}
-        currentTransactionHash={currentTransaction.hash}
-        currentTransactionType={currentTransaction.type}
-        currentTransactionAmount={currentTransaction.amount}
-        setCurrentTransaction={setCurrentTransaction}
-        clearCurrentTransaction={clearCurrentTransaction}
-        showWorks={showWorks}
-        setShowWorks={setShowWorks}
-        showNftModal={showNftModal}
-        setShowNftModal={setShowNftModal}
-      />
-    </AppWrapper>
+        <StyledImageContainer>
+          <StyledImage src="nakamotos-title.png" alt="Nakamot-Os" />
+        </StyledImageContainer>
+        <StyledRow>
+          <Card totalSupply={totalSupply} dollarPrice={dollarPrice} reserveBKFTToken={reserveBKFTToken} />
+          <Facts />
+        </StyledRow>
+        <StyledInfoRow>
+          <StyledDescription>
+            Buy and sell real cereal with digital currency. Delivered on demand.{' '}
+            <a
+              href="/"
+              onClick={e => {
+                e.preventDefault()
+                setState(state => ({ ...state, visible: !state.visible }))
+                setShowWorks(true)
+              }}
+            >
+              Learn more
+            </a>
+          </StyledDescription>
+        </StyledInfoRow>
+        <StyledBoxDetailsRow>
+          <StyledDetailsText styled={{ marginRight: '22%' }}>
+            <CurrentPrice>{dollarPrice ? `$${amountFormatter(dollarPrice, 18, 2)} USD` : '$0.00 USD'}</CurrentPrice>
+            <SockCount>
+              {(reserveBKFTToken && totalSupply) || true
+                ? `${amountFormatter(reserveBKFTToken, 18, 0)}/${totalSupply} available`
+                : ''}
+            </SockCount>
+          </StyledDetailsText>
+          <StyledDetailsText style={{ marginTop: '12px' }}>${TOKEN_SYMBOL}</StyledDetailsText>
+        </StyledBoxDetailsRow>
+        <StyledRow>
+          <Content>
+            <BuyButtons balanceBKFT={balanceBKFT} />
+            <RedeemButton balanceBKFT={balanceBKFT} />
+            {!!account && (
+              <Link style={{ textDecoration: 'none' }} to="/status">
+                <OrderStatusLink>Check order status?</OrderStatusLink>
+              </Link>
+            )}
+          </Content>
+        </StyledRow>
+        <Checkout
+          selectedTokenSymbol={selectedTokenSymbol}
+          setSelectedTokenSymbol={setSelectedTokenSymbol}
+          ready={ready}
+          unlock={unlock}
+          validateBuy={validateBuy}
+          buy={buy}
+          validateSell={validateSell}
+          sell={sell}
+          burn={burn}
+          balanceBKFT={balanceBKFT}
+          dollarPrice={dollarPrice}
+          reserveBKFTToken={reserveBKFTToken}
+          dollarize={dollarize}
+          showConnect={showConnect}
+          setShowConnect={setShowConnect}
+          currentTransactionHash={currentTransaction.hash}
+          currentTransactionType={currentTransaction.type}
+          currentTransactionAmount={currentTransaction.amount}
+          setCurrentTransaction={setCurrentTransaction}
+          clearCurrentTransaction={clearCurrentTransaction}
+          showWorks={showWorks}
+          setShowWorks={setShowWorks}
+          showNftModal={showNftModal}
+          setShowNftModal={setShowNftModal}
+        />
+      </AppWrapper>
+    </>
   )
 }

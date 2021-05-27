@@ -8,19 +8,28 @@ import { amountFormatter, TOKEN_SYMBOL } from '../utils'
 import Gallery3D from './Gallery/3DGallery'
 const CardWrapper = styled.div`
   background: #fff;
-  /* box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4); */
   color: white;
   display: flex;
   flex-direction: column;
+  border-radius: 8px;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   cursor: default;
   padding: 24px;
-  z-index: 1;
   transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);
-  margin-right: 74px;
-  margin-top: 97px;
+  margin-right: 4vw;
+  margin-top: 5vw;
+  width: 348px;
+  height: 628px;
+  padding: 10px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
+  @media only screen and (max-width: 480px) {
+    margin: auto;
+    margin-bottom: 40px;
+    margin-top: 12px;
+    width: 318px;
+  }
 `
 
 const Title = styled.p`
