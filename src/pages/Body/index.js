@@ -192,7 +192,7 @@ const Content = styled.div`
 const OrderStatusLink = styled.p`
   color: ${props => props.theme.orange};
   text-align: center;
-  font-size: 0.6rem;
+  font-size: 1rem;
 `
 
 const Unicorn = styled.p`
