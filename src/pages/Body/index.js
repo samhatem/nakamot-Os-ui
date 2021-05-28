@@ -38,6 +38,9 @@ export function Header({ totalSupply, ready, balanceBKFT, setShowConnect, setSho
           Nakamot-Os
         </Unicorn>
       </Link>
+      <StyledImageContainer>
+        <StyledImage src="./nakamotos-title.png" alt="Nakamot-Os" />
+      </StyledImageContainer>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         {!!nftBalance && <NFTBalance onClick={handleShowNftModal}>{nftBalance} Nakamot-O NFTs</NFTBalance>}
         {totalSupply && (
@@ -184,14 +187,6 @@ const Content = styled.div`
   width: 40%;
   margin-top: 16px;
   margin-bottom: 16px;
-
-  @media screen and (max-width: 1750px) {
-    margin-left: 30%;
-  }
-
-  @media only screen and (max-width: 480px) {
-    margin-left: 30%;
-  }
 `
 
 const OrderStatusLink = styled.p`
@@ -208,31 +203,28 @@ const Unicorn = styled.p`
 `
 
 const StyledImage = styled.img`
-  margin-right: 50px;
-  float: left;
-  width: 80%;
+  width: 150px;
 `
 
 const StyledImageContainer = styled.div`
-  width: calc(100vw - 32px);
-  max-width: 375px;
-  margin-bottom: 34px;
-  margin-left: 54px;
-  @media only screen and (max-width: 480px) {
-    margin-top: 24px;
-    margin-bottom: 20px;
-    margin-left: 10%;
+  position: absolute;
+  left: calc(50vw - 90px);
+
+  @media only screen and (max-width: 600px) {
+    display: none;
   }
 `
 
+// background-color: rgba(226, 226, 226);
 const StyledRow = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  width: 50%;
-  background-color: rgba(226, 226, 226);
+  justify-content: space-evenly;
+  width: 100%;
+  max-width: 1500px;
+  align-items: center;
 
-  @media screen and (max-width: 1750px) {
+  @media screen and (max-width: 800px) {
     min-width: 350px;
     flex-direction: column;
     justify-content: center;
@@ -242,7 +234,6 @@ const StyledRow = styled.div`
     flex-direction: column;
     justify-content: center;
     width: 100%;
-    margin-right: 20px;
   }
 `
 
@@ -250,9 +241,9 @@ const StyledBoxDetailsRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 50%;
-  background-color: rgba(226, 226, 226);
   padding-top: 32px;
+  width: 50%;
+  padding-left: 30%;
 
   @media screen and (max-width: 1750px) {
     min-width: 350px;
@@ -262,25 +253,21 @@ const StyledBoxDetailsRow = styled.div`
     flex-direction: column;
     width: 100%;
     margin-right: 20px;
+    align-items: center;
+    padding-left: 0;
   }
 `
 
 const StyledDetailsText = styled.span`
   width: 50%;
-
-  @media only screen and (max-width: 480px) {
-    margin-left: 30%;
-  }
 `
 
 const StyledInfoRow = styled.div`
   padding-top: 12px;
   display: flex;
   text-align: left;
-  justify-content: center;
-  width: 50%;
+  justify-content: space-evenly;
   min-width: 350px;
-  background-color: rgba(226, 226, 226);
   a {
     color: ${props => props.theme.orange};
     text-decoration: none;
@@ -290,7 +277,7 @@ const StyledInfoRow = styled.div`
     text-decoration: underline;
   }
 
-  @media screen and (max-width: 1750px) {
+  @media screen and (max-width: 1000px) {
     min-width: 350px;
   }
   @media only screen and (max-width: 480px) {
@@ -315,6 +302,13 @@ const CurrentPrice = styled.p`
   margin: 0px;
   margin-bottom: 0.5rem;
   font-feature-settings: 'tnum' on, 'onum' on;
+`
+
+const GreyBg = styled.div`
+  background-color: rgba(226,226,226);
+  border-radius: 10px;
+  margin-top: 50px;
+  margin-bottom: 100px;
 `
 
 export default function Body({
@@ -357,51 +351,49 @@ export default function Body({
           setShowConnect={setShowConnect}
           setShowNftModal={setShowNftModal}
         />
-
-        <StyledImageContainer>
-          <StyledImage src="nakamotos-title.png" alt="Nakamot-Os" />
-        </StyledImageContainer>
         <StyledRow>
           <Card totalSupply={totalSupply} dollarPrice={dollarPrice} reserveBKFTToken={reserveBKFTToken} />
           <Facts />
         </StyledRow>
-        <StyledInfoRow>
-          <StyledDescription>
-            Buy and sell real cereal with digital currency. Delivered on demand.{' '}
-            <a
-              href="/"
-              onClick={e => {
-                e.preventDefault()
-                setState(state => ({ ...state, visible: !state.visible }))
-                setShowWorks(true)
-              }}
-            >
-              Learn more
-            </a>
-          </StyledDescription>
-        </StyledInfoRow>
-        <StyledBoxDetailsRow>
-          <StyledDetailsText style={{ marginLeft: '30%' }}>
-            <CurrentPrice>{dollarPrice ? `$${amountFormatter(dollarPrice, 18, 2)} USD` : '$0.00 USD'}</CurrentPrice>
-            <SockCount>
-              {(reserveBKFTToken && totalSupply) || true
-                ? `${amountFormatter(reserveBKFTToken, 18, 0)}/${totalSupply} available`
-                : ''}
-            </SockCount>
-          </StyledDetailsText>
-          <StyledDetailsText style={{ marginTop: '12px' }}>${TOKEN_SYMBOL}</StyledDetailsText>
-        </StyledBoxDetailsRow>
-        <StyledRow>
-          <Content>
-            <BuyButtons balanceBKFT={balanceBKFT} />
-            <RedeemButton balanceBKFT={balanceBKFT} />
-            {!!account && (
-              <Link style={{ textDecoration: 'none' }} to="/status">
-                <OrderStatusLink>Check order status?</OrderStatusLink>
-              </Link>
-            )}
-          </Content>
-        </StyledRow>
+        <GreyBg>
+          <StyledInfoRow>
+            <StyledDescription>
+              Buy and sell real cereal with digital currency. Delivered on demand.{' '}
+              <a
+                href="/"
+                onClick={e => {
+                  e.preventDefault()
+                  setState(state => ({ ...state, visible: !state.visible }))
+                  setShowWorks(true)
+                }}
+              >
+                Learn more
+              </a>
+            </StyledDescription>
+          </StyledInfoRow>
+          <StyledBoxDetailsRow>
+            <StyledDetailsText>
+              <CurrentPrice>{dollarPrice ? `$${amountFormatter(dollarPrice, 18, 2)} USD` : '$0.00 USD'}</CurrentPrice>
+              <SockCount>
+                {(reserveBKFTToken && totalSupply) || true
+                  ? `${amountFormatter(reserveBKFTToken, 18, 0)}/${totalSupply} available`
+                  : ''}
+              </SockCount>
+            </StyledDetailsText>
+            <StyledDetailsText style={{ marginTop: '12px' }}>${TOKEN_SYMBOL}</StyledDetailsText>
+          </StyledBoxDetailsRow>
+          <StyledRow>
+            <Content>
+              <BuyButtons balanceBKFT={balanceBKFT} />
+              <RedeemButton balanceBKFT={balanceBKFT} />
+              {!!account && (
+                <Link style={{ textDecoration: 'none' }} to="/status">
+                  <OrderStatusLink>Check order status?</OrderStatusLink>
+                </Link>
+              )}
+            </Content>
+          </StyledRow>
+        </GreyBg>
         <Checkout
           selectedTokenSymbol={selectedTokenSymbol}
           setSelectedTokenSymbol={setSelectedTokenSymbol}
