@@ -154,8 +154,8 @@ export default function Facts() {
           )}
           <Line />
           <StyledParagraph>
-            When you redeem your $BOX token before the lottery block, not only will you receive a physical box of Nakamoto-O's,{" "}
-            but you'll also be automatically entered in a lottery to win a Nakamot-O's NFT!
+            When you redeem your $BOX token before the lottery block, not only will you receive a physical box of Nakamot-Os,{" "}
+            but you'll also be automatically entered in a lottery to win a Nakamot-Os NFT!
           </StyledParagraph>
           <StyledParagraph>
             There will only be 10 Initial Cereal Offering NFTs ever made. How's that for sound cereal?
