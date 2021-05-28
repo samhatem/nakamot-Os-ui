@@ -238,7 +238,7 @@ export default function Redeem({
               burn(numberBurned.toString())
                 .then(response => {
                   // save transaction hash
-                  fetch('/.netlify/functions/create-order', {
+                  fetch('/.netlify/functions/createOrder', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({

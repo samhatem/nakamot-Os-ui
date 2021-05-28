@@ -263,7 +263,7 @@ export default function RedeemForm({ setHasConfirmedAddress, setUserAddress, num
           const autoMessage = `${nameMap[address]}: ${account}\n${nameMap[timestamp]}: ${timestampToSign}\n${nameMap[numberBurned]}: ${actualNumberBurned}`
 
           signer.signMessage(`${header}\n\n${formDataMessage}\n${autoMessage}`).then(returnedSignature => {
-            fetch('/.netlify/functions/submission-created', {
+            fetch('/.netlify/functions/submissionCreated', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
