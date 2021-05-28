@@ -13,15 +13,25 @@ export default createGlobalStyle`
     font-family: Tomorrow, sans-serif;
     background-image: url('cybertruck.png'), url('btc-flag.png'), url('moon-ground-overlay.png'), url("stars.png"); 
     background-repeat: no-repeat, no-repeat, repeat-x, repeat;
-    background-position: left bottom, right bottom, center bottom;
-    background-size: 30%, 20%, 20%, 100%;
+    background-position: bottom left, right bottom, bottom center ;
+    background-size: 40%, 20%, 25%, 100%;
+    padding-right: 2%;
 
-    
+    @media not screen and (max-width: 480px) {
+      height: 100vh;
+    }
+
+    @media screen and (max-width: 1750px) {
+      background-image: url("stars.png"); 
+      background-repeat: repeat;    
+      background-size: 100%;
+  }
+
     @media only screen and (max-width: 480px) {
       background-image: url("stars.png"); 
       background-repeat: repeat;    
       background-size: 100%;
-      padding-bottom: 50px;
+      padding-bottom: 50px;      
     }
   }
 `

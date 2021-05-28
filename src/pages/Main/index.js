@@ -244,6 +244,7 @@ export default function Main({ stats, status }) {
   useEffect(() => {
     try {
       const BKFTExchangeRateETH = getExchangeRate(reserveBKFTToken, reserveBKFTWETH)
+
       setDollarPrice(
         BKFTExchangeRateETH.mul(USDExchangeRateETH).div(ethers.BigNumber.from(10).pow(ethers.BigNumber.from(18)))
       )

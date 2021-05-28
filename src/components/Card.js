@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import Tilt from 'react-tilt'
 
-import { amountFormatter, TOKEN_SYMBOL } from '../utils'
+import { TOKEN_SYMBOL } from '../utils'
 
 import Gallery3D from './Gallery/3DGallery'
 const CardWrapper = styled.div`
@@ -19,11 +19,18 @@ const CardWrapper = styled.div`
   padding: 24px;
   transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);
   margin-right: 4vw;
-  margin-top: 5vw;
+  margin-top: 2vw;
   width: 348px;
-  height: 628px;
+  height: 528px;
   padding: 10px;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
+
+  @media screen and (max-width: 1750px) {
+    margin: auto;
+    margin-bottom: 40px;
+    margin-top: 12px;
+  }
+
   @media only screen and (max-width: 480px) {
     margin: auto;
     margin-bottom: 40px;
@@ -52,26 +59,9 @@ const SubTitle = styled.p`
   font-feature-settings: 'tnum' on, 'onum' on;
 `
 
-const SockCount = styled.p`
-  color: #aeaeae;
-  font-weight: 400;
-  margin: 0px;
-  font-size: 12px;
-  font-feature-settings: 'tnum' on, 'onum' on;
-`
-
-const CurrentPrice = styled.p`
-  font-weight: 600;
-  font-size: 18px;
-  margin: 0px;
-  margin-bottom: 0.5rem;
-  font-feature-settings: 'tnum' on, 'onum' on;
-`
-
 const Info = styled.div`
   /* margin-bottom: -2px; */
 `
-
 const Dynamic = styled.p`
   color: #aeaeae;
   font-style: italic;
@@ -114,14 +104,6 @@ export default function Card({ totalSupply, dollarPrice, reserveBKFTToken }) {
         <SubTitle>${TOKEN_SYMBOL}</SubTitle>
         <Gallery3D />
         <MarketData>
-          <span>
-            <CurrentPrice>{dollarPrice ? `$${amountFormatter(dollarPrice, 18, 2)} USD` : '$0.00'}</CurrentPrice>
-            <SockCount>
-              {reserveBKFTToken && totalSupply
-                ? `${amountFormatter(reserveBKFTToken, 18, 0)}/${totalSupply} available`
-                : ''}
-            </SockCount>
-          </span>
           <Link to="/stats">
             <Info>
               <InfoButton>?</InfoButton>

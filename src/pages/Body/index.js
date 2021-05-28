@@ -81,6 +81,7 @@ const HeaderFrame = styled.div`
   flex-direction: row;
   justify-content: space-between;
   padding: 1rem;
+  padding-top: 0px;
 `
 
 const Account = styled.div`
@@ -160,6 +161,7 @@ const Status = styled.div`
 `
 
 const AppWrapper = styled.div`
+  padding-top: 20px;
   width: 100%;
   height: 100%;
   display: flex;
@@ -174,7 +176,6 @@ const AppWrapper = styled.div`
   }
 
   @media not screen and (max-width: 480px) {
-    margin: 0px auto;
     margin-bottom: 20vh;
   }
 `
@@ -184,6 +185,10 @@ const Content = styled.div`
   margin-top: 16px;
   margin-bottom: 16px;
 
+  @media screen and (max-width: 1750px) {
+    margin-left: 30%;
+  }
+
   @media only screen and (max-width: 480px) {
     margin-left: 30%;
   }
@@ -192,7 +197,7 @@ const Content = styled.div`
 const OrderStatusLink = styled.p`
   color: ${props => props.theme.orange};
   text-align: center;
-  font-size: 0.6rem;
+  font-size: 1rem;
 `
 
 const Unicorn = styled.p`
@@ -203,22 +208,20 @@ const Unicorn = styled.p`
 `
 
 const StyledImage = styled.img`
-  margin-bottom: 50px;
-  margin-top: 50px;
   margin-right: 50px;
   float: left;
-  width: 100%;
+  width: 80%;
 `
 
 const StyledImageContainer = styled.div`
   width: calc(100vw - 32px);
   max-width: 375px;
-  margin-top: 72px;
-  margin-bottom: 64px;
-  margin-left: 24px;
+  margin-bottom: 34px;
+  margin-left: 54px;
   @media only screen and (max-width: 480px) {
-    margin-top: 0px;
+    margin-top: 24px;
     margin-bottom: 20px;
+    margin-left: 10%;
   }
 `
 
@@ -226,13 +229,20 @@ const StyledRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 60%;
+  width: 50%;
   background-color: rgba(226, 226, 226);
+
+  @media screen and (max-width: 1750px) {
+    min-width: 350px;
+    flex-direction: column;
+    justify-content: center;
+  }
 
   @media screen and (max-width: 480px) {
     flex-direction: column;
     justify-content: center;
     width: 100%;
+    margin-right: 20px;
   }
 `
 
@@ -240,21 +250,26 @@ const StyledBoxDetailsRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 60%;
+  width: 50%;
   background-color: rgba(226, 226, 226);
   padding-top: 32px;
+
+  @media screen and (max-width: 1750px) {
+    min-width: 350px;
+  }
 
   @media only screen and (max-width: 480px) {
     flex-direction: column;
     width: 100%;
+    margin-right: 20px;
   }
 `
 
 const StyledDetailsText = styled.span`
-  margin: auto 12%;
+  width: 50%;
+
   @media only screen and (max-width: 480px) {
     margin-left: 30%;
-    padding: 0px;
   }
 `
 
@@ -263,7 +278,8 @@ const StyledInfoRow = styled.div`
   display: flex;
   text-align: left;
   justify-content: center;
-  width: 60%;
+  width: 50%;
+  min-width: 350px;
   background-color: rgba(226, 226, 226);
   a {
     color: ${props => props.theme.orange};
@@ -274,8 +290,13 @@ const StyledInfoRow = styled.div`
     text-decoration: underline;
   }
 
+  @media screen and (max-width: 1750px) {
+    min-width: 350px;
+  }
   @media only screen and (max-width: 480px) {
     width: 100%;
+    margin-right: 20px;
+    padding-top: 5px;
   }
 `
 
@@ -360,7 +381,7 @@ export default function Body({
           </StyledDescription>
         </StyledInfoRow>
         <StyledBoxDetailsRow>
-          <StyledDetailsText styled={{ marginRight: '22%' }}>
+          <StyledDetailsText style={{ marginLeft: '30%' }}>
             <CurrentPrice>{dollarPrice ? `$${amountFormatter(dollarPrice, 18, 2)} USD` : '$0.00 USD'}</CurrentPrice>
             <SockCount>
               {(reserveBKFTToken && totalSupply) || true

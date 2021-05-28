@@ -1,10 +1,10 @@
 import { ChainId } from '@uniswap/sdk'
 
-const isProd = process.env.NETWORK === 'mainnet'
+const isProd = process.env.REACT_APP_NETWORK === 'mainnet'
 
 export const PROVIDER_URL = isProd
   ? process.env.REACT_APP_MAINNET_PROVIDER_URL
-  : process.env.REACT_APP_GOERLI_PROVIDER_URL
+  : process.env.REACT_APP_KOVAN_PROVIDER_URL
 
 export const SUPPORTED_NETWORKS = isProd ? [1] : [1, 42]
 
