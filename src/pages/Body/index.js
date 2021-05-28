@@ -305,7 +305,7 @@ const CurrentPrice = styled.p`
 `
 
 const GreyBg = styled.div`
-  background-color: rgba(226,226,226);
+  background-color: rgba(226, 226, 226);
   border-radius: 10px;
   margin-top: 50px;
   margin-bottom: 100px;
@@ -373,7 +373,7 @@ export default function Body({
           </StyledInfoRow>
           <StyledBoxDetailsRow>
             <StyledDetailsText>
-              <CurrentPrice>{dollarPrice ? `$${amountFormatter(dollarPrice, 18, 2)} USD` : '$0.00 USD'}</CurrentPrice>
+              <CurrentPrice>{dollarPrice ? `$${amountFormatter(dollarPrice, 6, 2)} USD` : '$0.00 USD'}</CurrentPrice>
               <SockCount>
                 {(reserveBKFTToken && totalSupply) || true
                   ? `${amountFormatter(reserveBKFTToken, 18, 0)}/${totalSupply} available`
