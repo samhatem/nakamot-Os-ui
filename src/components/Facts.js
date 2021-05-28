@@ -25,6 +25,12 @@ const CardWrapper = styled.div`
   border-radius: 8px;
   margin-left: 4vw;
   margin-top: 2vw;
+
+  @media screen and (max-width: 1750px) {
+    margin: auto;
+    margin-bottom: 40px;
+    margin-top: 12px;
+  }
   @media only screen and (max-width: 480px) {
     margin: auto;
     margin-bottom: 40px;
@@ -37,7 +43,7 @@ const StyledTextContainer = styled.div`
   width: 100%;
   height: 32px;
   left: 597px;
-  font-family: Domine;
+  font-family: Tomorrow, sans-serif;
   font-style: normal;
   color: #000000;
 `
@@ -60,7 +66,7 @@ const StyledText = styled.h3`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  font-family: Domine;
+  font-family: Tomorrow, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
@@ -71,7 +77,7 @@ const StyledWinnerText = styled.h4`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  font-family: Domine;
+  font-family: Tomorrow, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -81,7 +87,7 @@ const StyledWinnerText = styled.h4`
 const StyledParagraph = styled.p`
   width: 100%;
   line-height: 20px;
-  font-family: Domine;
+  font-family: Tomorrow, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;

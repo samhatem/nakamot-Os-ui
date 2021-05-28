@@ -176,7 +176,6 @@ const AppWrapper = styled.div`
   }
 
   @media not screen and (max-width: 480px) {
-    margin: 0px auto;
     margin-bottom: 20vh;
   }
 `
@@ -185,6 +184,10 @@ const Content = styled.div`
   width: 40%;
   margin-top: 16px;
   margin-bottom: 16px;
+
+  @media screen and (max-width: 1750px) {
+    margin-left: 30%;
+  }
 
   @media only screen and (max-width: 480px) {
     margin-left: 30%;
@@ -214,10 +217,11 @@ const StyledImageContainer = styled.div`
   width: calc(100vw - 32px);
   max-width: 375px;
   margin-bottom: 34px;
-  margin-left: 74px;
+  margin-left: 54px;
   @media only screen and (max-width: 480px) {
-    margin-top: 0px;
+    margin-top: 24px;
     margin-bottom: 20px;
+    margin-left: 10%;
   }
 `
 
@@ -228,10 +232,17 @@ const StyledRow = styled.div`
   width: 50%;
   background-color: rgba(226, 226, 226);
 
+  @media screen and (max-width: 1750px) {
+    min-width: 350px;
+    flex-direction: column;
+    justify-content: center;
+  }
+
   @media screen and (max-width: 480px) {
     flex-direction: column;
     justify-content: center;
     width: 100%;
+    margin-right: 20px;
   }
 `
 
@@ -243,17 +254,22 @@ const StyledBoxDetailsRow = styled.div`
   background-color: rgba(226, 226, 226);
   padding-top: 32px;
 
+  @media screen and (max-width: 1750px) {
+    min-width: 350px;
+  }
+
   @media only screen and (max-width: 480px) {
     flex-direction: column;
     width: 100%;
+    margin-right: 20px;
   }
 `
 
 const StyledDetailsText = styled.span`
   width: 50%;
+
   @media only screen and (max-width: 480px) {
     margin-left: 30%;
-    padding: 0px;
   }
 `
 
@@ -263,6 +279,7 @@ const StyledInfoRow = styled.div`
   text-align: left;
   justify-content: center;
   width: 50%;
+  min-width: 350px;
   background-color: rgba(226, 226, 226);
   a {
     color: ${props => props.theme.orange};
@@ -273,8 +290,13 @@ const StyledInfoRow = styled.div`
     text-decoration: underline;
   }
 
+  @media screen and (max-width: 1750px) {
+    min-width: 350px;
+  }
   @media only screen and (max-width: 480px) {
     width: 100%;
+    margin-right: 20px;
+    padding-top: 5px;
   }
 `
 

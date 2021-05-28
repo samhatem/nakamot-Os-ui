@@ -21,11 +21,17 @@ export default createGlobalStyle`
       height: 100vh;
     }
 
+    @media screen and (max-width: 1750px) {
+      background-image: url("stars.png"); 
+      background-repeat: repeat;    
+      background-size: 100%;
+  }
+
     @media only screen and (max-width: 480px) {
       background-image: url("stars.png"); 
       background-repeat: repeat;    
       background-size: 100%;
-      padding-bottom: 50px;
+      padding-bottom: 50px;      
     }
   }
 `

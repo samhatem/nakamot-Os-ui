@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react'
 import { useWeb3Context } from 'web3-react'
-import { ethers } from 'ethers'
+import { BigNumber, ethers } from 'ethers'
 
 import { TOKEN_SYMBOLS, TOKEN_ADDRESSES, ERROR_CODES } from '../../utils'
 import {
@@ -244,6 +244,7 @@ export default function Main({ stats, status }) {
   useEffect(() => {
     try {
       const BKFTExchangeRateETH = getExchangeRate(reserveBKFTToken, reserveBKFTWETH)
+
       setDollarPrice(
         BKFTExchangeRateETH.mul(USDExchangeRateETH).div(ethers.BigNumber.from(10).pow(ethers.BigNumber.from(18)))
       )
