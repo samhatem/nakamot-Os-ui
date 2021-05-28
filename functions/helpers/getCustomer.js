@@ -14,7 +14,6 @@ export async function getCustomer (address, customerInfo, shouldCreateAddress = 
   console.log("getting customer")
   const allRefs = await client.query(q.Paginate(q.Match(q.Index('get_by_customer'), address)))
 
-  /*
   if (allRefs.data.length === 0) {
     return createCustomer(address, customerInfo)
   }
@@ -35,7 +34,6 @@ export async function getCustomer (address, customerInfo, shouldCreateAddress = 
   }
 
   return customer
-  */
 }
 
 async function createAddress (customer, info) {
