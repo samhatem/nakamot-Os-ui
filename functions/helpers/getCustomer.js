@@ -36,6 +36,8 @@ export async function getCustomer (address, customerInfo, shouldCreateAddress = 
 }
 
 async function createAddress (customer, info) {
+  if (info.country.toUpperCase() === "USA") { info.country = "United States" }
+
   const { data: { customer_address: newAddress } } = await axios({
     url: `/admin/api/2021-04/customers/${customer.id}/addresses.json`,
     method: 'post',
