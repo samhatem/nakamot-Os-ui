@@ -566,6 +566,7 @@ export default function Main({ stats, status }) {
       balanceBKFT={balanceBKFT}
       reserveBKFTToken={reserveBKFTToken}
       totalSupply={totalSupply}
+      ethPrice={USDExchangeRateETH}
     />
   )
 }

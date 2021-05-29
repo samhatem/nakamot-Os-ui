@@ -325,7 +325,8 @@ export default function Body({
   dollarPrice,
   balanceBKFT,
   reserveBKFTToken,
-  totalSupply
+  totalSupply,
+  ethPrice
 }) {
   const { account } = useWeb3Context()
   const [currentTransaction, _setCurrentTransaction] = useState({})
@@ -339,6 +340,7 @@ export default function Body({
   const [showConnect, setShowConnect] = useState(false)
   const [showWorks, setShowWorks] = useState(false)
   const [showNftModal, setShowNftModal] = useState(false)
+  const boxPriceETH = amountFormatter(dollarPrice, 6, 2) / amountFormatter(ethPrice, 6, 2)
 
   return (
     <>
@@ -373,7 +375,7 @@ export default function Body({
           </StyledInfoRow>
           <StyledBoxDetailsRow>
             <StyledDetailsText>
-              <CurrentPrice>{dollarPrice ? `$${amountFormatter(dollarPrice, 6, 2)} USD` : '$0.00 USD'}</CurrentPrice>
+              <CurrentPrice>{dollarPrice ? `${boxPriceETH.toFixed(4)} ETH` : '0.00 ETH'}</CurrentPrice>
               <SockCount>
                 {(reserveBKFTToken && totalSupply) || true
                   ? `${amountFormatter(reserveBKFTToken, 18, 0)}/${totalSupply} available`
