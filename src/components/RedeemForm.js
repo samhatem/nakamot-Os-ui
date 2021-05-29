@@ -287,7 +287,7 @@ export default function RedeemForm({
               })
             })
               .then(res => {
-                if (res.status !== 200) {
+                if (res.status === 500) {
                   setHasRedemptionFailed(true)
                   setHasConfirmedAddress(false)
                 } else {
