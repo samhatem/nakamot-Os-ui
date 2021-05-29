@@ -78,7 +78,13 @@ const addressMapping = [
 
 const recaptchaEnabled = false
 
-export default function RedeemForm({ setHasConfirmedAddress, setUserAddress, numberBurned: actualNumberBurned, formState, setFormState }) {
+export default function RedeemForm({
+  setHasConfirmedAddress,
+  setUserAddress,
+  numberBurned: actualNumberBurned,
+  formState,
+  setFormState
+}) {
   const { library, account } = useWeb3Context()
   const [recaptcha, setRecaptcha] = useState()
   // const [autoAddress, setAutoAddress] = useState([])
@@ -281,7 +287,9 @@ export default function RedeemForm({ setHasConfirmedAddress, setUserAddress, num
               .then(() => {
                 setHasConfirmedAddress(true)
               })
-              .catch(console.error)
+              .catch(() => {
+                setHasConfirmedAddress(false)
+              })
           })
 
           event.preventDefault()
@@ -348,8 +356,8 @@ const ButtonFrame = styled.button`
   cursor: pointer;
   pointer-events: ${props => (props.disabled ? 'none' : 'auto')};
 
-  background: linear-gradient(90deg, #FE8700 4.52%, #FFA743 100%);
-  box-shadow: 0px 4px 20px rgba(254,135,0,1, 0.4);
+  background: linear-gradient(90deg, #fe8700 4.52%, #ffa743 100%);
+  box-shadow: 0px 4px 20px rgba(254, 135, 0, 1, 0.4);
   background: ${props => (props.disabled ? '#f1f2f6' : 'linear-gradient(90deg, #FE8700 4.52%, #FFA743 100%)')};
   box-shadow: ${props => (props.disabled ? 'none' : '0px 4px 20px rgba(254,135,0,1, 0.4)')};
   color: ${props => (props.disabled ? '#aeaeae' : props.theme.white)};
