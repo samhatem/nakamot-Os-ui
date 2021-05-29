@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { useWeb3Context } from 'web3-react'
 import ReCAPTCHA from 'react-google-recaptcha'
 
-import { TOKEN_SYMBOL } from '../utils'
+import { EMAIL, TOKEN_SYMBOL } from '../utils'
 
 // we need to capture the full address into netlify...
 // https://www.netlify.com/blog/2017/07/20/how-to-integrate-netlifys-form-handling-in-a-react-app/
@@ -87,6 +87,7 @@ export default function RedeemForm({
 }) {
   const { library, account } = useWeb3Context()
   const [recaptcha, setRecaptcha] = useState()
+  const [hasRedemptionFailed, setHasRedemptionFailed] = useState(false)
   // const [autoAddress, setAutoAddress] = useState([])
   // const [inputY, setInputY] = useState(0)
 
@@ -257,6 +258,7 @@ export default function RedeemForm({
       />
 
       {recaptchaEnabled && <ReCAPTCHA sitekey={process.env.REACT_APP_SITE_RECAPTCHA_KEY} onChange={onRecaptcha} />}
+      {hasRedemptionFailed && <ErrorPrompt>{`Request failed. Try again or contact ${EMAIL}`}</ErrorPrompt>}
       <ButtonFrame
         type="submit"
         disabled={!canSign || (recaptchaEnabled && !!!recaptcha)}
@@ -284,11 +286,16 @@ export default function RedeemForm({
                 }
               })
             })
-              .then((res) => {
-                console.log({ res })
-                setHasConfirmedAddress(true)
+              .then(res => {
+                if (res.status !== 200) {
+                  setHasRedemptionFailed(true)
+                  setHasConfirmedAddress(false)
+                } else {
+                  setHasConfirmedAddress(true)
+                }
               })
               .catch(() => {
+                setHasRedemptionFailed(true)
                 setHasConfirmedAddress(false)
               })
           })
@@ -308,7 +315,6 @@ const FormFrame = styled.form`
   color: #fff;
   font-weight: 600;
   margin: 16px;
-  /* margin-bottom: 0px; */
   font-size: 16px;
   display: flex;
   flex-direction: row;
@@ -370,4 +376,14 @@ const ButtonFrame = styled.button`
   :hover {
     transform: scale(0.99);
   }
+`
+
+const ErrorPrompt = styled.p`
+  font-weight: 500;
+  font-size: 14px;
+  margin: 8px 16px 10px 16px !important;
+  text-align: left;
+  color: red;
+  font-style: italic;
+  width: 100%;
 `

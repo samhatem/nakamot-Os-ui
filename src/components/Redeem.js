@@ -251,7 +251,7 @@ export default function Redeem({
                       }
                     })
                   })
-                    .then((res) => {
+                    .then(res => {
                       console.log({ res })
                       setTransactionHash(response.hash)
                     })
