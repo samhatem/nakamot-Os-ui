@@ -97,7 +97,6 @@ async function createCustomer (address, customerInfo) {
     }
   })
 
-  try {
     const res = await client.query(
       q.Create(q.Collection('customers'), {
         data: {
@@ -119,7 +118,4 @@ async function createCustomer (address, customerInfo) {
       }))
 
     return res.data
-  } catch (e) {
-    throw new Error("Unable to create customer")
-  }
 }
