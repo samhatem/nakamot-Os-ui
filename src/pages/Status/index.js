@@ -15,6 +15,14 @@ const OrderDiv = styled.div`
   margin-bottom: 1rem;
 `
 
+const GreyBg = styled.div`
+  background-color: rgba(226, 226, 226);
+  border-radius: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 40px;
+`
+
 export default function Body({ totalSupply, ready, balanceBKFT }) {
   const [state] = useAppContext()
   const { library, account } = useWeb3Context()
@@ -41,6 +49,7 @@ export default function Body({ totalSupply, ready, balanceBKFT }) {
         method: 'POST',
         body: JSON.stringify({ address: account, signature: signature, timestamp: timestamp })
       }).then(async response => {
+        console.log({ response })
         if (response.status !== 200) {
           const parsed = await response.json().catch(() => ({ error: 'Unknown Error' }))
           console.error(parsed.error)
@@ -50,6 +59,7 @@ export default function Body({ totalSupply, ready, balanceBKFT }) {
           setData(parsed)
         }
       })
+      .catch(console.error)
 
       return () => {
         setError()
@@ -73,63 +83,65 @@ export default function Body({ totalSupply, ready, balanceBKFT }) {
     return (
       <AppWrapper overlay={state.visible}>
         <Header totalSupply={totalSupply} ready={ready} balanceBKFT={balanceBKFT} setShowConnect={() => {}} />
-        <Content>
-          <p>
-            You can use this page to check the status of your order, please bookmark it for future reference.
-          </p>
+        <GreyBg>
+          <Content>
+            <p>
+              You can use this page to check the status of your order, please bookmark it for future reference.
+            </p>
 
-          {error && <p>Error</p>}
+            {error && <p>Error</p>}
 
-          <Button text={'Access my order history'} disabled={!!data} onClick={sign} />
-          <br />
-          {data &&
-            (data.length === 0 ? (
-              <p>No orders found.</p>
-            ) : (
-              data.map((d, i) => {
-                return (
-                  <OrderDiv key={i}>
-                    <ul>
-                      <li>
-                        Order Date:{' '}
-                        {getFormattedDate(d.created_at)}
-                      </li>
-                      <li>{TOKEN_SYMBOL} Redeemed: {d.line_items[0].fulfillable_quantity}</li>
-                      <li>
-                        <a href={d.order_status_url} target="_blank" rel="noopener noreferrer">
-                          Order Status
-                        </a>
-                      </li>
-                      {d.shippingId && (
+            <Button text={'Access my order history'} disabled={!!data} onClick={sign} />
+            <br />
+            {data &&
+              (data.length === 0 ? (
+                <p>No orders found.</p>
+              ) : (
+                data.map((d, i) => {
+                  return (
+                    <OrderDiv key={i}>
+                      <ul>
                         <li>
-                          Shipping Id:{' '}
-                          <a
-                            href={`https://www.google.com/search?q=${d.shippingId}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ textDecoration: 'none' }}
-                          >
-                            {d.shippingId}
+                          Order Date:{' '}
+                          {getFormattedDate(d.created_at)}
+                        </li>
+                        <li>{TOKEN_SYMBOL} Redeemed: {d.line_items[0].fulfillable_quantity}</li>
+                        <li>
+                          <a href={d.order_status_url} target="_blank" rel="noopener noreferrer">
+                            Order Status
                           </a>
                         </li>
-                      )}
-                    </ul>
-                  </OrderDiv>
-                )
-              })
-            ))}
-          <p style={{ fontSize: '.75rem', textAlign: 'center' }}>
-            Problem with an order?{' '}
-            <a
-              href={`mailto:Satoshi@breakfast.exchange?Subject=NakamotOs%20Order%20for%20${account}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Email us
-            </a>
-            .{' '}
-          </p>
-        </Content>
+                        {d.shippingId && (
+                          <li>
+                            Shipping Id:{' '}
+                            <a
+                              href={`https://www.google.com/search?q=${d.shippingId}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ textDecoration: 'none' }}
+                            >
+                              {d.shippingId}
+                            </a>
+                          </li>
+                        )}
+                      </ul>
+                    </OrderDiv>
+                  )
+                })
+              ))}
+            <p style={{ fontSize: '.75rem', textAlign: 'center' }}>
+              Problem with an order?{' '}
+              <a
+                href={`mailto:decentralizedbreakfast@gmail.com?Subject=NakamotOs%20Order%20for%20${account}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Email us
+              </a>
+              .{' '}
+            </p>
+          </Content>
+        </GreyBg>
       </AppWrapper>
     )
   }

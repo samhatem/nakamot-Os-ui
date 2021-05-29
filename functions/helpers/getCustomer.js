@@ -11,6 +11,7 @@ export function findAddress (customer, info) {
 }
 
 export async function getCustomer (address, customerInfo, shouldCreateAddress = false) {
+  console.log("getting customer")
   const allRefs = await client.query(q.Paginate(q.Match(q.Index('get_by_customer'), address)))
 
   if (allRefs.data.length === 0) {
@@ -59,6 +60,7 @@ async function createAddress (customer, info) {
 }
 
 async function createCustomer (address, customerInfo) {
+  console.log("creating customer")
   const {
     firstName,
     lastName,
@@ -95,7 +97,6 @@ async function createCustomer (address, customerInfo) {
     }
   })
 
-  try {
     const res = await client.query(
       q.Create(q.Collection('customers'), {
         data: {
@@ -117,7 +118,4 @@ async function createCustomer (address, customerInfo) {
       }))
 
     return res.data
-  } catch (e) {
-    throw new Error("Unable to create customer")
-  }
 }

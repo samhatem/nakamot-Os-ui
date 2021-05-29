@@ -30,6 +30,7 @@ function returnSuccess(data, statusCode = 200) {
 }
 
 export async function handler(event) {
+  console.log("in handler")
   const data = JSON.parse(event.body)
 
   const {

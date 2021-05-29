@@ -72,7 +72,7 @@ export default function Works({ closeCheckout }) {
         <a href="https://unisocks.exchange/" target="_blank" rel="noopener noreferrer">Unisocks</a> which we used to cook up your breakfast.
       </Desc>
       <Desc>
-        <a href="mailto:Satoshi@breakfast.exchange" target="_blank" rel="noopener noreferrer">
+        <a href="mailto:decentralizedbreakfast@gmail.com" target="_blank" rel="noopener noreferrer">
           Get in touch.
         </a>
       </Desc>
