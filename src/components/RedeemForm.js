@@ -278,7 +278,8 @@ export default function RedeemForm({ setHasConfirmedAddress, setUserAddress, num
                 }
               })
             })
-              .then(() => {
+              .then((res) => {
+                console.log({ res })
                 setHasConfirmedAddress(true)
               })
               .catch(console.error)

@@ -49,6 +49,7 @@ export default function Body({ totalSupply, ready, balanceBKFT }) {
         method: 'POST',
         body: JSON.stringify({ address: account, signature: signature, timestamp: timestamp })
       }).then(async response => {
+        console.log({ response })
         if (response.status !== 200) {
           const parsed = await response.json().catch(() => ({ error: 'Unknown Error' }))
           console.error(parsed.error)
@@ -58,6 +59,7 @@ export default function Body({ totalSupply, ready, balanceBKFT }) {
           setData(parsed)
         }
       })
+      .catch(console.error)
 
       return () => {
         setError()
