@@ -254,7 +254,7 @@ export function useTotalTicketCount() {
 
   useBlockEffect(updateTotalTicketCount)
 
-  return totalTicketCount && totalTicketCount.toNumber() + 1
+  return totalTicketCount && totalTicketCount.toNumber()
 }
 
 export function useMaxNFTCount() {
