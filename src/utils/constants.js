@@ -24,11 +24,15 @@ export const ROUTER_ADDRESS = '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'
 
 export const FACTORY_ADDRESS = '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f'
 
-export const NFT_ADDRESS = isProd ? '0x7471395d46B92A34634d87150d07d4f6C90624Aa' : '0x5AaeAeecf564E7D053e81e98f2e9116320f3bAF4'
+export const NFT_ADDRESS = isProd
+  ? '0x7471395d46B92A34634d87150d07d4f6C90624Aa'
+  : '0x5AaeAeecf564E7D053e81e98f2e9116320f3bAF4'
 
 export const NFT_URI = 'https://arweave.net/w8Vs3I-TmRIcZVNaSkxjVhtWc9ZJleCJeSRlpXEVdPM'
 
-export const BKFT_ADDRESS = isProd ? '0xEc4c9ECf676bbfb32527300197274a30ADdd2567' : '0xC61346627AAf12EF13Ce06463Cba92A3f980C855'
+export const BKFT_ADDRESS = isProd
+  ? '0xEc4c9ECf676bbfb32527300197274a30ADdd2567'
+  : '0xC61346627AAf12EF13Ce06463Cba92A3f980C855'
 
 const WETH_ADDRESS = isProd
   ? '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
@@ -69,3 +73,5 @@ export const TRADE_TYPES = ['BUY', 'SELL', 'UNLOCK', 'REDEEM'].reduce((o, k, i) 
   o[k] = i
   return o
 }, {})
+
+export const EMAIL = 'decentralizedbreakfast@gmail.com'

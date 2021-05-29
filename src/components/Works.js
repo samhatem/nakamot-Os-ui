@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { Controls } from './Redeem'
-import { TOKEN_SYMBOL } from '../utils/constants'
+import { EMAIL, TOKEN_SYMBOL } from '../utils/constants'
 
 const WorksFrame = styled.div`
   width: 100%;
@@ -72,7 +72,7 @@ export default function Works({ closeCheckout }) {
         <a href="https://unisocks.exchange/" target="_blank" rel="noopener noreferrer">Unisocks</a> which we used to cook up your breakfast.
       </Desc>
       <Desc>
-        <a href="mailto:decentralizedbreakfast@gmail.com" target="_blank" rel="noopener noreferrer">
+        <a href={`mailto:${EMAIL}`} target="_blank" rel="noopener noreferrer">
           Get in touch.
         </a>
       </Desc>

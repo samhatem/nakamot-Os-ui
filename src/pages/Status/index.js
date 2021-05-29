@@ -5,7 +5,7 @@ import { useAppContext } from '../../context'
 import { Redirect } from 'react-router-dom'
 import { Header } from '../Body'
 import Button from '../../components/Button'
-import { TOKEN_SYMBOL } from "../../utils"
+import { EMAIL, TOKEN_SYMBOL } from "../../utils"
 
 const OrderDiv = styled.div`
   display: flex;
@@ -132,7 +132,7 @@ export default function Body({ totalSupply, ready, balanceBKFT }) {
             <p style={{ fontSize: '.75rem', textAlign: 'center' }}>
               Problem with an order?{' '}
               <a
-                href={`mailto:decentralizedbreakfast@gmail.com?Subject=NakamotOs%20Order%20for%20${account}`}
+                href={`mailto:${EMAIL}?Subject=NakamotOs%20Order%20for%20${account}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
