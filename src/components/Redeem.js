@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useWeb3Context } from 'web3-react'
 import { Link } from 'react-router-dom'
+import { BigNumber } from 'ethers'
 
 import { useAppContext } from '../context'
 import { useNftContext } from '../context/nftContext'
@@ -121,7 +122,7 @@ export default function Redeem({
                 <p>Redeem {TOKEN_SYMBOL}</p>
               </Owned>
               <IncrementToken
-                initialValue={Number(amountFormatter(balanceBKFT, 18, 0))}
+                initialValue={Number(amountFormatter(BigNumber.from('1000000000000000000'), 18, 0))}
                 max={Number(amountFormatter(balanceBKFT, 18, 0))}
               />
             </InfoFrame>
@@ -238,7 +239,7 @@ export default function Redeem({
               burn(numberBurned.toString())
                 .then(response => {
                   // save transaction hash
-                  fetch('/.netlify/functions/create-order', {
+                  fetch('/.netlify/functions/createOrder', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -250,7 +251,8 @@ export default function Redeem({
                       }
                     })
                   })
-                    .then(() => {
+                    .then((res) => {
+                      console.log({ res })
                       setTransactionHash(response.hash)
                     })
                     .catch(console.error)

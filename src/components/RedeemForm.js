@@ -269,7 +269,7 @@ export default function RedeemForm({
           const autoMessage = `${nameMap[address]}: ${account}\n${nameMap[timestamp]}: ${timestampToSign}\n${nameMap[numberBurned]}: ${actualNumberBurned}`
 
           signer.signMessage(`${header}\n\n${formDataMessage}\n${autoMessage}`).then(returnedSignature => {
-            fetch('/.netlify/functions/submission-created', {
+            fetch('/.netlify/functions/submissionCreated', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -284,7 +284,8 @@ export default function RedeemForm({
                 }
               })
             })
-              .then(() => {
+              .then((res) => {
+                console.log({ res })
                 setHasConfirmedAddress(true)
               })
               .catch(() => {
