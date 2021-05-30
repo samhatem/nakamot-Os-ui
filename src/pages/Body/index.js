@@ -307,8 +307,20 @@ const CurrentPrice = styled.p`
 const GreyBg = styled.div`
   background-color: rgba(226, 226, 226);
   border-radius: 10px;
-  margin-top: 50px;
+  margin-top: 10px;
   margin-bottom: 100px;
+`
+
+const Centered = styled.div`
+  display: flex;
+
+  > div {
+    margin-right: 50px;
+  }
+
+  @media only screen and (max-width: 800px) {
+    flex-direction: column;
+  }
 `
 
 export default function Body({
@@ -354,8 +366,10 @@ export default function Body({
           setShowNftModal={setShowNftModal}
         />
         <StyledRow>
-          <Card totalSupply={totalSupply} dollarPrice={dollarPrice} reserveBKFTToken={reserveBKFTToken} />
-          <Facts />
+          <Centered>
+            <Card totalSupply={totalSupply} dollarPrice={dollarPrice} reserveBKFTToken={reserveBKFTToken} />
+            <Facts />
+          </Centered>
         </StyledRow>
         <GreyBg>
           <StyledInfoRow>
