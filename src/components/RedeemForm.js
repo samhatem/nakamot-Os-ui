@@ -293,13 +293,44 @@ export default function RedeemForm({
                   setHasRedemptionFailed(true)
                   setHasConfirmedAddress(false)
                   try {
-                    console.log("Req body", JSON.parse(res.body))
+                    const reader = res.body.getReader()
+                    return new ReadableStream({
+                      start(controller) {
+                        // The following function handles each data chunk
+                        function push() {
+                          // "done" is a Boolean and value a "Uint8Array"
+                          reader.read().then( ({done, value}) => {
+                            // If there is no more data to read
+                            if (done) {
+                              console.log('done', done);
+                              controller.close();
+                              return;
+                            }
+                            // Get the data and send it to the browser via the controller
+                            controller.enqueue(value);
+                            // Check chunks by logging to the console
+                            console.log(done, value);
+                            push();
+                          })
+                        }
+
+                        push();
+                      }
+                    });
                   } catch (e) {
                     console.log("Error trying to parse res.body")
                   }
                 } else {
                   setHasConfirmedAddress(true)
                 }
+              })
+              .then(stream => {
+                // Respond with our stream
+                return new Response(stream, { headers: { "Content-Type": "text/html" } }).text();
+              })
+              .then(result => {
+                // Do things with result
+                console.log(result);
               })
               .catch((err) => {
                 console.error(err)
