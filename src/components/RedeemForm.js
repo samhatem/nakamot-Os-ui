@@ -289,9 +289,14 @@ export default function RedeemForm({
               .then(res => {
                 console.log('Response from create submission')
                 console.log(res)
-                if (res.status === 500) {
+                if (res.status >= 400) {
                   setHasRedemptionFailed(true)
                   setHasConfirmedAddress(false)
+                  try {
+                    console.log("Req body", JSON.parse(res.body))
+                  } catch (e) {
+                    console.log("Error trying to parse res.body")
+                  }
                 } else {
                   setHasConfirmedAddress(true)
                 }
