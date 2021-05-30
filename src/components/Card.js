@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 import Tilt from 'react-tilt'
 
 import { TOKEN_SYMBOL } from '../utils'
@@ -59,40 +58,6 @@ const SubTitle = styled.p`
   font-feature-settings: 'tnum' on, 'onum' on;
 `
 
-const Info = styled.div`
-  /* margin-bottom: -2px; */
-`
-const Dynamic = styled.p`
-  color: #aeaeae;
-  font-style: italic;
-  font-weight: 400;
-  margin: 0px;
-  margin-top: 1px;
-  font-size: 12px;
-  float: left;
-`
-
-const InfoButton = styled.span`
-  width: 16px;
-  height: 16px;
-  font-size: 12px;
-  color: white;
-  text-decoration: none;
-  text-align: center;
-  margin-left: 8px;
-  float: right;
-  background-color: #5ca2ff;
-`
-
-const MarketData = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-end;
-  width: 100%;
-  margin-top: 1rem;
-`
-
 export default function Card({ totalSupply, dollarPrice, reserveBKFTToken }) {
   return (
     <Tilt
@@ -103,14 +68,6 @@ export default function Card({ totalSupply, dollarPrice, reserveBKFTToken }) {
         <Title>Nakamot-Os</Title>
         <SubTitle>${TOKEN_SYMBOL}</SubTitle>
         <Gallery3D />
-        <MarketData>
-          <Link to="/stats">
-            <Info>
-              <InfoButton>?</InfoButton>
-              <Dynamic>Dynamic Pricing Stats</Dynamic>
-            </Info>
-          </Link>
-        </MarketData>
       </CardWrapper>
     </Tilt>
   )
