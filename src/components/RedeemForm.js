@@ -330,6 +330,7 @@ export default function RedeemForm({
               })
               .then(result => {
                 // Do things with result
+                console.log("The Result from the readable stream");
                 console.log(result);
               })
               .catch((err) => {
