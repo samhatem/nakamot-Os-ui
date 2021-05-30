@@ -258,7 +258,7 @@ export default function RedeemForm({
       />
 
       {recaptchaEnabled && <ReCAPTCHA sitekey={process.env.REACT_APP_SITE_RECAPTCHA_KEY} onChange={onRecaptcha} />}
-      {hasRedemptionFailed && <ErrorPrompt>{`Request failed. Try again or contact ${EMAIL}`}</ErrorPrompt>}
+      {hasRedemptionFailed && <ErrorPrompt>{`Request failed. Make sure the address has no abbreviations. Try again or contact ${EMAIL}`}</ErrorPrompt>}
       <ButtonFrame
         type="submit"
         disabled={!canSign || (recaptchaEnabled && !!!recaptcha)}
