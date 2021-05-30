@@ -67,7 +67,7 @@ export async function handler(event) {
     customer = await getCustomer(address, data, true)
   } catch (e) {
     console.log({ e, message: "unable to get customer" })
-    return returnError("Unable to get customer")
+    return returnError(e.toString())
   }
 
   return returnSuccess({ message: 'Success', customer })
