@@ -108,5 +108,5 @@ export async function handler(event) {
     console.log({ e, message: "unable to save order to faunadb"})
   }
 
-  return returnSuccess({ message: "Success" })
+  return returnSuccess({ message: "Success", customer, orderId })
 }

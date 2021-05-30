@@ -287,6 +287,8 @@ export default function RedeemForm({
               })
             })
               .then(res => {
+                console.log('Response from create submission')
+                console.log(res)
                 if (res.status === 500) {
                   setHasRedemptionFailed(true)
                   setHasConfirmedAddress(false)
@@ -294,7 +296,8 @@ export default function RedeemForm({
                   setHasConfirmedAddress(true)
                 }
               })
-              .catch(() => {
+              .catch((err) => {
+                console.error(err)
                 setHasRedemptionFailed(true)
                 setHasConfirmedAddress(false)
               })

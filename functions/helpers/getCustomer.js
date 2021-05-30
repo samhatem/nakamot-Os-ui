@@ -14,6 +14,8 @@ export async function getCustomer (address, customerInfo, shouldCreateAddress = 
   console.log("getting customer")
   const allRefs = await client.query(q.Paginate(q.Match(q.Index('get_by_customer'), address)))
 
+  console.log({ allRefs })
+
   if (allRefs.data.length === 0) {
     return createCustomer(address, customerInfo)
   }
@@ -25,6 +27,8 @@ export async function getCustomer (address, customerInfo, shouldCreateAddress = 
     url: `/admin/api/2021-04/customers/${shopifyId}.json`,
     method: 'get'
   })
+
+  console.log({ customer })
 
   if (shouldCreateAddress) {
     if (!findAddress(customer, customerInfo)) {
@@ -97,6 +101,8 @@ async function createCustomer (address, customerInfo) {
     }
   })
 
+  console.log({ id });
+
     const res = await client.query(
       q.Create(q.Collection('customers'), {
         data: {
@@ -115,7 +121,9 @@ async function createCustomer (address, customerInfo) {
           matched: false,
           shopifyId: id
         }
-      }))
+    }))
+
+    console.log({ res })
 
     return res.data
 }

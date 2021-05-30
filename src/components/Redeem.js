@@ -252,12 +252,17 @@ export default function Redeem({
                     })
                   })
                     .then(res => {
-                      console.log({ res })
+                      console.log('Response from create order')
+                      console.log(res)
                       setTransactionHash(response.hash)
                     })
-                    .catch(console.error)
+                    .catch((error) => {
+                      console.log('Error in create order')
+                      console.log(error)
+                    })
                 })
                 .catch(error => {
+                  console.log('Error from create order')
                   console.error(error)
                   // setTransactionHash(
                   //   true

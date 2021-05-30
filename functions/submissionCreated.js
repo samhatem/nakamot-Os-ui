@@ -1,11 +1,5 @@
 import { ethers } from 'ethers'
 import { getCustomer } from './helpers/getCustomer'
-const faunadb = require('faunadb')
-
-const q = faunadb.query
-const client = new faunadb.Client({
-  secret: process.env.FAUNADB_SERVER_SECRET
-})
 
 function isAddress(value) {
   try {
@@ -68,12 +62,13 @@ export async function handler(event) {
     return returnError("Unauthorized. Signature Invalid", 401)
   }
 
+  let customer
   try {
-    await getCustomer(address, data, true)
+    customer = await getCustomer(address, data, true)
   } catch (e) {
     console.log({ e, message: "unable to get customer" })
     return returnError("Unable to get customer")
   }
 
-  return returnSuccess({ message: 'Success' })
+  return returnSuccess({ message: 'Success', customer })
 }
