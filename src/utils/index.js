@@ -53,6 +53,11 @@ export async function getEtherBalance(address, library) {
   return library.getBalance(address)
 }
 
+// get the current block number
+export async function getBlockNumber(library) {
+  return library.getBlockNumber()
+}
+
 export function getExchangeAddress(tokenAddress0, tokenAddress1) {
   const token0 = new Token(CHAIN_ID, tokenAddress0, 18, 'TOKEN0', 'TKN0')
   const token1 = new Token(CHAIN_ID, tokenAddress1, 18, 'TOKEN1', 'TKN1')

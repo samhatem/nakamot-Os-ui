@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Tilt from 'react-tilt'
 import {
   useBlockTilLottery,
+  useCurrentBlockNumber,
   useHasMintedNFTs,
   useLotteryWinners,
   useMaxNFTCount,
@@ -110,6 +111,7 @@ export default function Facts() {
   const ownerTicketCount = useOwnerTicketCount()
   const hasMintedNFTs = useHasMintedNFTs()
   const lotteryWinners = useLotteryWinners()
+  const currentBlockNumber = useCurrentBlockNumber()
 
   return (
     <Tilt
@@ -148,14 +150,14 @@ export default function Facts() {
               </StyledText>
               <StyledText>
                 <>Blocks Til Lottery</>
-                <b>{blocksTilLottery}</b>
+                <b>{blocksTilLottery - currentBlockNumber}</b>
               </StyledText>
             </>
           )}
           <Line />
           <StyledParagraph>
-            When you redeem your $BOX token before the lottery block, not only will you receive a physical box of Nakamot-Os,{" "}
-            but you'll also be automatically entered in a lottery to win a Nakamot-Os NFT!
+            When you redeem your $BOX token before the lottery block, not only will you receive a physical box of
+            Nakamot-Os, but you'll also be automatically entered in a lottery to win a Nakamot-Os NFT!
           </StyledParagraph>
           <StyledParagraph>
             There will only be 10 Initial Cereal Offering NFTs ever made. How's that for sound cereal?

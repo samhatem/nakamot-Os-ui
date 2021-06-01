@@ -18,7 +18,8 @@ import {
   getMaxNFTCount,
   getBlocksTilLottery,
   getLotteryWinners,
-  getHasMintedNFTs
+  getHasMintedNFTs,
+  getBlockNumber
 } from '../utils'
 import { utils } from 'ethers'
 
@@ -110,6 +111,41 @@ export function useAddressBalance(address, tokenAddress) {
   useBlockEffect(updateBalance)
 
   return balance
+}
+
+export function useCurrentBlockNumber() {
+  const { library } = useWeb3Context()
+
+  const [currentBlockNumber, setCurrentBlockNumber] = useState()
+
+  const updateCurrentBlockNumber = useCallback(() => {
+    let stale = false
+
+    getBlockNumber(library)
+      .then(value => {
+        if (!stale) {
+          setCurrentBlockNumber(value)
+        }
+      })
+      .catch(error => {
+        if (!stale) {
+          setCurrentBlockNumber(null)
+        }
+      })
+
+    return () => {
+      stale = true
+      setCurrentBlockNumber()
+    }
+  }, [library])
+
+  useEffect(() => {
+    return updateCurrentBlockNumber()
+  }, [updateCurrentBlockNumber])
+
+  useBlockEffect(updateCurrentBlockNumber)
+
+  return currentBlockNumber
 }
 
 export function useNFTIndices(tokensOwned) {
