@@ -150,7 +150,7 @@ export default function Facts() {
               </StyledText>
               <StyledText>
                 <>Blocks Til Lottery</>
-                <b>{blocksTilLottery - currentBlockNumber}</b>
+                <b>{blocksTilLottery && (blocksTilLottery - currentBlockNumber)}</b>
               </StyledText>
             </>
           )}
