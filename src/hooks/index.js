@@ -430,7 +430,7 @@ export function useLotteryWinners() {
 
   useBlockEffect(updateLotteryWinners)
 
-  return lotteryWinners && lotteryWinners.map(winner => winner.toNumber())
+  return lotteryWinners
 }
 
 export function useNFTSupply() {
