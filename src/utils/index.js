@@ -3,7 +3,7 @@ import { Token, Pair } from '@uniswap/sdk'
 import UncheckedJsonRpcSigner from './signer'
 import { CHAIN_ID, ROUTER_ADDRESS, NFT_ADDRESS, BKFT_ADDRESS } from './constants'
 
-import ERC20_ABI from './erc20.json'
+import NAKAMOTOS_TOKEN_ABI from './nakamotosErc20'
 import NFT_ABI from './nft.json'
 import ROUTER_ABI from './router.json'
 
@@ -37,7 +37,7 @@ export function getRouterContract(library, account) {
 }
 
 export function getTokenContract(tokenAddress, library, account) {
-  return getContract(tokenAddress, ERC20_ABI, library, account)
+  return getContract(tokenAddress, NAKAMOTOS_TOKEN_ABI, library, account)
 }
 
 export function getNFTContract(nftAddress, library, account) {
@@ -71,7 +71,7 @@ export async function getTokenBalance(tokenAddress, address, library) {
     throw Error(`Invalid 'tokenAddress' or 'address' parameter '${tokenAddress}' or '${address}'.`)
   }
 
-  return getContract(tokenAddress, ERC20_ABI, library).balanceOf(address)
+  return getContract(tokenAddress, NAKAMOTOS_TOKEN_ABI, library).balanceOf(address)
 }
 
 export async function getTokenAllowance(address, tokenAddress, spenderAddress, library) {
@@ -82,7 +82,7 @@ export async function getTokenAllowance(address, tokenAddress, spenderAddress, l
     )
   }
 
-  return getContract(tokenAddress, ERC20_ABI, library).allowance(address, spenderAddress)
+  return getContract(tokenAddress, NAKAMOTOS_TOKEN_ABI, library).allowance(address, spenderAddress)
 }
 
 export async function getNFTBalance(address, library) {
